@@ -1,9 +1,12 @@
 import { Container, Text } from '@mantine/core'
+import { DragDropContext } from 'react-beautiful-dnd'
 
 function App(): JSX.Element {
   return (
     <Container>
-      <Text>Hello world!</Text>
+      <DragDropContext onDragEnd={() => console.log('End')}>
+        <Text>Hello world!</Text>
+      </DragDropContext>
     </Container>
   )
 }
