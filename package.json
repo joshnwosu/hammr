@@ -30,6 +30,7 @@
     "@emotion/react": "^11.11.1",
     "@mantine/carousel": "^6.0.16",
     "@mantine/core": "^6.0.16",
+    "@mantine/dates": "^6.0.16",
     "@mantine/dropzone": "^6.0.16",
     "@mantine/hooks": "^6.0.16",
     "@mantine/modals": "^6.0.16",
@@ -42,6 +43,7 @@
     "embla-carousel-react": "^8.0.0-rc11",
     "node-id3": "^0.2.6",
     "react-beautiful-dnd": "^13.1.1",
+    "react-icons": "^4.10.1",
     "zustand": "^4.3.9"
   },
   "devDependencies": {

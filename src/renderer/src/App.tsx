@@ -1,7 +1,8 @@
 import { Button, ScrollArea } from '@mantine/core'
 import React, { useState } from 'react'
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd'
-import IpcListener from './components/root/ipcListener'
+import IpcListener from './components/root/IpcListener'
+import { TbSend } from 'react-icons/tb'
 
 interface Item {
   id: string
@@ -59,7 +60,9 @@ const App: React.FC = () => {
   return (
     <ScrollArea w={300} h={400}>
       <IpcListener />
-      <Button onClick={sendMessage}>Send Message to Main</Button>
+      <Button onClick={sendMessage} rightIcon={<TbSend size={'1rem'} />} color="grape">
+        Send Message to Main
+      </Button>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable">
           {(provided, snapshot) => (
