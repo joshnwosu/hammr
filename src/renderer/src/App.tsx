@@ -1,6 +1,7 @@
 import { Button, ScrollArea } from '@mantine/core'
 import React, { useState } from 'react'
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd'
+import IpcListener from './components/root/ipcListener'
 
 interface Item {
   id: string
@@ -52,11 +53,12 @@ const App: React.FC = () => {
   }
 
   const sendMessage = () => {
-    window.api.send('show-context-menu', true)
+    window.api.send('show-context-menu', { name: 'Jerry Nwosu', age: 26 })
   }
 
   return (
     <ScrollArea w={300} h={400}>
+      <IpcListener />
       <Button onClick={sendMessage}>Send Message to Main</Button>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable">

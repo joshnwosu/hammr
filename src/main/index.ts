@@ -72,6 +72,6 @@ app.on('window-all-closed', () => {
 // In this file you can include the rest of your app"s specific main process
 // code. You can also put them in separate files and require them here.
 
-ipcMain.on('show-context-menu', (_, data) => {
-  console.log(data)
+ipcMain.on('show-context-menu', (event, data) => {
+  event.sender.send('show-context-menu', { ...data, country: 'Nigeria' })
 })

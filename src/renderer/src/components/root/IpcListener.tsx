@@ -2,7 +2,9 @@ import { useEffect } from 'react'
 
 export default function IpcListener() {
   useEffect(() => {
-    console.log('Hello')
+    window.api.send('show-context-menu', { name: 'Joshua Nwosu', age: 26 })
+    window.api.receive('show-context-menu', (_, data) => console.log(data))
+    // window.api.send("get-tracks")
   }, [])
 
   return (
