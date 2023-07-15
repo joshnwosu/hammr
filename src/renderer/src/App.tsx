@@ -1,4 +1,4 @@
-import { Button } from '@mantine/core'
+import { Button, ScrollArea } from '@mantine/core'
 import React, { useState } from 'react'
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd'
 
@@ -56,7 +56,7 @@ const App: React.FC = () => {
   }
 
   return (
-    <>
+    <ScrollArea w={300} h={400}>
       <Button onClick={sendMessage}>Send Message to Main</Button>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable">
@@ -85,7 +85,7 @@ const App: React.FC = () => {
           )}
         </Droppable>
       </DragDropContext>
-    </>
+    </ScrollArea>
   )
 }
 
