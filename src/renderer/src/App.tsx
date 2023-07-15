@@ -52,8 +52,7 @@ const App: React.FC = () => {
   }
 
   const sendMessage = () => {
-    window.api.send('show-context-menu', 'hi')
-    window.api.receive('show-context-menu', (data) => console.log(data))
+    window.api.send('show-context-menu', true)
   }
 
   return (
