@@ -21,6 +21,6 @@ export const directories = {
   artistPicture: ARTIST_PICTURE_DIRECTORY,
   filesTrackerLocation: path.join(APP_DATA_DIRECTORY, 'processedFiles.json'),
   playlistsLocation: path.join(APP_DATA_DIRECTORY, 'playlists.json'),
-  playbackStatLocation: path.join(APP_DATA_DIRECTORY, 'playbackStats.json'),
+  playbackStatsLocation: path.join(APP_DATA_DIRECTORY, 'playbackStats.json'),
   settingsLocation: path.join(APP_DATA_DIRECTORY, 'settings.json')
 }
