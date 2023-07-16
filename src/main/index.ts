@@ -5,7 +5,7 @@ import icon from '../../resources/icon.png?asset'
 import { directories } from './modules/directories'
 import chokidar from 'chokidar'
 import { isValidFileType } from './utilities'
-import { refreshTracks } from './core/playerReady'
+import { refreshTracks } from './core/refreshTracks'
 import createParsedTrack from './core/createdParsedTrack'
 import { filesTracker } from './modules/filesTracker'
 import { playlistsTracker } from './modules/playlistsTrackers'
@@ -111,25 +111,19 @@ chokidar
   })
   .on('ready', () => {
     console.log('Files Ready.')
+    playerReady()
   })
 
 // ipc Listeners
 
-ipcMain.on('is-playing', () => {
+ipcMain.on('isPlaying', () => {
   // Do something here.
 })
 
-ipcMain.on('get-tracks', () => {
-  // playerReady();
-  console.log("I'm am on this side.")
-})
-
-ipcMain.on('show-context-menu', (event, data) => {
-  const d = directories
-  event.sender.send('show-context-menu', { ...data, country: 'Nigeria', appDIR: d })
-
-  playerReady()
-})
+// ipcMain.on('get-tracks', () => {
+//   playerReady()
+//   console.log("I'm am on this side.")
+// })
 
 export const playerReady = () => {
   const processedFiles = filesTracker.getTracks
@@ -137,7 +131,10 @@ export const playerReady = () => {
   const recentlyPlayedTracks = playbackStats.recentlyPlayedTracks
   const playStats = playbackStats.playStats
 
+  // console.log('Ready Player...')
+
   if (processedFiles.length > 0) {
+    console.log('Kolo: ', processedFiles)
     mainWindow.webContents.send('processedFiles', processedFiles)
     mainWindow.webContents.send('userPlaylists', playlists)
     mainWindow.webContents.send('recentlyPlayed', recentlyPlayedTracks)

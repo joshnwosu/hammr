@@ -4,7 +4,7 @@ import { join, parse } from 'path'
 import { SUPPORTED_FORMATS } from '../utilities'
 import { filesTracker } from '../modules/filesTracker'
 import { settings } from '../modules/settings'
-import createParsedTrack from '../core/createdParsedTrack'
+import createParsedTrack from './createdParsedTrack'
 
 export const refreshTracks = (): void => {
   const folders: string[] = settings.getSettings.foldersToScan
