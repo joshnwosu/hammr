@@ -3,6 +3,8 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import { directories } from './modules/directories'
+import chokidar from 'chokidar'
+import { isValidFileType } from './utilities'
 
 function createWindow(): void {
   // Create the browser window.
@@ -77,3 +79,27 @@ ipcMain.on('show-context-menu', (event, data) => {
   const d = directories
   event.sender.send('show-context-menu', { ...data, country: 'Nigeria', appDIR: d })
 })
+
+// listen for file changes
+
+chokidar
+  .watch(directories.musicDirectory, {
+    ignored: /[\/\\]\./,
+    persistent: true,
+    ignoreInitial: true,
+    awaitWriteFinish: true
+  })
+  .on('add', async (path) => {
+    if (isValidFileType(path)) {
+      console.log(`File ${path} has been added.`)
+    }
+  })
+  .on('change', (path) => {
+    console.log(`File ${path} has been changed`)
+  })
+  .on('unlink', (path) => {
+    console.log(`File ${path} has been removed`)
+  })
+  .on('ready', () => {
+    console.log('Files Ready.')
+  })
