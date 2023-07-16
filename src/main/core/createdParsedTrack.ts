@@ -3,7 +3,7 @@ import path from 'path'
 import NodeID3, { Tags } from 'node-id3'
 import { directories } from '../modules/directories'
 import { removeMIME, writeImageBuffer } from '../utilities'
-import { FilesTracker } from '../modules/filesTracker'
+import { filesTracker } from '../modules/filesTracker'
 
 function createParsedTrack(fileLocation: string) {
   return new Promise((resolve, _) => {
@@ -55,7 +55,7 @@ function createParsedTrack(fileLocation: string) {
         track.dateAdded = stats.ctimeMs
       })
 
-      FilesTracker.prototype.addFile(track)
+      filesTracker.addFile(track)
 
       resolve(track)
     })

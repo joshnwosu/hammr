@@ -1,33 +1,9 @@
 import fs from 'fs'
 import { directories } from './directories'
 import { removeDuplicates } from '../utilities'
+import { Track } from '../types'
 
-interface Track {
-  r_fileLocation: string
-  fileLocation: string
-  albumArt: string
-  album: string
-  title: string
-  artist: string
-  genre: string
-  year: string
-  extractedTitle: string
-  defaultTitle: string
-  extractedArtist: string
-  defaultArtist: string
-  fileName: string
-  length: string
-  date: string
-  dateAdded: string | any
-  trackNumber: string
-  folderInfo: {
-    name: string
-    path: any
-  }
-  // Add additional properties as needed
-}
-
-export class FilesTracker {
+class FilesTracker {
   processedFiles: Track[] = []
 
   constructor() {
@@ -94,3 +70,5 @@ export class FilesTracker {
     return this.processedFiles
   }
 }
+
+export const filesTracker = new FilesTracker()

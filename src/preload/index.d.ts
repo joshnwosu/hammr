@@ -1,4 +1,4 @@
-import { CustomAPI } from './type'
+import { CustomAPI } from './types'
 import { ElectronAPI } from '@electron-toolkit/preload'
 
 declare global {
