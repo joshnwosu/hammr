@@ -1,22 +1,28 @@
 import fs from 'fs'
 import { directories } from './directories'
-
-interface DuplicateProps {
-  targetArray: any[]
-  props: string | any
-}
-
-export const removeDuplicates = ({ targetArray, props }: DuplicateProps): any[] => {
-  return targetArray.filter((item, index, self) => {
-    const isDuplicate = self.findIndex((t) => t[props] === item[props]) !== index
-    return !isDuplicate
-  })
-}
+import { removeDuplicates } from '../utilities'
 
 interface Track {
+  r_fileLocation: string
   fileLocation: string
+  albumArt: string
+  album: string
+  title: string
+  artist: string
+  genre: string
+  year: string
+  extractedTitle: string
+  defaultTitle: string
+  extractedArtist: string
+  defaultArtist: string
+  fileName: string
+  length: string
+  date: string
+  dateAdded: string | any
+  trackNumber: string
   folderInfo: {
-    path: string
+    name: string
+    path: any
   }
   // Add additional properties as needed
 }
