@@ -1,5 +1,5 @@
 import fs from 'fs'
-import path, { parse } from 'path'
+import { parse, join } from 'path'
 import NodeID3, { Tags } from 'node-id3'
 import { directories } from '../modules/directories'
 import { extractTitleAndArtist, removeMIME, writeImageBuffer } from '../utilities'
@@ -27,15 +27,19 @@ function createParsedTrack(fileLocation: string) {
     //   dateAdded: 0,
     //   trackNumber: '',
     //   folderInfo: {
-    //     name: path.parse(path.parse(fileLocation).dir).base,
-    //     path: path.parse(fileLocation).dir
+    //     name: parse(parse(fileLocation).dir).base,
+    //     path: parse(fileLocation).dir
     //   }
     // }
 
     const track: Track = {
       r_fileLocation: 'file://' + fileLocation,
       fileLocation: fileLocation,
-      fileName: parse(fileLocation).name
+      fileName: parse(fileLocation).name,
+      folderInfo: {
+        name: parse(parse(fileLocation).dir).base,
+        path: parse(fileLocation).dir
+      }
     }
 
     NodeID3.read(fileLocation, async (_: any, tags: Tags) => {
@@ -44,7 +48,7 @@ function createParsedTrack(fileLocation: string) {
         // @ts-expect-error
         tags.image.mime = tags.image?.mime.replace(/image\//g, '') || 'jpg'
 
-        const albumArtPath = path.join(
+        const albumArtPath = join(
           directories.albumCover,
           `${removeMIME(decodeURI(track.fileName).replace(/[^a-zA-Z0-9-_]/g, ''))}.${
             // @ts-expect-error
@@ -67,6 +71,15 @@ function createParsedTrack(fileLocation: string) {
       track.genre = tags.genre ? tags.genre.trim() : 'Unknown Genre'
 
       track.year = tags.year
+
+      track.defaultTitle = track.title || track.extractedTitle || track.fileName
+      track.defaultArtist = track.artist || track.extractedArtist
+
+      track.length = tags.length
+
+      track.date = tags.date
+
+      track.trackNumber = tags.trackNumber
 
       fs.stat(track.fileLocation, (_, stats) => {
         track.dateAdded = stats.ctimeMs
