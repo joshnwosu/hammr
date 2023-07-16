@@ -15,28 +15,28 @@ export const removeDuplicates = ({ targetArray, props }: DuplicateProps): any[] 
 export const writeImageBuffer = (imageBuffer: any, savePath: string) => {
   fs.writeFileSync(savePath, imageBuffer)
 }
-export const extractTitleAndArtist = (trackName: string) => {
-  const split = trackName.split('-')
-  let artist: string
-  let title: string
-  if (trackName.includes('_-')) {
-    artist = split[0]
-    title = split[1]
-  } else if (trackName.includes('-')) {
-    artist = split[1]
-    title = split[0]
-  } else {
-    return { artist: 'unknown', title: null }
-  }
-  artist = artist.replace(/_/g, ' ').trim()
-  title = title
-    .replace(/_/g, ' ')
-    .replace(/\(.*\).*/gi, '')
-    .replace(/\[.*\].*/gi, '')
-    .replace(/\)/, '')
-    .trim()
-  return { artist, title }
-}
+// export const extractTitleAndArtist = (trackName: string) => {
+//   const split = trackName.split('-')
+//   let artist: string
+//   let title: string
+//   if (trackName.includes('_-')) {
+//     artist = split[0]
+//     title = split[1]
+//   } else if (trackName.includes('-')) {
+//     artist = split[1]
+//     title = split[0]
+//   } else {
+//     return { artist: 'unknown', title: null }
+//   }
+//   artist = artist.replace(/_/g, ' ').trim()
+//   title = title
+//     .replace(/_/g, ' ')
+//     .replace(/\(.*\).*/gi, '')
+//     .replace(/\[.*\].*/gi, '')
+//     .replace(/\)/, '')
+//     .trim()
+//   return { artist, title }
+// }
 
 export const removeMIME = (str: string) => {
   return str.replace(/(\.mp3)|(\.m4a)|(\.ogg)|(\.wav)/gi, '')
@@ -44,4 +44,29 @@ export const removeMIME = (str: string) => {
 
 export const isValidFileType = (path: string) => {
   return path.match(/\.mp3|\.webm|\.m4a|\.ogg/gi)
+}
+
+export const SUPPORTED_FORMATS = ['.mp3', '.wav', '.ogg', '.acc', '.flac', '.webm', '.m4a', '.opus']
+
+export const extractTitleAndArtist = (trackName: string): { artist: string; title: string } => {
+  const split = trackName.split('-')
+  let artist: string
+  let title: string
+  if (trackName.includes('_-')) {
+    artist = split[0].trim()
+    title = split[1].trim()
+  } else if (trackName.includes('-')) {
+    artist = split[1].trim()
+    title = split[0].trim()
+  } else {
+    return { artist: 'unknown', title: 'unknown' }
+  }
+  artist = artist.replace(/_/g, ' ')
+  title = title
+    .replace(/_/g, ' ')
+    .replace(/\(.*\).*/gi, '')
+    .replace(/\[.*\].*/gi, '')
+    .replace(/\)/g, '')
+    .trim()
+  return { artist, title }
 }

@@ -1,36 +1,42 @@
 import fs from 'fs'
-import path from 'path'
+import path, { parse } from 'path'
 import NodeID3, { Tags } from 'node-id3'
 import { directories } from '../modules/directories'
-import { removeMIME, writeImageBuffer } from '../utilities'
+import { extractTitleAndArtist, removeMIME, writeImageBuffer } from '../utilities'
 import { filesTracker } from '../modules/filesTracker'
+import { Track } from '../types'
 
 function createParsedTrack(fileLocation: string) {
   return new Promise((resolve, _) => {
-    const track = {
-      r_fileLocation: '',
-      fileLocation: '',
-      albumArt: '',
-      album: '',
-      title: '',
-      artist: '',
-      genre: '',
-      year: '',
-      extractedTitle: '',
-      defaultTitle: '',
-      extractedArtist: '',
-      defaultArtist: '',
-      fileName: '',
-      length: '',
-      date: '',
-      dateAdded: 0,
-      trackNumber: '',
-      folderInfo: {
-        name: path.parse(path.parse(fileLocation).dir).base,
-        path: path.parse(fileLocation).dir
-      }
+    // const track: Track = {
+    //   r_fileLocation: '',
+    //   fileLocation: '',
+    //   fileName: '',
+    //   albumArt: '',
+    //   album: '',
+    //   title: '',
+    //   artist: '',
+    //   genre: '',
+    //   year: '',
+    //   extractedTitle: '',
+    //   defaultTitle: '',
+    //   extractedArtist: '',
+    //   defaultArtist: '',
+    //   length: '',
+    //   date: '',
+    //   dateAdded: 0,
+    //   trackNumber: '',
+    //   folderInfo: {
+    //     name: path.parse(path.parse(fileLocation).dir).base,
+    //     path: path.parse(fileLocation).dir
+    //   }
+    // }
+
+    const track: Track = {
+      r_fileLocation: 'file://' + fileLocation,
+      fileLocation: fileLocation,
+      fileName: parse(fileLocation).name
     }
-    track.r_fileLocation = 'file://' + fileLocation
 
     NodeID3.read(fileLocation, async (_: any, tags: Tags) => {
       // @ts-expect-error
@@ -51,7 +57,18 @@ function createParsedTrack(fileLocation: string) {
         track.albumArt = albumArtPath
       }
 
-      fs.stat(track.r_fileLocation, (_, stats) => {
+      track.title = tags.title || track.fileName
+      track.extractedTitle = extractTitleAndArtist(track.fileName).title
+
+      track.artist = tags.artist || 'Unknown Artist'
+      track.extractedArtist = extractTitleAndArtist(track.fileName).artist
+
+      track.album = tags.album ? tags.album.trim() : 'Unknown Album'
+      track.genre = tags.genre ? tags.genre.trim() : 'Unknown Genre'
+
+      track.year = tags.year
+
+      fs.stat(track.fileLocation, (_, stats) => {
         track.dateAdded = stats.ctimeMs
       })
 
