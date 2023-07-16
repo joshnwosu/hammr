@@ -2,6 +2,7 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+import { directories } from './modules/directories'
 
 function createWindow(): void {
   // Create the browser window.
@@ -73,5 +74,6 @@ app.on('window-all-closed', () => {
 // code. You can also put them in separate files and require them here.
 
 ipcMain.on('show-context-menu', (event, data) => {
-  event.sender.send('show-context-menu', { ...data, country: 'Nigeria' })
+  const d = directories
+  event.sender.send('show-context-menu', { ...data, country: 'Nigeria', appDIR: d })
 })
