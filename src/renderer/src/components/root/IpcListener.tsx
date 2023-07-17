@@ -22,9 +22,9 @@ export default function IpcListener() {
     console.log('The track:', encodeTrackFile(track))
     audio.src = encodeTrackFile(track)
 
-    audio.onloadeddata = () => {
-      audio.play()
-    }
+    // audio.onloadeddata = () => {
+    //   audio.play()
+    // }
   }
 
   useEffect(() => {
