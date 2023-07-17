@@ -2,13 +2,11 @@ import { useEffect } from 'react'
 
 export default function IpcListener() {
   useEffect(() => {
-    setTimeout(() => {
-      // console.log('Hello')
+    window.api.send('playerReady')
 
-      window.api.receive('processedFiles', (_, tracks) => {
-        console.log('The Tracks Here: ', tracks)
-      })
-    }, 1000)
+    window.api.receive('playerReady', (_, arg) => {
+      console.log(arg)
+    })
   }, [])
 
   return (

@@ -54,7 +54,7 @@ const App: React.FC = () => {
   }
 
   const sendMessage = () => {
-    window.api.send('show-context-menu', { name: 'Jerry Nwosu', age: 26 })
+    // console.log('Send Message')
   }
 
   return (

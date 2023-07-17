@@ -131,27 +131,23 @@ export const playerReady = () => {
   const recentlyPlayedTracks = playbackStats.recentlyPlayedTracks
   const playStats = playbackStats.playStats
 
-  // console.log('Ready Player...')
-
   if (processedFiles.length > 0) {
-    // console.log('Kolo: ', processedFiles)
-    // mainWindow.webContents.send('processedFiles', processedFiles)
-    mainWindow.webContents.send('userPlaylists', playlists)
-    mainWindow.webContents.send('recentlyPlayed', recentlyPlayedTracks)
-    mainWindow.webContents.send('playStats', playStats)
+    ipcMain.on('playerReady', (_event) => {
+      _event.sender.send('playerReady', {
+        processedFiles,
+        playlists,
+        recentlyPlayedTracks,
+        playStats
+      })
 
-    mainWindow.webContents.on('did-finish-load', () => {
-      mainWindow.webContents.send('processedFiles', processedFiles)
+      // _event.sender.send('processedFiles', processedFiles)
+      // _event.sender.send('userPlaylists', playlists)
+      // _event.sender.send('recentlyPlayed', recentlyPlayedTracks)
+      // _event.sender.send('playStats', playStats)
     })
+
+    // console.log('Hola')
 
     refreshTracks()
   }
 }
-
-// ipcMain.on('processedFiles', (event) => {
-//   event.sender.send('processedFiles', filesTracker.processedFiles)
-// })
-
-ipcMain.on('show-context-menu', (event) => {
-  event.sender.send('processedFiles', filesTracker.processedFiles)
-})
