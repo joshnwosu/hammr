@@ -95,7 +95,7 @@ chokidar
     if (isValidFileType(path)) {
       console.log(`File ${path} has been added.`)
       const newTrack = await createParsedTrack(path)
-      mainWindow.webContents.send('new-track', newTrack)
+      mainWindow.webContents.send('newTrack', newTrack)
       filesTracker.saveChanges()
       playerReady()
     }
@@ -134,12 +134,24 @@ export const playerReady = () => {
   // console.log('Ready Player...')
 
   if (processedFiles.length > 0) {
-    console.log('Kolo: ', processedFiles)
-    mainWindow.webContents.send('processedFiles', processedFiles)
+    // console.log('Kolo: ', processedFiles)
+    // mainWindow.webContents.send('processedFiles', processedFiles)
     mainWindow.webContents.send('userPlaylists', playlists)
     mainWindow.webContents.send('recentlyPlayed', recentlyPlayedTracks)
     mainWindow.webContents.send('playStats', playStats)
 
+    mainWindow.webContents.on('did-finish-load', () => {
+      mainWindow.webContents.send('processedFiles', processedFiles)
+    })
+
     refreshTracks()
   }
 }
+
+// ipcMain.on('processedFiles', (event) => {
+//   event.sender.send('processedFiles', filesTracker.processedFiles)
+// })
+
+ipcMain.on('show-context-menu', (event) => {
+  event.sender.send('processedFiles', filesTracker.processedFiles)
+})
