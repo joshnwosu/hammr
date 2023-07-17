@@ -1,8 +1,9 @@
 import { Button, ScrollArea } from '@mantine/core'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd'
 import IpcListener from './components/root/IpcListener'
 import { TbSend } from 'react-icons/tb'
+import { usePlayerStore } from './store/playerStore'
 
 interface Item {
   id: string
@@ -40,6 +41,15 @@ const getListStyle = (isDraggingOver: boolean): React.CSSProperties => ({
 const App: React.FC = () => {
   const [items, setItems] = useState<Item[]>(getItems(11))
 
+  // const amount = usePlayerStore((state) => state.amount)
+  // const increaseByTen = usePlayerStore((state) => state.increaseByTen)
+
+  const { name, amount, increaseByTen, tracks } = usePlayerStore((state) => state)
+
+  useEffect(() => {
+    console.log('From store.')
+  }, [name])
+
   const onDragEnd = (result: DropResult) => {
     // dropped outside the list
     if (!result.destination) {
@@ -55,14 +65,24 @@ const App: React.FC = () => {
 
   const sendMessage = () => {
     // console.log('Send Message')
+    increaseByTen(10)
   }
 
   return (
     <ScrollArea w={300} h={400}>
       <IpcListener />
       <Button onClick={sendMessage} rightIcon={<TbSend size={'1rem'} />} color="grape">
-        Send Message to Main
+        Send Message to Main - {amount}
       </Button>
+
+      {tracks.map((item, index) => {
+        return (
+          <div key={index}>
+            <p>{item.title}</p>
+          </div>
+        )
+      })}
+
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable">
           {(provided, snapshot) => (

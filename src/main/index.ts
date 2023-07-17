@@ -22,8 +22,9 @@ function createWindow(): void {
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
+      webSecurity: false,
       nodeIntegration: true,
-      contextIsolation: false,
+      contextIsolation: true,
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false
     }
@@ -133,17 +134,17 @@ export const playerReady = () => {
 
   if (processedFiles.length > 0) {
     ipcMain.on('playerReady', (_event) => {
-      _event.sender.send('playerReady', {
-        processedFiles,
-        playlists,
-        recentlyPlayedTracks,
-        playStats
-      })
+      // _event.sender.send('playerReady', {
+      //   processedFiles,
+      //   playlists,
+      //   recentlyPlayedTracks,
+      //   playStats
+      // })
 
-      // _event.sender.send('processedFiles', processedFiles)
-      // _event.sender.send('userPlaylists', playlists)
-      // _event.sender.send('recentlyPlayed', recentlyPlayedTracks)
-      // _event.sender.send('playStats', playStats)
+      _event.sender.send('processedFiles', processedFiles)
+      _event.sender.send('userPlaylists', playlists)
+      _event.sender.send('recentlyPlayed', recentlyPlayedTracks)
+      _event.sender.send('playStats', playStats)
     })
 
     // console.log('Hola')
