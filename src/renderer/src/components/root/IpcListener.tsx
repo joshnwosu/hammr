@@ -1,46 +1,30 @@
 import { usePlayerStore } from '@renderer/store/playerStore'
 import { useEffect } from 'react'
-// import path from 'path'
+import path from 'path-browserify'
 
-function encodeTrackFile(track) {
+export function encodeTrackFile(track) {
   let prefix = 'file://'
-  let trackExtension = getFileExtension(track.fileLocation)
+  let trackExtension = path.extname(track.fileLocation)
   let trackPath = track.folderInfo.path
-  let encodedFileName = encodeURIComponent(getFileName(track.fileName))
+  let encodedFileName = encodeURIComponent(path.basename(track.fileName))
 
-  return `${prefix}${trackPath}/${encodedFileName}${trackExtension}`
-}
-
-function getFileExtension(filePath) {
-  const lastDotIndex = filePath.lastIndexOf('.')
-  if (lastDotIndex !== -1) {
-    return filePath.substr(lastDotIndex)
-  }
-  return ''
-}
-
-function getFileName(filePath) {
-  const fileName = filePath.split('/').pop()
-  if (fileName) {
-    return fileName
-  }
-  return ''
+  return prefix + path.join(trackPath, encodedFileName) + trackExtension
 }
 
 export default function IpcListener() {
-  // let audio: LegacyRef<HTMLAudioElement> | undefined
-  let audioElement: HTMLAudioElement = document.createElement('audio')
+  let audio: HTMLAudioElement
 
-  const { restoreTracks, tracks } = usePlayerStore((state) => state)
+  audio = new Audio()
 
-  const initPlayer = (track) => {
-    audioElement.src = encodeTrackFile(tracks)
+  const { restoreTracks } = usePlayerStore((state) => state)
 
-    audioElement.onloadeddata = () => {
-      audioElement.play()
+  const initPlayer = (track: any) => {
+    console.log('The track:', encodeTrackFile(track))
+    audio.src = encodeTrackFile(track)
+
+    audio.onloadeddata = () => {
+      audio.play()
     }
-
-    console.log('Holla: ', track)
   }
 
   useEffect(() => {
@@ -70,7 +54,6 @@ export default function IpcListener() {
 
   return (
     <div>
-      {/* <audio ref={audio} src={encodeTrackFile(tracks[0])} autoPlay /> */}
       <svg
         style={{ visibility: 'hidden', position: 'absolute' }}
         width="0"
