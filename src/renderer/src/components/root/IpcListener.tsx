@@ -1,31 +1,8 @@
 import { usePlayerStore } from '@renderer/store/playerStore'
 import { useEffect } from 'react'
-import path from 'path-browserify'
-
-export function encodeTrackFile(track) {
-  let prefix = 'file://'
-  let trackExtension = path.extname(track.fileLocation)
-  let trackPath = track.folderInfo.path
-  let encodedFileName = encodeURIComponent(path.basename(track.fileName))
-
-  return prefix + path.join(trackPath, encodedFileName) + trackExtension
-}
 
 export default function IpcListener() {
-  let audio: HTMLAudioElement
-
-  audio = new Audio()
-
   const { restoreTracks } = usePlayerStore((state) => state)
-
-  const initPlayer = (track: any) => {
-    console.log('The track:', encodeTrackFile(track))
-    audio.src = encodeTrackFile(track)
-
-    // audio.onloadeddata = () => {
-    //   audio.play()
-    // }
-  }
 
   useEffect(() => {
     window.api.send('playerReady')
@@ -33,10 +10,6 @@ export default function IpcListener() {
     window.api.receive('processedFiles', (_, tracks) => {
       console.log('The Tracks Here: ', tracks)
       restoreTracks(tracks)
-
-      setTimeout(() => {
-        initPlayer(tracks[0])
-      }, 2000)
     })
 
     window.api.receive('userPlaylists', (_, playlists) => {

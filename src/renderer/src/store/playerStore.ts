@@ -1,24 +1,24 @@
 import { create } from 'zustand'
 
-interface Track {
+export interface Track {
   r_fileLocation: string
   fileLocation: string
   fileName: string
-  albumArt?: string
-  album?: string
-  title?: string
-  artist?: string
-  genre?: string
-  year?: string
-  extractedTitle?: string
-  defaultTitle?: string
-  extractedArtist?: string
-  defaultArtist?: string
-  length?: string
-  date?: string
-  dateAdded?: string | any
-  trackNumber?: string
-  folderInfo?: {
+  albumArt: string
+  album: string
+  title: string
+  artist: string
+  genre: string
+  year: string
+  extractedTitle: string
+  defaultTitle: string
+  extractedArtist: string
+  defaultArtist: string
+  length: string
+  date: string
+  dateAdded: string | any
+  trackNumber: string
+  folderInfo: {
     name: string
     path: any
   }
@@ -30,8 +30,10 @@ interface PlayerStoreProps {
   amount: number
   increaseByTen: (value: number) => void
   tracks: Track[]
+  nowPlaying: Track
   restoreTracks: (tracks: any[]) => void
-  selectedSong?: any
+  selectedTrack: string
+  setSelectedTrack: (track: Track['fileLocation'] | string) => void
 }
 
 export const usePlayerStore = create<PlayerStoreProps>((set, get) => ({
@@ -42,7 +44,12 @@ export const usePlayerStore = create<PlayerStoreProps>((set, get) => ({
     set({ amount: value + amountState })
   },
   tracks: [],
+  nowPlaying: {} as Track,
   restoreTracks: (tracks) => {
     set({ tracks })
+  },
+  selectedTrack: '',
+  setSelectedTrack: (track) => {
+    set({ selectedTrack: track })
   }
 }))

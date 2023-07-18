@@ -4,6 +4,8 @@ import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautif
 import IpcListener from './components/root/IpcListener'
 import { TbSend } from 'react-icons/tb'
 import { usePlayerStore } from './store/playerStore'
+import PlayerControls from './components/layouts/PlayerControls'
+import { Link, useNavigate } from 'react-router-dom'
 
 interface Item {
   id: string
@@ -39,12 +41,13 @@ const getListStyle = (isDraggingOver: boolean): React.CSSProperties => ({
 })
 
 const App: React.FC = () => {
+  const navigation = useNavigate()
   const [items, setItems] = useState<Item[]>(getItems(11))
 
   // const amount = usePlayerStore((state) => state.amount)
   // const increaseByTen = usePlayerStore((state) => state.increaseByTen)
 
-  const { name, amount, increaseByTen, tracks } = usePlayerStore((state) => state)
+  const { name, amount, increaseByTen, tracks, setSelectedTrack } = usePlayerStore((state) => state)
 
   useEffect(() => {
     console.log('From store.')
@@ -70,15 +73,21 @@ const App: React.FC = () => {
 
   return (
     <ScrollArea w={300} h={400}>
+      <PlayerControls />
       <IpcListener />
       <Button onClick={sendMessage} rightIcon={<TbSend size={'1rem'} />} color="grape">
         Send Message to Main - {amount}
       </Button>
 
+      <Link to={'tracks'}>Go to Tracks</Link>
+      <Button onClick={() => navigation(+1)} color="cyan">
+        Go Forward
+      </Button>
+
       {tracks.map((item, index) => {
         return (
           <div key={index}>
-            <p>{item.title}</p>
+            <p onClick={() => setSelectedTrack(item.fileLocation)}>{item.title}</p>
           </div>
         )
       })}
