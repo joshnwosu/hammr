@@ -5,7 +5,9 @@ import IpcListener from './components/root/IpcListener'
 import { TbSend } from 'react-icons/tb'
 import { usePlayerStore } from './store/playerStore'
 import PlayerControls from './components/layouts/PlayerControls'
-import { Link, useNavigate } from 'react-router-dom'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import Tracks from './screens/Tracks'
+import Home from './screens/Home'
 
 interface Item {
   id: string
@@ -41,7 +43,7 @@ const getListStyle = (isDraggingOver: boolean): React.CSSProperties => ({
 })
 
 const App: React.FC = () => {
-  const navigation = useNavigate()
+  // const navigation = useNavigate()
   const [items, setItems] = useState<Item[]>(getItems(11))
 
   // const amount = usePlayerStore((state) => state.amount)
@@ -71,55 +73,70 @@ const App: React.FC = () => {
     increaseByTen(10)
   }
 
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <Home />
+    },
+    {
+      path: '/tracks',
+      element: <Tracks />
+    }
+  ])
+
   return (
-    <ScrollArea w={300} h={400}>
-      <PlayerControls />
-      <IpcListener />
-      <Button onClick={sendMessage} rightIcon={<TbSend size={'1rem'} />} color="grape">
-        Send Message to Main - {amount}
-      </Button>
+    <>
+      <RouterProvider router={router} />
 
-      <Link to={'tracks'}>Go to Tracks</Link>
-      <Button onClick={() => navigation(+1)} color="cyan">
-        Go Forward
-      </Button>
+      <ScrollArea w={300} h={400}>
+        <PlayerControls />
+        <IpcListener />
+        <Button onClick={sendMessage} rightIcon={<TbSend size={'1rem'} />} color="grape">
+          Send Message to Main - {amount}
+        </Button>
 
-      {tracks.map((item, index) => {
-        return (
-          <div key={index}>
-            <p onClick={() => setSelectedTrack(item.fileLocation)}>{item.title}</p>
-          </div>
-        )
-      })}
+        {/* <Link to={'tracks'}>Go to Tracks</Link> */}
+        {/* <Button onClick={() => navigation(+1)} color="cyan">
+          Go Forward
+        </Button> */}
 
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="droppable">
-          {(provided, snapshot) => (
-            <div
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-              style={getListStyle(snapshot.isDraggingOver)}
-            >
-              {items.map((item, index) => (
-                <Draggable key={item.id} draggableId={item.id} index={index}>
-                  {(provided, snapshot) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
-                    >
-                      {item.content}
-                    </div>
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
+        {tracks.map((item, index) => {
+          return (
+            <div key={index}>
+              <p onClick={() => setSelectedTrack(item.fileLocation)}>{item.title}</p>
             </div>
-          )}
-        </Droppable>
-      </DragDropContext>
-    </ScrollArea>
+          )
+        })}
+
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="droppable">
+            {(provided, snapshot) => (
+              <div
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+                style={getListStyle(snapshot.isDraggingOver)}
+              >
+                {items.map((item, index) => (
+                  <Draggable key={item.id} draggableId={item.id} index={index}>
+                    {(provided, snapshot) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
+                      >
+                        {item.content}
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+      </ScrollArea>
+    </>
   )
 }
 
