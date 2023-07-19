@@ -36,6 +36,7 @@
     "@mantine/modals": "^6.0.16",
     "@mantine/notifications": "^6.0.16",
     "@mantine/spotlight": "^6.0.16",
+    "allotment": "^1.19.2",
     "axios": "^1.4.0",
     "chokidar": "^3.5.3",
     "dayjs": "^1.11.9",

@@ -1,4 +1,4 @@
-import { Button, ScrollArea } from '@mantine/core'
+import { Button, ScrollArea, Text } from '@mantine/core'
 import React, { useEffect, useState } from 'react'
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd'
 import IpcListener from './components/root/IpcListener'
@@ -8,6 +8,8 @@ import PlayerControls from './components/layouts/PlayerControls'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Tracks from './screens/Tracks'
 import Home from './screens/Home'
+
+import { Allotment } from 'allotment'
 
 interface Item {
   id: string
@@ -85,20 +87,27 @@ const App: React.FC = () => {
   ])
 
   return (
-    <>
-      <RouterProvider router={router} />
+    <div style={{ height: '100vh' }}>
+      <Allotment vertical={false} defaultSizes={[200, 200, 200]}>
+        <Allotment.Pane minSize={60} maxSize={500}>
+          <Text>Side Bar</Text>
+        </Allotment.Pane>
+        <Allotment.Pane>
+          <Text>Lorem Ipsum</Text>
+        </Allotment.Pane>
+        <Allotment.Pane minSize={250} maxSize={350}>
+          <Text>Now Playing</Text>
+        </Allotment.Pane>
+      </Allotment>
 
-      <ScrollArea w={300} h={400}>
+      {/* <RouterProvider router={router} /> */}
+
+      {/* <ScrollArea w={300} h={400}>
         <PlayerControls />
         <IpcListener />
         <Button onClick={sendMessage} rightIcon={<TbSend size={'1rem'} />} color="grape">
           Send Message to Main - {amount}
         </Button>
-
-        {/* <Link to={'tracks'}>Go to Tracks</Link> */}
-        {/* <Button onClick={() => navigation(+1)} color="cyan">
-          Go Forward
-        </Button> */}
 
         {tracks.map((item, index) => {
           return (
@@ -135,8 +144,8 @@ const App: React.FC = () => {
             )}
           </Droppable>
         </DragDropContext>
-      </ScrollArea>
-    </>
+      </ScrollArea> */}
+    </div>
   )
 }
 
