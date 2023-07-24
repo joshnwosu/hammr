@@ -2,14 +2,26 @@ import {
   Box,
   ColorScheme,
   ColorSchemeProvider,
+  Container,
   Grid,
   MantineProvider,
   Paper,
-  Text
+  Text,
+  createStyles
 } from '@mantine/core'
 import React, { useState } from 'react'
 import { SwitchToggle } from './components/widgets/SwitchTheme'
 import { useCookies } from 'react-cookie'
+
+const useStyles = createStyles((theme) => ({
+  col: {
+    width: '100%',
+    height: '100%',
+    right: 0,
+    padding: theme.spacing.md,
+    backgroundColor: theme.colorScheme != 'dark' ? theme.colors.dark['9'] : theme.colors.gray[0]
+  }
+}))
 
 const App: React.FC = () => {
   const [cookie, setCookie] = useCookies()
@@ -23,54 +35,61 @@ const App: React.FC = () => {
     setCookie('mantine-color-scheme', nextColorScheme, { maxAge: 60 * 60 * 24 * 30 })
   }
 
+  const { classes } = useStyles()
+
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
       <MantineProvider withGlobalStyles withNormalizeCSS theme={{ colorScheme }}>
-        <Box
-          sx={(theme) => ({
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-            backgroundColor: theme.colorScheme == 'dark' ? theme.black : theme.white
-          })}
-        >
+        <Container fluid p={0}>
           <Grid
-            gutter={6}
-            sx={{
+            style={{
               width: '100%',
               height: 'calc(100% - 80px)'
             }}
+            sx={(theme) => ({
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              bottom: 0,
+              left: 0,
+              backgroundColor: theme.colorScheme == 'dark' ? theme.black : theme.colors.gray[0]
+            })}
+            gutter={10}
+            p={5}
+            m={0}
           >
             <Grid.Col span={'auto'}>
-              <Paper sx={{ height: '100%' }} radius={'md'}>
-                <Text>Hello world</Text>
+              <Paper className={classes.col} radius={'md'}>
+                <Text>Navbar component</Text>
               </Paper>
             </Grid.Col>
             <Grid.Col span={6}>
-              <Paper sx={{ height: '100%' }} radius={'md'}>
+              <Paper className={classes.col} radius={'md'}>
                 <SwitchToggle />
+                <Text>Tracks component</Text>
               </Paper>
             </Grid.Col>
             <Grid.Col span={'auto'}>
-              <Paper sx={{ height: '100%' }} radius={'md'}>
-                <Text>3</Text>
+              <Paper className={classes.col} radius={'md'}>
+                <Text>Nowplaying component</Text>
               </Paper>
             </Grid.Col>
           </Grid>
 
           <Box
-            style={{
+            sx={(theme) => ({
               position: 'absolute',
               right: 0,
               left: 0,
               bottom: 0,
               height: 80,
-              background: 'red'
-            }}
-          ></Box>
-        </Box>
+              padding: theme.spacing.md,
+              backgroundColor: theme.colorScheme == 'dark' ? theme.black : theme.colors.gray[0]
+            })}
+          >
+            <Text>This is the PlayerControl component</Text>
+          </Box>
+        </Container>
       </MantineProvider>
     </ColorSchemeProvider>
   )
