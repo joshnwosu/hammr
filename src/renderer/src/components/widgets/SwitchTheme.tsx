@@ -6,7 +6,7 @@ export function SwitchToggle() {
   const theme = useMantineTheme()
 
   return (
-    <Group position="center" my={30}>
+    <Group position="center">
       <Switch
         checked={colorScheme === 'dark'}
         onChange={() => {

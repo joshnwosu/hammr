@@ -1,4 +1,12 @@
-import { Box, ColorScheme, ColorSchemeProvider, MantineProvider } from '@mantine/core'
+import {
+  Box,
+  ColorScheme,
+  ColorSchemeProvider,
+  Grid,
+  MantineProvider,
+  Paper,
+  Text
+} from '@mantine/core'
 import React, { useState } from 'react'
 import { SwitchToggle } from './components/widgets/SwitchTheme'
 import { useCookies } from 'react-cookie'
@@ -28,7 +36,40 @@ const App: React.FC = () => {
             backgroundColor: theme.colorScheme == 'dark' ? theme.black : theme.white
           })}
         >
-          <SwitchToggle />
+          <Grid
+            gutter={6}
+            sx={{
+              width: '100%',
+              height: 'calc(100% - 80px)'
+            }}
+          >
+            <Grid.Col span={'auto'}>
+              <Paper sx={{ height: '100%' }} radius={'md'}>
+                <Text>Hello world</Text>
+              </Paper>
+            </Grid.Col>
+            <Grid.Col span={6}>
+              <Paper sx={{ height: '100%' }} radius={'md'}>
+                <SwitchToggle />
+              </Paper>
+            </Grid.Col>
+            <Grid.Col span={'auto'}>
+              <Paper sx={{ height: '100%' }} radius={'md'}>
+                <Text>3</Text>
+              </Paper>
+            </Grid.Col>
+          </Grid>
+
+          <Box
+            style={{
+              position: 'absolute',
+              right: 0,
+              left: 0,
+              bottom: 0,
+              height: 80,
+              background: 'red'
+            }}
+          ></Box>
         </Box>
       </MantineProvider>
     </ColorSchemeProvider>
