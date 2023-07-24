@@ -12,7 +12,7 @@ const Home = () => {
 
       <Allotment vertical={false}>
         <Allotment.Pane minSize={100}>
-          <p>Side Bar</p>
+          <p>Side Bar yoo</p>
         </Allotment.Pane>
         <Allotment.Pane>
           <p>Lorem Ipsum</p>
