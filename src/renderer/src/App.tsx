@@ -58,18 +58,18 @@ const App: React.FC = () => {
             p={5}
             m={0}
           >
-            <Grid.Col span={'auto'}>
+            <Grid.Col span={3}>
               <Paper className={classes.col} radius={'md'}>
                 <Text>Navbar component</Text>
               </Paper>
             </Grid.Col>
-            <Grid.Col span={6}>
+            <Grid.Col span={'auto'}>
               <Paper className={classes.col} radius={'md'}>
                 <SwitchToggle />
                 <Text>Tracks component</Text>
               </Paper>
             </Grid.Col>
-            <Grid.Col span={'auto'}>
+            <Grid.Col span={3}>
               <Paper className={classes.col} radius={'md'}>
                 <Text>Nowplaying component</Text>
               </Paper>
