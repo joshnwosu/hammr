@@ -87,7 +87,7 @@ const App: React.FC = () => {
               backgroundColor: theme.colorScheme == 'dark' ? theme.black : theme.colors.gray[0]
             })}
           >
-            <Text>This is the PlayerControl component</Text>
+            <Text>PlayerControl component</Text>
           </Box>
         </Container>
       </MantineProvider>
