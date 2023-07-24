@@ -1,4 +1,4 @@
-import { ColorScheme, ColorSchemeProvider, MantineProvider } from '@mantine/core'
+import { Box, ColorScheme, ColorSchemeProvider, MantineProvider } from '@mantine/core'
 import React, { useState } from 'react'
 import { SwitchToggle } from './components/widgets/SwitchTheme'
 import { useCookies } from 'react-cookie'
@@ -18,9 +18,18 @@ const App: React.FC = () => {
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
       <MantineProvider withGlobalStyles withNormalizeCSS theme={{ colorScheme }}>
-        <div style={{ height: '100vh' }}>
+        <Box
+          sx={(theme) => ({
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            backgroundColor: theme.colorScheme == 'dark' ? theme.black : theme.white
+          })}
+        >
           <SwitchToggle />
-        </div>
+        </Box>
       </MantineProvider>
     </ColorSchemeProvider>
   )
