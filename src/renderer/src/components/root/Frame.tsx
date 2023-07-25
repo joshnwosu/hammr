@@ -1,4 +1,4 @@
-import { ActionIcon, Group, createStyles, ChevronIcon, Tooltip } from '@mantine/core'
+import { ActionIcon, Group, createStyles, Tooltip } from '@mantine/core'
 import { IoEllipsisHorizontal } from 'react-icons/io5'
 import {
   VscChromeClose,
@@ -16,7 +16,29 @@ const useStyles = createStyles((theme) => ({
     WebkitAppRegion: 'drag',
     paddingLeft: theme.spacing.lg
   },
-  right: {}
+  right: {},
+  windowBtn: {
+    width: 45,
+    height: '100%',
+    cursor: 'auto',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    ':hover': {
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2]
+    }
+  },
+  windowBtnClose: {
+    width: 45,
+    height: '100%',
+    cursor: 'auto',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    ':hover': {
+      backgroundColor: theme.colors.red[9]
+    }
+  }
 }))
 
 export const Frame = () => {
@@ -44,30 +66,21 @@ export const Frame = () => {
         </div>
 
         <Group spacing={0} p={0} m={0} h={'100%'}>
-          <ActionIcon
-            radius={0}
-            w={50}
-            h={'100%'}
-            variant="transparent"
-            title="Don't even know what this icon does."
-          >
-            <ChevronIcon />
-          </ActionIcon>
           <Tooltip label="Minimize">
-            <ActionIcon radius={0} w={50} h={'100%'} variant="transparent">
+            <div className={classes.windowBtn}>
               <VscChromeMinimize />
-            </ActionIcon>
+            </div>
           </Tooltip>
           <Tooltip label="Restore Down">
-            <ActionIcon radius={0} w={50} h={'100%'} variant="transparent">
+            <div className={classes.windowBtn}>
               <VscChromeRestore />
-            </ActionIcon>
+            </div>
           </Tooltip>
 
           <Tooltip label="Close">
-            <ActionIcon radius={0} w={50} h={'100%'} variant="transparent">
+            <div className={classes.windowBtnClose}>
               <VscChromeClose />
-            </ActionIcon>
+            </div>
           </Tooltip>
         </Group>
       </Group>
