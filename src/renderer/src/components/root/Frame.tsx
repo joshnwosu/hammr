@@ -66,18 +66,39 @@ export const Frame = () => {
         </div>
 
         <Group spacing={0} p={0} m={0} h={'100%'}>
-          <Tooltip label="Minimize">
+          <Tooltip
+            label="Minimize"
+            styles={(theme) => ({
+              tooltip: {
+                fontSize: theme.spacing.sm
+              }
+            })}
+          >
             <div className={classes.windowBtn}>
               <VscChromeMinimize />
             </div>
           </Tooltip>
-          <Tooltip label="Restore Down">
+          <Tooltip
+            label="Restore Down"
+            styles={(theme) => ({
+              tooltip: {
+                fontSize: theme.spacing.sm
+              }
+            })}
+          >
             <div className={classes.windowBtn}>
               <VscChromeRestore />
             </div>
           </Tooltip>
 
-          <Tooltip label="Close">
+          <Tooltip
+            label="Close"
+            styles={(theme) => ({
+              tooltip: {
+                fontSize: theme.spacing.sm
+              }
+            })}
+          >
             <div className={classes.windowBtnClose}>
               <VscChromeClose />
             </div>
