@@ -12,7 +12,7 @@ export function SwitchToggle() {
         onChange={() => {
           toggleColorScheme()
         }}
-        size="lg"
+        size="md"
         onLabel={<TbSun color={theme.white} size="1.25rem" />}
         offLabel={<TbMoonStars color={theme.colors.gray[6]} size="1.25rem" />}
       />
