@@ -44,21 +44,31 @@ export const Frame = () => {
         </div>
 
         <Group spacing={0} p={0} m={0} h={'100%'}>
-          <ActionIcon radius={0} w={50} h={'100%'} variant="transparent" title="Chevron">
+          <ActionIcon
+            radius={0}
+            w={50}
+            h={'100%'}
+            variant="transparent"
+            title="Don't even know what this icon does."
+          >
             <ChevronIcon />
           </ActionIcon>
-          <ActionIcon radius={0} w={50} h={'100%'} variant="transparent">
-            <VscChromeMinimize />
-          </ActionIcon>
-          <Tooltip label="Restore">
+          <Tooltip label="Minimize">
+            <ActionIcon radius={0} w={50} h={'100%'} variant="transparent">
+              <VscChromeMinimize />
+            </ActionIcon>
+          </Tooltip>
+          <Tooltip label="Restore Down">
             <ActionIcon radius={0} w={50} h={'100%'} variant="transparent">
               <VscChromeRestore />
             </ActionIcon>
           </Tooltip>
 
-          <ActionIcon radius={0} w={50} h={'100%'} variant="transparent">
-            <VscChromeClose />
-          </ActionIcon>
+          <Tooltip label="Close">
+            <ActionIcon radius={0} w={50} h={'100%'} variant="transparent">
+              <VscChromeClose />
+            </ActionIcon>
+          </Tooltip>
         </Group>
       </Group>
     </div>
