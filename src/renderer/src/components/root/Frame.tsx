@@ -32,13 +32,13 @@ export const Frame = () => {
         </ActionIcon>
 
         <Group spacing={0} grow p={0} m={0} h={'100%'}>
-          <ActionIcon radius={0} w={80} h={'100%'} variant="default">
+          <ActionIcon radius={0} w={50} h={'100%'} variant="transparent">
             <VscChromeMinimize />
           </ActionIcon>
-          <ActionIcon radius={0}>
+          <ActionIcon radius={0} w={50} h={'100%'} variant="transparent">
             <VscChromeRestore />
           </ActionIcon>
-          <ActionIcon radius={0}>
+          <ActionIcon radius={0} w={50} h={'100%'} variant="transparent">
             <VscChromeClose />
           </ActionIcon>
         </Group>
