@@ -63,7 +63,7 @@ const App: React.FC = () => {
               backgroundColor: theme.colorScheme == 'dark' ? theme.black : theme.colors.gray[0]
             })}
             gutter={10}
-            p={5}
+            p={0}
             m={0}
           >
             <Grid.Col span={navbarSize}>
