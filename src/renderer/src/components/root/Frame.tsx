@@ -9,7 +9,7 @@ import {
 
 const useStyles = createStyles(() => ({
   right: {
-    '-webkit-app-region': 'drag',
+    WebkitAppRegion: 'drag',
     height: 30
   }
 }))
@@ -27,8 +27,8 @@ export const Frame = () => {
         pl={'md'}
         py={0}
       >
-        <ActionIcon>
-          <IoEllipsisHorizontal size={'lg'} />
+        <ActionIcon variant="transparent">
+          <IoEllipsisHorizontal size={'1.5rem'} />
         </ActionIcon>
 
         <Group spacing={0} grow p={0} m={0} h={'100%'}>
