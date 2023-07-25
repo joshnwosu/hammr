@@ -18,7 +18,7 @@ const useStyles = createStyles((theme) => ({
   },
   right: {},
   windowBtn: {
-    width: 45,
+    width: 50,
     height: '100%',
     cursor: 'auto',
     display: 'flex',
@@ -29,7 +29,7 @@ const useStyles = createStyles((theme) => ({
     }
   },
   windowBtnClose: {
-    width: 45,
+    width: 50,
     height: '100%',
     cursor: 'auto',
     display: 'flex',
