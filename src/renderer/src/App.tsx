@@ -9,6 +9,7 @@ import {
   MantineProvider,
   Paper,
   Text,
+  Tooltip,
   createStyles
 } from '@mantine/core'
 import React, { useState } from 'react'
@@ -68,14 +69,16 @@ const App: React.FC = () => {
             <Grid.Col span={navbarSize}>
               <Paper className={classes.col} radius={'md'}>
                 <Text>Navbar component</Text>
-                <Button
-                  onClick={() => {
-                    if (navbarSize === 2) setNavbarSize('auto')
-                    else setNavbarSize(2)
-                  }}
-                >
-                  Expand
-                </Button>
+                <Tooltip label="Expand">
+                  <Button
+                    onClick={() => {
+                      if (navbarSize === 2) setNavbarSize('auto')
+                      else setNavbarSize(2)
+                    }}
+                  >
+                    Expand
+                  </Button>
+                </Tooltip>
               </Paper>
             </Grid.Col>
             <Grid.Col span={'auto'}>
