@@ -28,7 +28,7 @@ export const Frame = () => {
         pl={'md'}
         py={0}
       >
-        <ActionIcon variant="transparent">
+        <ActionIcon radius={0} variant="transparent">
           <IoEllipsisHorizontal size={'1.8rem'} />
         </ActionIcon>
 
