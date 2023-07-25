@@ -51,8 +51,7 @@ const App: React.FC = () => {
             style={{
               width: '100%',
               height: 'calc(100% - 110px)',
-              top: 30,
-              border: '1px solid red'
+              top: 30
             }}
             sx={(theme) => ({
               position: 'absolute',
