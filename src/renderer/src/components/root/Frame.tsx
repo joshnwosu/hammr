@@ -1,9 +1,10 @@
-import { ActionIcon, Center, Group, createStyles } from '@mantine/core'
+import { ActionIcon, Group, createStyles } from '@mantine/core'
 import { IoEllipsisHorizontal } from 'react-icons/io5'
 import {
   VscChromeClose,
   VscChromeRestore,
   VscChromeMinimize,
+  // @ts-ignore
   VscChromeMaximize
 } from 'react-icons/vsc'
 
@@ -28,7 +29,7 @@ export const Frame = () => {
         py={0}
       >
         <ActionIcon variant="transparent">
-          <IoEllipsisHorizontal size={'1.5rem'} />
+          <IoEllipsisHorizontal size={'1.8rem'} />
         </ActionIcon>
 
         <Group spacing={0} grow p={0} m={0} h={'100%'}>
