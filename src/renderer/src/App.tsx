@@ -1,5 +1,7 @@
 import {
   Box,
+  Button,
+  ColSpan,
   ColorScheme,
   ColorSchemeProvider,
   Container,
@@ -12,6 +14,7 @@ import {
 import React, { useState } from 'react'
 import { SwitchToggle } from './components/widgets/SwitchTheme'
 import { useCookies } from 'react-cookie'
+import { Frame } from './components/root/Frame'
 
 const useStyles = createStyles((theme) => ({
   col: {
@@ -37,14 +40,19 @@ const App: React.FC = () => {
 
   const { classes } = useStyles()
 
+  const [navbarSize, setNavbarSize] = useState<ColSpan>(2)
+
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
       <MantineProvider withGlobalStyles withNormalizeCSS theme={{ colorScheme }}>
         <Container fluid p={0}>
+          <Frame />
           <Grid
             style={{
               width: '100%',
-              height: 'calc(100% - 80px)'
+              height: 'calc(100% - 110px)',
+              top: 30,
+              border: '1px solid red'
             }}
             sx={(theme) => ({
               position: 'absolute',
@@ -58,9 +66,17 @@ const App: React.FC = () => {
             p={5}
             m={0}
           >
-            <Grid.Col span={3}>
+            <Grid.Col span={navbarSize}>
               <Paper className={classes.col} radius={'md'}>
                 <Text>Navbar component</Text>
+                <Button
+                  onClick={() => {
+                    if (navbarSize === 2) setNavbarSize('auto')
+                    else setNavbarSize(2)
+                  }}
+                >
+                  Expand
+                </Button>
               </Paper>
             </Grid.Col>
             <Grid.Col span={'auto'}>
@@ -69,11 +85,13 @@ const App: React.FC = () => {
                 <Text>Tracks component</Text>
               </Paper>
             </Grid.Col>
-            <Grid.Col span={3}>
-              <Paper className={classes.col} radius={'md'}>
-                <Text>Nowplaying component</Text>
-              </Paper>
-            </Grid.Col>
+            {true && (
+              <Grid.Col span={2}>
+                <Paper className={classes.col} radius={'md'}>
+                  <Text>Nowplaying component</Text>
+                </Paper>
+              </Grid.Col>
+            )}
           </Grid>
 
           <Box
