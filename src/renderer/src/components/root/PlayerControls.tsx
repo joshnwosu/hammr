@@ -1,6 +1,7 @@
 import { Track, usePlayerStore } from '@renderer/store/playerStore'
 import { useEffect, useRef } from 'react'
 import path from 'path-browserify'
+import { Box, Text } from '@mantine/core'
 
 export function encodeTrackFile(track: Track) {
   let prefix = 'file://'
@@ -35,6 +36,15 @@ function PlayerControls() {
   return (
     <>
       <audio ref={audioRef} />
+      <Box
+        sx={(theme) => ({
+          height: 80,
+          padding: theme.spacing.md,
+          backgroundColor: theme.colorScheme == 'dark' ? theme.black : theme.colors.gray[0]
+        })}
+      >
+        <Text>PlayerControl component</Text>
+      </Box>
     </>
   )
 }

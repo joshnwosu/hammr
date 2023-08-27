@@ -1,20 +1,19 @@
 import {
-  Box,
-  Button,
-  ColSpan,
   ColorScheme,
   ColorSchemeProvider,
   Grid,
   MantineProvider,
   Paper,
   Text,
-  Tooltip,
   createStyles
 } from '@mantine/core'
 import React, { useState } from 'react'
 import { SwitchToggle } from './components/widgets/SwitchTheme'
 import { useCookies } from 'react-cookie'
 import { Frame } from './components/root/Frame'
+import PlayerControls from './components/root/PlayerControls'
+import SideBar from './components/root/SideBar'
+import NowPlaying from './components/root/NowPlaying'
 
 const useStyles = createStyles((theme) => ({
   col: {
@@ -40,8 +39,6 @@ const App: React.FC = () => {
 
   const { classes } = useStyles()
 
-  const [navbarSize, setNavbarSize] = useState<ColSpan>(2)
-
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
       <MantineProvider withGlobalStyles withNormalizeCSS theme={{ colorScheme }}>
@@ -66,45 +63,30 @@ const App: React.FC = () => {
             p={0}
             m={0}
           >
-            <Grid.Col span={navbarSize}>
+            <Grid.Col
+              // span={navbarSize}
+              span={3}
+            >
               <Paper className={classes.col} radius={'md'}>
-                <Text>Navbar component</Text>
-                <Tooltip label="Expand">
-                  <Button
-                    onClick={() => {
-                      if (navbarSize === 2) setNavbarSize('auto')
-                      else setNavbarSize(2)
-                    }}
-                  >
-                    Expand
-                  </Button>
-                </Tooltip>
+                <SideBar />
               </Paper>
             </Grid.Col>
+
             <Grid.Col span={'auto'}>
               <Paper className={classes.col} radius={'md'}>
                 <SwitchToggle />
                 <Text>Tracks component</Text>
               </Paper>
             </Grid.Col>
-            {true && (
-              <Grid.Col span={2}>
-                <Paper className={classes.col} radius={'md'}>
-                  <Text>Nowplaying component</Text>
-                </Paper>
-              </Grid.Col>
-            )}
+
+            <Grid.Col span={2}>
+              <Paper className={classes.col} radius={'md'}>
+                <NowPlaying />
+              </Paper>
+            </Grid.Col>
           </Grid>
 
-          <Box
-            sx={(theme) => ({
-              height: 80,
-              padding: theme.spacing.md,
-              backgroundColor: theme.colorScheme == 'dark' ? theme.black : theme.colors.gray[0]
-            })}
-          >
-            <Text>PlayerControl component</Text>
-          </Box>
+          <PlayerControls />
         </div>
       </MantineProvider>
     </ColorSchemeProvider>
