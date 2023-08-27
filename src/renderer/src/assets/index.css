@@ -2,3 +2,7 @@
   --focus-border: #007fd4;
   --separator-border: #838383;
 } */
+
+* {
+  user-select: none;
+}
