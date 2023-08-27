@@ -40,6 +40,14 @@ function createWindow(): void {
     return { action: 'deny' }
   })
 
+  mainWindow.on('will-resize', () => {
+    mainWindow.webContents.send('isMaximize', false)
+  })
+
+  mainWindow.on('maximize', () => {
+    mainWindow.webContents.send('isMaximize', true)
+  })
+
   // HMR for renderer base on electron-vite cli.
   // Load the remote URL for development or the local html file for production.
   if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
@@ -116,17 +124,6 @@ chokidar
     playerReady()
   })
 
-// ipc Listeners
-
-ipcMain.on('isPlaying', () => {
-  // Do something here.
-})
-
-// ipcMain.on('get-tracks', () => {
-//   playerReady()
-//   console.log("I'm am on this side.")
-// })
-
 export const playerReady = () => {
   const processedFiles = filesTracker.getTracks
   const playlists = playlistsTracker.getPlaylists
@@ -152,4 +149,37 @@ export const playerReady = () => {
 
     refreshTracks()
   }
+}
+
+// ipc Listeners
+
+ipcMain.on('isPlaying', () => {
+  // Do something here.
+})
+
+// ipcMain.on('get-tracks', () => {
+//   playerReady()
+//   console.log("I'm am on this side.")
+// })
+
+ipcMain.on('frame', (_event, arg) => {
+  if (arg === 'destroy') mainWindow.destroy()
+  else if (arg === 'kill') app.quit()
+  else if (arg === 'minimize') mainWindow.minimize()
+  else if (arg === 'maximize') {
+    if (mainWindow.isMaximized()) {
+      _event.sender.send('isMaximize', false)
+      mainWindow.unmaximize()
+    } else {
+      _event.sender.send('isMaximize', true)
+      mainWindow.maximize()
+    }
+  } else if (arg === 'close') {
+    saveAppData()
+    mainWindow.close()
+  }
+})
+
+function saveAppData() {
+  console.log('Saving App Data...')
 }

@@ -1,4 +1,5 @@
-import { ActionIcon, Group, createStyles, Tooltip } from '@mantine/core'
+import { ActionIcon, Group, createStyles, Tooltip, UnstyledButton } from '@mantine/core'
+import React, { useEffect, useState } from 'react'
 import { IoEllipsisHorizontal } from 'react-icons/io5'
 import {
   VscChromeClose,
@@ -24,25 +25,51 @@ const useStyles = createStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    ':hover': {
+    ':hover:not(:last-child)': {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2]
-    }
-  },
-  windowBtnClose: {
-    width: 50,
-    height: '100%',
-    cursor: 'auto',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    ':hover': {
-      backgroundColor: theme.colors.red[9]
+    },
+
+    ':last-child': {
+      ':hover': {
+        backgroundColor: theme.colors.red[9],
+        color: 'white'
+      }
     }
   }
 }))
 
 export const Frame = () => {
   const { classes } = useStyles()
+  const [isMaximize, setIsMaximize] = useState(null)
+
+  const actionButtons = [
+    {
+      type: 'minimize',
+      label: 'Minimize',
+      icon: VscChromeMinimize
+    },
+    // {
+    //   label: 'restore down',
+    //   icon: VscChromeRestore
+    // },
+    {
+      type: 'maximize',
+      label: isMaximize ? 'Restore Down' : 'Maximize',
+      icon: isMaximize ? VscChromeRestore : VscChromeMaximize
+    },
+    {
+      type: 'close',
+      label: 'Close',
+      icon: VscChromeClose
+    }
+  ]
+
+  useEffect(() => {
+    window.api.receive('isMaximize', (_, value) => {
+      setIsMaximize(value)
+    })
+  }, [])
+
   return (
     <div className={classes.frame}>
       <Group
@@ -66,43 +93,28 @@ export const Frame = () => {
         </div>
 
         <Group spacing={0} p={0} m={0} h={'100%'}>
-          <Tooltip
-            label="Minimize"
-            styles={(theme) => ({
-              tooltip: {
-                fontSize: theme.spacing.sm
-              }
-            })}
-          >
-            <div className={classes.windowBtn}>
-              <VscChromeMinimize />
-            </div>
-          </Tooltip>
-          <Tooltip
-            label="Restore Down"
-            styles={(theme) => ({
-              tooltip: {
-                fontSize: theme.spacing.sm
-              }
-            })}
-          >
-            <div className={classes.windowBtn}>
-              <VscChromeRestore />
-            </div>
-          </Tooltip>
-
-          <Tooltip
-            label="Close"
-            styles={(theme) => ({
-              tooltip: {
-                fontSize: theme.spacing.sm
-              }
-            })}
-          >
-            <div className={classes.windowBtnClose}>
-              <VscChromeClose />
-            </div>
-          </Tooltip>
+          {actionButtons.map((item, index) => (
+            <Tooltip
+              key={index.toString()}
+              label={item.label}
+              styles={(theme) => ({
+                tooltip: {
+                  fontSize: theme.spacing.sm,
+                  textTransform: 'capitalize'
+                }
+              })}
+            >
+              <UnstyledButton
+                className={classes.windowBtn}
+                onClick={() => window.api.send('frame', item.type)}
+              >
+                {React.createElement(item.icon, {
+                  strokeWidth: '0.1',
+                  size: '1rem'
+                })}
+              </UnstyledButton>
+            </Tooltip>
+          ))}
         </Group>
       </Group>
     </div>
