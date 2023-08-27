@@ -4,7 +4,6 @@ import {
   ColSpan,
   ColorScheme,
   ColorSchemeProvider,
-  Container,
   Grid,
   MantineProvider,
   Paper,
@@ -46,20 +45,21 @@ const App: React.FC = () => {
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
       <MantineProvider withGlobalStyles withNormalizeCSS theme={{ colorScheme }}>
-        <Container fluid p={0}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            position: 'absolute',
+            width: '100%',
+            height: '100%'
+          }}
+        >
           <Frame />
           <Grid
             style={{
-              width: '100%',
-              height: 'calc(100% - 110px)',
-              top: 30
+              flex: 1
             }}
             sx={(theme) => ({
-              position: 'absolute',
-              top: 0,
-              right: 0,
-              bottom: 0,
-              left: 0,
               backgroundColor: theme.colorScheme == 'dark' ? theme.black : theme.colors.gray[0]
             })}
             gutter={10}
@@ -98,10 +98,6 @@ const App: React.FC = () => {
 
           <Box
             sx={(theme) => ({
-              position: 'absolute',
-              right: 0,
-              left: 0,
-              bottom: 0,
               height: 80,
               padding: theme.spacing.md,
               backgroundColor: theme.colorScheme == 'dark' ? theme.black : theme.colors.gray[0]
@@ -109,7 +105,7 @@ const App: React.FC = () => {
           >
             <Text>PlayerControl component</Text>
           </Box>
-        </Container>
+        </div>
       </MantineProvider>
     </ColorSchemeProvider>
   )

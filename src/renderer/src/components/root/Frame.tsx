@@ -1,17 +1,16 @@
-import { ActionIcon, Group, createStyles, Tooltip, UnstyledButton } from '@mantine/core'
+import { ActionIcon, Group, createStyles, UnstyledButton } from '@mantine/core'
 import React, { useEffect, useState } from 'react'
 import { IoEllipsisHorizontal } from 'react-icons/io5'
 import {
   VscChromeClose,
   VscChromeRestore,
   VscChromeMinimize,
-  // @ts-ignore
   VscChromeMaximize
 } from 'react-icons/vsc'
 
 const useStyles = createStyles((theme) => ({
   frame: {
-    height: 30
+    height: 40
   },
   left: {
     WebkitAppRegion: 'drag',
@@ -26,7 +25,7 @@ const useStyles = createStyles((theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     ':hover:not(:last-child)': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2]
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
     },
 
     ':last-child': {
@@ -48,10 +47,6 @@ export const Frame = () => {
       label: 'Minimize',
       icon: VscChromeMinimize
     },
-    // {
-    //   label: 'restore down',
-    //   icon: VscChromeRestore
-    // },
     {
       type: 'maximize',
       label: isMaximize ? 'Restore Down' : 'Maximize',
@@ -88,32 +83,23 @@ export const Frame = () => {
           }}
         >
           <ActionIcon radius={0} variant="transparent">
-            <IoEllipsisHorizontal size={'1.8rem'} />
+            <IoEllipsisHorizontal size={'1.5rem'} />
           </ActionIcon>
         </div>
 
         <Group spacing={0} p={0} m={0} h={'100%'}>
           {actionButtons.map((item, index) => (
-            <Tooltip
+            <UnstyledButton
               key={index.toString()}
-              label={item.label}
-              styles={(theme) => ({
-                tooltip: {
-                  fontSize: theme.spacing.sm,
-                  textTransform: 'capitalize'
-                }
-              })}
+              className={classes.windowBtn}
+              onClick={() => window.api.send('frame', item.type)}
+              title={item.label}
             >
-              <UnstyledButton
-                className={classes.windowBtn}
-                onClick={() => window.api.send('frame', item.type)}
-              >
-                {React.createElement(item.icon, {
-                  strokeWidth: '0.1',
-                  size: '1rem'
-                })}
-              </UnstyledButton>
-            </Tooltip>
+              {React.createElement(item.icon, {
+                strokeWidth: '0.1',
+                size: '1rem'
+              })}
+            </UnstyledButton>
           ))}
         </Group>
       </Group>
