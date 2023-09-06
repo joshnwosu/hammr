@@ -4,10 +4,10 @@ import {
   Grid,
   MantineProvider,
   Paper,
-  Text,
   createStyles
 } from '@mantine/core'
 import React, { useState } from 'react'
+// @ts-ignore
 import { SwitchToggle } from './components/widgets/SwitchTheme'
 import { useCookies } from 'react-cookie'
 import { Frame } from './components/root/Frame'
@@ -74,8 +74,7 @@ const App: React.FC = () => {
 
             <Grid.Col span={'auto'}>
               <Paper className={classes.col} radius={'md'}>
-                <SwitchToggle />
-                <Text>Tracks component</Text>
+                {/* <SwitchToggle /> */}
               </Paper>
             </Grid.Col>
 
