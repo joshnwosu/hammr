@@ -8,12 +8,12 @@ import {
 } from '@mantine/core'
 import React, { useState } from 'react'
 // @ts-ignore
-import { SwitchToggle } from './components/widgets/SwitchTheme'
+import { SwitchToggle } from './components/Widgets/SwitchTheme'
 import { useCookies } from 'react-cookie'
-import { Frame } from './components/root/Frame'
-import PlayerControls from './components/root/PlayerControls'
-import SideBar from './components/root/SideBar'
-import NowPlaying from './components/root/NowPlaying'
+import { Frame } from './components/Frame/Frame'
+import PlayerControls from './components/PlayerControls/PlayerControls'
+import Sidebar from './components/Sidebar/Sidebar'
+import NowPlaying from './components/NowPlaying/NowPlaying'
 
 const useStyles = createStyles((theme) => ({
   col: {
@@ -68,7 +68,7 @@ const App: React.FC = () => {
               span={3}
             >
               <Paper className={classes.col} radius={'md'}>
-                <SideBar />
+                <Sidebar />
               </Paper>
             </Grid.Col>
 

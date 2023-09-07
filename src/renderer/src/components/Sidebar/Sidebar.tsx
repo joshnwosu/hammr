@@ -14,7 +14,7 @@ import {
   TbPlayerSkipForward
 } from 'react-icons/tb'
 
-export default function SideBar() {
+export default function Sidebar() {
   const [navbarSize, setNavbarSize] = useState<ColSpan>(2)
   return (
     <div>
