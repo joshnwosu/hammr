@@ -13,7 +13,7 @@ export default function IpcListener() {
     })
 
     window.api.receive('newTrack', (_, newTrack) => {
-      console.log('The track added: ', newTrack)
+      // console.log('The track added: ', newTrack)
       addTrack(newTrack)
     })
 
