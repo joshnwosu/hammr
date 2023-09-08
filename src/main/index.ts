@@ -6,10 +6,10 @@ import chokidar from 'chokidar'
 import { isValidFileType } from './utilities'
 import { refreshTracks } from './core/refreshTracks'
 import createParsedTrack from './core/createdParsedTrack'
-import { filesTracker } from './modules/filesTracker'
-import { playlistsTracker } from './modules/playlistsTrackers'
-import { playbackStats } from './modules/playbackStats'
-import { settings } from './modules/settings'
+import { filesTracker } from './modules/FilesTracker/FilesTracker'
+import { playlistsTracker } from './modules/PlaylistsTracker/PlaylistsTracker'
+import { playbackStats } from './modules/PlaybackStats/PlaybackStats'
+import { settings } from './modules/Settings/Settings'
 
 let mainWindow: BrowserWindow
 
@@ -89,11 +89,7 @@ app.on('window-all-closed', () => {
   }
 })
 
-// In this file you can include the rest of your app"s specific main process
-// code. You can also put them in separate files and require them here.
-
 // listen for file changes
-
 chokidar
   .watch(settings.getSettings.foldersToScan, {
     ignored: /[\/\\]\./,
@@ -130,25 +126,15 @@ export const playerReady = () => {
   const recentlyPlayedTracks = playbackStats.recentlyPlayedTracks
   const playStats = playbackStats.playStats
 
-  if (processedFiles.length > 0) {
-    ipcMain.on('playerReady', (_event) => {
-      // _event.sender.send('playerReady', {
-      //   processedFiles,
-      //   playlists,
-      //   recentlyPlayedTracks,
-      //   playStats
-      // })
-
-      _event.sender.send('processedFiles', processedFiles)
-      _event.sender.send('userPlaylists', playlists)
-      _event.sender.send('recentlyPlayed', recentlyPlayedTracks)
-      _event.sender.send('playStats', playStats)
-    })
-
-    // console.log('Hola')
-
-    refreshTracks()
-  }
+  // if (processedFiles.length > 0) {
+  ipcMain.on('playerReady', (_event) => {
+    _event.sender.send('processedFiles', processedFiles)
+    _event.sender.send('userPlaylists', playlists)
+    _event.sender.send('recentlyPlayed', recentlyPlayedTracks)
+    _event.sender.send('playStats', playStats)
+  })
+  // }
+  refreshTracks()
 }
 
 // ipc Listeners
@@ -156,11 +142,6 @@ export const playerReady = () => {
 ipcMain.on('isPlaying', () => {
   // Do something here.
 })
-
-// ipcMain.on('get-tracks', () => {
-//   playerReady()
-//   console.log("I'm am on this side.")
-// })
 
 ipcMain.on('frame', (_event, arg) => {
   if (arg === 'destroy') mainWindow.destroy()

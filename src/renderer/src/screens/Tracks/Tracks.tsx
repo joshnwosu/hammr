@@ -23,7 +23,7 @@ const Tracks = () => {
             <div key={index}>
               <p
                 onClick={() => {
-                  setSelectedTrack(item.fileLocation)
+                  setSelectedTrack(item.r_fileLocation)
                   setNowPlaying(item)
                 }}
               >

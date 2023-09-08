@@ -1,12 +1,16 @@
 import fs from 'fs'
-import { directories } from './directories'
-import { removeDuplicates } from '../utilities'
-import { Track } from '../types'
+import { directories } from '../Directory/Directory'
+import { removeDuplicates } from '../../utilities'
+import { Track } from '../../types'
 
 class FilesTracker {
   processedFiles: Track[] = []
 
   constructor() {
+    this.loadProcessedFiles()
+  }
+
+  async loadProcessedFiles() {
     if (fs.existsSync(directories.filesTrackerLocation)) {
       try {
         const data = JSON.parse(fs.readFileSync(directories.filesTrackerLocation, 'utf-8'))

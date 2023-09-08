@@ -1,5 +1,5 @@
 import fs from 'fs'
-import { directories } from './directories'
+import { directories } from '../Directory/Directory'
 
 class PlaylistsTracker {
   playlists: { name: string; tracks: any[] }[] = [{ name: 'Favorites', tracks: [] }]

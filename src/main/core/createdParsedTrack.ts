@@ -1,37 +1,13 @@
-import fs from 'fs'
+// import fs from 'fs'
 import { parse, join } from 'path'
 import NodeID3, { Tags } from 'node-id3'
-import { directories } from '../modules/directories'
+import { directories } from '../modules/Directory/Directory'
 import { extractTitleAndArtist, removeMIME, writeImageBuffer } from '../utilities'
-import { filesTracker } from '../modules/filesTracker'
+import { filesTracker } from '../modules/FilesTracker/FilesTracker'
 import { Track } from '../types'
 
 function createParsedTrack(fileLocation: string) {
   return new Promise((resolve, _) => {
-    // const track: Track = {
-    //   r_fileLocation: '',
-    //   fileLocation: '',
-    //   fileName: '',
-    //   albumArt: '',
-    //   album: '',
-    //   title: '',
-    //   artist: '',
-    //   genre: '',
-    //   year: '',
-    //   extractedTitle: '',
-    //   defaultTitle: '',
-    //   extractedArtist: '',
-    //   defaultArtist: '',
-    //   length: '',
-    //   date: '',
-    //   dateAdded: 0,
-    //   trackNumber: '',
-    //   folderInfo: {
-    //     name: parse(parse(fileLocation).dir).base,
-    //     path: parse(fileLocation).dir
-    //   }
-    // }
-
     const track: Track = {
       r_fileLocation: 'file://' + fileLocation,
       fileLocation: fileLocation,
@@ -81,9 +57,9 @@ function createParsedTrack(fileLocation: string) {
 
       track.trackNumber = tags.trackNumber
 
-      fs.stat(track.fileLocation, (_, stats) => {
-        track.dateAdded = stats.ctimeMs
-      })
+      // fs.stat(track.fileLocation, (_, stats) => {
+      //   track.dateAdded = stats.ctimeMs
+      // })
 
       filesTracker.addFile(track)
 

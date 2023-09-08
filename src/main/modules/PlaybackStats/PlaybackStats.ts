@@ -1,5 +1,5 @@
 import fs from 'fs'
-import { directories } from './directories'
+import { directories } from '../Directory/Directory'
 
 function sortArrayOfObjects<T>(targetArray: T[], param: keyof T): void {
   function compare(a: T, b: T): number {
