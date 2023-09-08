@@ -35,7 +35,7 @@ function PlayerControls() {
 
   return (
     <>
-      <audio ref={audioRef} />
+      <audio ref={audioRef} crossOrigin="anonymous" />
       <Box
         sx={(theme) => ({
           height: 80,

@@ -21,7 +21,14 @@ const Tracks = () => {
         {tracks.map((item, index) => {
           return (
             <div key={index}>
-              <p onClick={() => setSelectedTrack(item.fileLocation)}>{item.title}</p>
+              <p
+                onClick={() => {
+                  setSelectedTrack(item.r_fileLocation)
+                  console.log(item)
+                }}
+              >
+                {item.title}
+              </p>
             </div>
           )
         })}
