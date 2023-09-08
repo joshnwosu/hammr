@@ -14,6 +14,8 @@ import { Frame } from './components/Frame/Frame'
 import PlayerControls from './components/PlayerControls/PlayerControls'
 import Sidebar from './components/Sidebar/Sidebar'
 import NowPlaying from './components/NowPlaying/NowPlaying'
+import Tracks from './screens/Tracks/Tracks'
+import Root from './components/Root/Root'
 
 const useStyles = createStyles((theme) => ({
   col: {
@@ -42,6 +44,7 @@ const App: React.FC = () => {
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
       <MantineProvider withGlobalStyles withNormalizeCSS theme={{ colorScheme }}>
+        <Root />
         <div
           style={{
             display: 'flex',
@@ -63,10 +66,7 @@ const App: React.FC = () => {
             p={0}
             m={0}
           >
-            <Grid.Col
-              // span={navbarSize}
-              span={3}
-            >
+            <Grid.Col span={3}>
               <Paper className={classes.col} radius={'md'}>
                 <Sidebar />
               </Paper>
@@ -74,7 +74,7 @@ const App: React.FC = () => {
 
             <Grid.Col span={'auto'}>
               <Paper className={classes.col} radius={'md'}>
-                {/* <SwitchToggle /> */}
+                <Tracks />
               </Paper>
             </Grid.Col>
 
