@@ -45,7 +45,7 @@ class FilesTracker {
   deleteFileBasedOnDirectory(folderPath: string) {
     const filtered = this.processedFiles.filter(
       (track) =>
-        track.folderInfo.path.replace(/(.*)[\/\\]/, '') !== folderPath.replace(/(.*)[\/\\]/, '')
+        track.folderInfo?.path.replace(/(.*)[\/\\]/, '') !== folderPath.replace(/(.*)[\/\\]/, '')
     )
 
     this.processedFiles = filtered
