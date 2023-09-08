@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 const Tracks = () => {
   // const navigation = useNavigate()
 
-  const { tracks, setSelectedTrack } = usePlayerStore((state) => state)
+  const { tracks, setSelectedTrack, setNowPlaying } = usePlayerStore((state) => state)
 
   useEffect(() => {
     console.log('Tracks: ', tracks)
@@ -24,6 +24,7 @@ const Tracks = () => {
               <p
                 onClick={() => {
                   setSelectedTrack(item.r_fileLocation)
+                  setNowPlaying(item)
                   console.log(item)
                 }}
               >

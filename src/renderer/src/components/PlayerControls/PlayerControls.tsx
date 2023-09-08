@@ -15,11 +15,12 @@ export function encodeTrackFile(track: Track) {
 function PlayerControls() {
   const audioRef = useRef<HTMLAudioElement>(null)
 
-  const { selectedTrack } = usePlayerStore((state) => state)
+  const { selectedTrack, nowPlaying } = usePlayerStore((state) => state)
 
   const initPlayer = () => {
     const audioElement = audioRef.current as HTMLAudioElement
-    // console.log('Selected Track: ', selectedTrack)
+    console.log('Selected Track: ', selectedTrack)
+    console.log('Now Playing: ', nowPlaying)
 
     audioElement.src = selectedTrack
     audioElement.onloadeddata = () => {

@@ -31,6 +31,7 @@ interface PlayerStoreProps {
   nowPlaying: Track
   selectedTrack: string
   setSelectedTrack: (track: Track['fileLocation'] | string) => void
+  setNowPlaying: (track: Track) => void
   restoreTracks: (tracks: any[]) => void
   addTrack: (track: Track) => void
 }
@@ -45,6 +46,9 @@ export const usePlayerStore = create<PlayerStoreProps>((set, get) => ({
   },
   setSelectedTrack: (track) => {
     set({ selectedTrack: track })
+  },
+  setNowPlaying: (track) => {
+    set({ nowPlaying: track })
   },
   addTrack: (payload) => {
     set((state) => {
