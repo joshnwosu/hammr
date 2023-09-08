@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 const Tracks = () => {
   // const navigation = useNavigate()
 
-  const { tracks, setSelectedTrack } = usePlayerStore((state) => state)
+  const { tracks, setSelectedTrack, setNowPlaying } = usePlayerStore((state) => state)
 
   useEffect(() => {
     console.log('Tracks: ', tracks)
@@ -21,7 +21,14 @@ const Tracks = () => {
         {tracks.map((item, index) => {
           return (
             <div key={index}>
-              <p onClick={() => setSelectedTrack(item.fileLocation)}>{item.title}</p>
+              <p
+                onClick={() => {
+                  setSelectedTrack(item.fileLocation)
+                  setNowPlaying(item)
+                }}
+              >
+                {item.title}
+              </p>
             </div>
           )
         })}

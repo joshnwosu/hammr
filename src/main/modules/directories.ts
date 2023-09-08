@@ -3,7 +3,7 @@ import path from 'path'
 import fs from 'fs'
 
 const APP_DATA_DIRECTORY = app.getPath('userData')
-const MUSIC_DIRECTORY = path.join(app.getPath('home'), 'Music')
+const MUSIC_DIRECTORY = path.join(app.getPath('music'))
 const ALBUM_COVER_ART_DIRECTORY = path.join(APP_DATA_DIRECTORY, 'Album Cover')
 const ARTIST_PICTURE_DIRECTORY = path.join(APP_DATA_DIRECTORY, 'Artist Pictures')
 
