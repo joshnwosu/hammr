@@ -27,29 +27,22 @@ export interface Track {
 
 interface PlayerStoreProps {
   name: string
-  amount: number
-  increaseByTen: (value: number) => void
   tracks: Track[]
   nowPlaying: Track
-  restoreTracks: (tracks: any[]) => void
   selectedTrack: string
   setSelectedTrack: (track: Track['fileLocation'] | string) => void
+  restoreTracks: (tracks: any[]) => void
   addTrack: (track: Track) => void
 }
 
 export const usePlayerStore = create<PlayerStoreProps>((set, get) => ({
   name: 'player',
-  amount: 0,
-  increaseByTen: (value: number) => {
-    const amountState = get().amount
-    set({ amount: value + amountState })
-  },
   tracks: [],
   nowPlaying: {} as Track,
+  selectedTrack: '',
   restoreTracks: (tracks) => {
     set({ tracks })
   },
-  selectedTrack: '',
   setSelectedTrack: (track) => {
     set({ selectedTrack: track })
   },
