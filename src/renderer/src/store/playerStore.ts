@@ -34,6 +34,7 @@ interface PlayerStoreProps {
   restoreTracks: (tracks: any[]) => void
   selectedTrack: string
   setSelectedTrack: (track: Track['fileLocation'] | string) => void
+  addTrack: (track: Track) => void
 }
 
 export const usePlayerStore = create<PlayerStoreProps>((set, get) => ({
@@ -51,5 +52,16 @@ export const usePlayerStore = create<PlayerStoreProps>((set, get) => ({
   selectedTrack: '',
   setSelectedTrack: (track) => {
     set({ selectedTrack: track })
+  },
+  addTrack: (payload) => {
+    set((state) => {
+      const trackAlreadyAdded = state.tracks.some(
+        (track) => track.fileLocation === payload.fileLocation
+      )
+      if (!trackAlreadyAdded) {
+        return { tracks: [...state.tracks, payload] }
+      }
+      return { tracks: [...state.tracks] }
+    })
   }
 }))

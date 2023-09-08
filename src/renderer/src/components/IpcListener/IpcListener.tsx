@@ -2,7 +2,7 @@ import { usePlayerStore } from '@renderer/store/playerStore'
 import { useEffect } from 'react'
 
 export default function IpcListener() {
-  const { restoreTracks } = usePlayerStore((state) => state)
+  const { restoreTracks, addTrack } = usePlayerStore((state) => state)
 
   useEffect(() => {
     window.api.send('playerReady')
@@ -10,6 +10,11 @@ export default function IpcListener() {
     window.api.receive('processedFiles', (_, tracks) => {
       console.log('The Tracks Here: ', tracks)
       restoreTracks(tracks)
+    })
+
+    window.api.receive('newTrack', (_, newTrack) => {
+      console.log('The track added: ', newTrack)
+      addTrack(newTrack)
     })
 
     window.api.receive('userPlaylists', (_, playlists) => {

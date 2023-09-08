@@ -10,6 +10,7 @@ import createParsedTrack from './core/createdParsedTrack'
 import { filesTracker } from './modules/filesTracker'
 import { playlistsTracker } from './modules/playlistsTrackers'
 import { playbackStats } from './modules/playbackStats'
+import { settings } from './modules/settings'
 
 let mainWindow: BrowserWindow
 
@@ -95,7 +96,7 @@ app.on('window-all-closed', () => {
 // listen for file changes
 
 chokidar
-  .watch(directories.musicDirectory, {
+  .watch(settings.getSettings.foldersToScan, {
     ignored: /[\/\\]\./,
     persistent: true,
     ignoreInitial: true,
