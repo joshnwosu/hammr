@@ -10,7 +10,7 @@ import {
 
 const useStyles = createStyles((theme) => ({
   frame: {
-    height: 40
+    height: 35
   },
   left: {
     WebkitAppRegion: 'drag',
@@ -97,7 +97,8 @@ export const Frame = () => {
             >
               {React.createElement(item.icon, {
                 strokeWidth: '0.1',
-                size: '1rem'
+                size: '0.9rem',
+                color: 'white'
               })}
             </UnstyledButton>
           ))}

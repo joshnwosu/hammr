@@ -34,6 +34,8 @@ interface PlayerStoreProps {
   setNowPlaying: (track: Track) => void
   restoreTracks: (tracks: any[]) => void
   addTrack: (track: Track) => void
+  updateTrack: (track: Track) => void
+  deleteTrack: (track) => void
 }
 
 export const usePlayerStore = create<PlayerStoreProps>((set, get) => ({
@@ -52,7 +54,7 @@ export const usePlayerStore = create<PlayerStoreProps>((set, get) => ({
   },
   addTrack: (payload) => {
     set((state) => {
-      const trackAlreadyAdded = state.tracks.some(
+      const trackAlreadyAdded = get().tracks.some(
         (track) => track.fileLocation === payload.fileLocation
       )
       if (!trackAlreadyAdded) {
@@ -60,5 +62,11 @@ export const usePlayerStore = create<PlayerStoreProps>((set, get) => ({
       }
       return { tracks: [...state.tracks] }
     })
+  },
+  updateTrack: (payload) => {
+    console.log('UpdateTrack Payload: ', payload)
+  },
+  deleteTrack(track) {
+    // const trackIndex =
   }
 }))

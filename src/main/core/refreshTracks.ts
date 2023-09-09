@@ -2,8 +2,8 @@ import fs from 'fs'
 import { join, parse } from 'path'
 
 import { SUPPORTED_FORMATS } from '../utilities'
-import { filesTracker } from '../modules/filesTracker'
-import { settings } from '../modules/settings'
+import { filesTracker } from '../modules/FilesTracker/FilesTracker'
+import { settings } from '../modules/Settings/Settings'
 import createParsedTrack from './createdParsedTrack'
 
 export const refreshTracks = (): void => {
