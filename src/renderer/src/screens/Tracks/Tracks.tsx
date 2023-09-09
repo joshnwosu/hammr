@@ -1,16 +1,14 @@
+import { Button } from '@mantine/core'
+import pcManager from '@renderer/components/PlayerControls/PlayerControlManager'
 import { usePlayerStore } from '@renderer/store/playerStore'
-import { useEffect } from 'react'
+import trackUtils from '@renderer/utils/TrackUtils'
 // import { TbChevronLeft, TbChevronRight } from 'react-icons/tb'
 // import { useNavigate } from 'react-router-dom'
 
 const Tracks = () => {
   // const navigation = useNavigate()
 
-  const { tracks, setSelectedTrack, setNowPlaying } = usePlayerStore((state) => state)
-
-  useEffect(() => {
-    console.log('Tracks: ', tracks)
-  }, [])
+  const { tracks, setNowPlaying } = usePlayerStore((state) => state)
 
   return (
     <div>
@@ -18,21 +16,23 @@ const Tracks = () => {
       <TbChevronRight onClick={() => navigation(+1)} /> */}
       This is where the tracks lies.
       <div>
-        {tracks.map((item, index) => {
+        {tracks.map((track, index) => {
           return (
             <div key={index}>
               <p
                 onClick={() => {
-                  setSelectedTrack(item.r_fileLocation)
-                  setNowPlaying(item)
-                  console.log(item)
+                  pcManager.selectedTrack(track.r_fileLocation, tracks)
+                  // pcManager.setTracksAndPlay(tracks, track.r_fileLocation)
                 }}
               >
-                {item.title}
+                {track.title}
               </p>
             </div>
           )
         })}
+      </div>
+      <div>
+        <Button onClick={() => pcManager.nextTrack()}>Next</Button>
       </div>
     </div>
   )

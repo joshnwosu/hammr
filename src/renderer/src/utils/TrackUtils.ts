@@ -1,19 +1,14 @@
 import { Track } from '@renderer/store/playerStore'
 
-interface TrackUtilProps {
-  arr: Track[]
-  id: string
-}
-
 class TrackUtils {
   constructor() {}
 
-  getTrack({ arr, id }: TrackUtilProps) {
-    return arr.find((track) => track.fileLocation === id)
+  getTrack(tracks: Track[], id: string) {
+    return tracks.find((track) => track.r_fileLocation === id)
   }
 
-  getTrackIndex({ arr, id }: TrackUtilProps) {
-    return arr.findIndex((track) => track.fileLocation === id)
+  getTrackIndex(tracks: Track[], id: string) {
+    return tracks.findIndex((track) => track.r_fileLocation == id)
   }
 
   formatIndex(num: number) {
@@ -21,7 +16,7 @@ class TrackUtils {
     return index <= 9 ? '0' + index : index
   }
 
-  formatDuration({ length }: { length: number }) {
+  formatDuration(length: number) {
     let seconds = Math.floor(length % 60) || 0
     let minutes = Math.floor((length / 60) % 60) || 0
     let hours = Math.floor(length / 3600) || 0
@@ -92,6 +87,6 @@ class TrackUtils {
   }
 }
 
-module.exports = {
-  trackUtils: new TrackUtils()
-}
+const trackUtils = new TrackUtils()
+
+export default trackUtils

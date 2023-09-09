@@ -1,42 +1,19 @@
-import { Track, usePlayerStore } from '@renderer/store/playerStore'
-import { useEffect, useRef } from 'react'
-import path from 'path-browserify'
-import { Box, Text } from '@mantine/core'
-
-export function encodeTrackFile(track: Track) {
-  let prefix = 'file://'
-  let trackExtension = path.extname(track.fileLocation)
-  let trackPath = track.folderInfo.path
-  let encodedFileName = encodeURIComponent(path.basename(track.fileName))
-
-  return prefix + path.join(trackPath, encodedFileName) + trackExtension
-}
+import { usePlayerStore } from '@renderer/store/playerStore'
+import { useEffect } from 'react'
+import { Box, Grid, Text } from '@mantine/core'
+import pcManager from './PlayerControlManager'
 
 function PlayerControls() {
-  const audioRef = useRef<HTMLAudioElement>(null)
-
-  const { selectedTrack, nowPlaying } = usePlayerStore((state) => state)
-
-  const initPlayer = () => {
-    const audioElement = audioRef.current as HTMLAudioElement
-    console.log('Selected Track: ', selectedTrack)
-    console.log('Now Playing: ', nowPlaying)
-
-    audioElement.src = selectedTrack
-    audioElement.onloadeddata = () => {
-      audioElement.play()
-    }
-  }
+  const { trackFile } = usePlayerStore((state) => state)
 
   useEffect(() => {
-    if (selectedTrack) {
-      initPlayer()
+    if (trackFile) {
+      pcManager.initPlayer(trackFile)
     }
-  }, [selectedTrack])
+  }, [trackFile])
 
   return (
     <>
-      <audio ref={audioRef} crossOrigin="anonymous" />
       <Box
         sx={(theme) => ({
           height: 80,
@@ -44,7 +21,13 @@ function PlayerControls() {
           backgroundColor: theme.colorScheme == 'dark' ? theme.black : theme.colors.gray[0]
         })}
       >
-        <Text>PlayerControl component</Text>
+        <Grid>
+          <Grid.Col span={4}>
+            <Text>1</Text>
+          </Grid.Col>
+          <Grid.Col span={4}>2</Grid.Col>
+          <Grid.Col span={4}>3</Grid.Col>
+        </Grid>
       </Box>
     </>
   )
