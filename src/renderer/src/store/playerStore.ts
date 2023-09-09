@@ -28,10 +28,12 @@ export interface Track {
 interface PlayerStoreProps {
   name: string
   tracks: Track[]
+  queues: Track[]
   nowPlaying: Track
-  selectedTrack: string
-  setSelectedTrack: (track: Track['fileLocation'] | string) => void
+  trackFile: string
+  setTrackFile: (track: Track['fileLocation'] | string) => void
   setNowPlaying: (track: Track) => void
+  setQueues: (track: Track[]) => void
   restoreTracks: (tracks: any[]) => void
   addTrack: (track: Track) => void
   updateTrack: (track: Track) => void
@@ -41,13 +43,17 @@ interface PlayerStoreProps {
 export const usePlayerStore = create<PlayerStoreProps>((set, get) => ({
   name: 'player',
   tracks: [],
+  queues: [],
   nowPlaying: {} as Track,
-  selectedTrack: '',
+  trackFile: '',
   restoreTracks: (tracks) => {
     set({ tracks })
   },
-  setSelectedTrack: (track) => {
-    set({ selectedTrack: track })
+  setTrackFile: (track) => {
+    set({ trackFile: track })
+  },
+  setQueues: (tracks) => {
+    set({ queues: tracks })
   },
   setNowPlaying: (track) => {
     set({ nowPlaying: track })
@@ -67,6 +73,7 @@ export const usePlayerStore = create<PlayerStoreProps>((set, get) => ({
     console.log('UpdateTrack Payload: ', payload)
   },
   deleteTrack(track) {
-    // const trackIndex =
+    const trackIndex = track
+    console.log(trackIndex)
   }
 }))
