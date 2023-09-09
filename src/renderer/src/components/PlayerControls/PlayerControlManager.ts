@@ -1,10 +1,7 @@
 import trackUtils from '@renderer/utils/TrackUtils'
 import { Track, usePlayerStore } from '../../store/playerStore'
-import React from 'react'
 
 export class PlayerControlManager {
-  private audioRef: React.RefObject<HTMLAudioElement>
-
   public audio: HTMLAudioElement
   public tracks: Track[]
   public fileTrack: string
@@ -13,53 +10,51 @@ export class PlayerControlManager {
     this.audio = new Audio()
     this.tracks = []
     this.fileTrack = ''
-    this.audioRef = React.createRef() // Create a ref for the audio element
-    this.setAudioRef() // Set the audio element reference
-
-    this.initPlayer()
   }
 
-  private setAudioRef() {
-    this.audioRef = React.createRef() // Create a ref
-    this.audio = this.audioRef.current || new Audio() // Assign the ref's current value to audio
-  }
+  initPlayer(currentTrack: string) {
+    this.fileTrack = currentTrack
+    let index = trackUtils.getTrackIndex(this.tracks, currentTrack)
+    // Set the audio source and play it
+    this.audio.src = this.tracks[index]?.r_fileLocation
 
-  initPlayer() {
-    const { audio, fileTrack: selectedTrack } = this
-
-    let queues = usePlayerStore.getState().queues
-    let index = trackUtils.getTrackIndex(queues, selectedTrack)
-
-    console.log('The Index: ', index)
-
-    audio.src = queues[index]?.r_fileLocation
-
-    // audio.src = selectedTrack
-    audio.onloadeddata = () => {
-      audio.play()
+    this.audio.onloadeddata = () => {
+      this.audio.play()
     }
-    audio.oncanplay = () => {
+    this.audio.oncanplay = () => {
       //
       usePlayerStore.getState()
     }
-    audio.onplaying = () => {
+    this.audio.onplaying = () => {
       //
     }
-    audio.onpause = () => {
+    this.audio.onpause = () => {
       //
     }
-    audio.ontimeupdate = () => {
+    this.audio.ontimeupdate = () => {
       //
     }
-    audio.onended = () => {
+    this.audio.onended = () => {
       //
     }
-    audio.onerror = () => {
+    this.audio.onerror = () => {
       //
     }
   }
 
-  isPlaying(status: boolean) {
+  selectedTrack(currentTrack: string, tracks: Track[]) {
+    this.tracks = tracks
+    this.fileTrack = currentTrack
+
+    usePlayerStore.getState().setTrackFile('')
+    if (currentTrack !== undefined) {
+      usePlayerStore.getState().setTrackFile(currentTrack)
+
+      usePlayerStore.getState().setQueues(tracks)
+    }
+  }
+
+  private isPlaying(status: boolean) {
     window.api.send('isPlaying', status)
   }
 
@@ -75,8 +70,18 @@ export class PlayerControlManager {
     }
   }
 
-  playTrack() {
-    this.audio.play()
+  playTrack(index: number) {
+    if (!this.tracks) return
+    else {
+      // if (this.tracks[index]) {
+      //   usePlayerStore.setState({}) // do something here
+      // }
+
+      usePlayerStore.setState({
+        trackFile: this.tracks[index].r_fileLocation
+      })
+    }
+
     this.isPlaying(true)
   }
 
@@ -85,20 +90,38 @@ export class PlayerControlManager {
     this.isPlaying(false)
   }
 
-  selectedTrack(id: string, tracks: Track[]) {
-    usePlayerStore.getState().setTrackFile('')
-    if (id !== undefined) {
-      usePlayerStore.getState().setTrackFile(id)
-
-      usePlayerStore.getState().setQueues(tracks)
-    }
-  }
-
   playAll() {
     this.fileTrack = ''
   }
 
-  nextTrack() {}
+  public nextTrack() {
+    if (this.tracks.length === 0) {
+      // Push tracks to queues if they are empty
+      console.log('empty')
+    }
+
+    let currentIndex = trackUtils.getTrackIndex(this.tracks, this.fileTrack)
+
+    const status = true
+
+    if (status) {
+      currentIndex++
+      if (currentIndex > this.tracks.length - 1) currentIndex = 0
+    } else {
+      if (this.tracks.length > 1) {
+        let temp = currentIndex
+        while (currentIndex == temp) {
+          currentIndex = Math.floor(Math.random() * this.tracks.length)
+        }
+      }
+    }
+
+    if (this.tracks[currentIndex]) {
+      this.playTrack(currentIndex)
+    }
+
+    console.log('current index: ', currentIndex)
+  }
 
   previousTrack() {}
 

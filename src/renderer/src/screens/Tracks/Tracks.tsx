@@ -1,3 +1,4 @@
+import { Button } from '@mantine/core'
 import pcManager from '@renderer/components/PlayerControls/PlayerControlManager'
 import { usePlayerStore } from '@renderer/store/playerStore'
 import trackUtils from '@renderer/utils/TrackUtils'
@@ -21,6 +22,7 @@ const Tracks = () => {
               <p
                 onClick={() => {
                   pcManager.selectedTrack(track.r_fileLocation, tracks)
+                  // pcManager.setTracksAndPlay(tracks, track.r_fileLocation)
                 }}
               >
                 {track.title}
@@ -28,6 +30,9 @@ const Tracks = () => {
             </div>
           )
         })}
+      </div>
+      <div>
+        <Button onClick={() => pcManager.nextTrack()}>Next</Button>
       </div>
     </div>
   )

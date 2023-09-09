@@ -8,8 +8,7 @@ function PlayerControls() {
 
   useEffect(() => {
     if (trackFile) {
-      pcManager.fileTrack = trackFile
-      pcManager.initPlayer()
+      pcManager.initPlayer(trackFile)
     }
   }, [trackFile])
 
