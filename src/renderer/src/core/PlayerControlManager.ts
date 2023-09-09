@@ -1,5 +1,5 @@
 import trackUtils from '@renderer/utils/TrackUtils'
-import { Track, usePlayerStore } from '../store/playerStore'
+import { Track, usePlayerStore } from '../store/playerStore/playerStore'
 
 export class PlayerControlManager {
   public audio: HTMLAudioElement

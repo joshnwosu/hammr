@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { PlayerStoreProps } from './types'
 
 export interface Track {
   r_fileLocation: string
@@ -22,22 +23,6 @@ export interface Track {
     name: string
     path: any
   }
-  // Add additional properties as needed
-}
-
-interface PlayerStoreProps {
-  name: string
-  tracks: Track[]
-  queues: Track[]
-  nowPlaying: Track
-  trackFile: string
-  setTrackFile: (track: Track['fileLocation'] | string) => void
-  setNowPlaying: (track: Track) => void
-  setQueues: (track: Track[]) => void
-  restoreTracks: (tracks: any[]) => void
-  addTrack: (track: Track) => void
-  updateTrack: (track: Track) => void
-  deleteTrack: (track) => void
 }
 
 export const usePlayerStore = create<PlayerStoreProps>((set, get) => ({
@@ -46,6 +31,15 @@ export const usePlayerStore = create<PlayerStoreProps>((set, get) => ({
   queues: [],
   nowPlaying: {} as Track,
   trackFile: '',
+  player: {
+    playing: false,
+    repeat: 0,
+    shuffle: false,
+    currentTime: 0,
+    duration: 0,
+    lastPlayed: [],
+    nowPlaying: {} as Track
+  },
   restoreTracks: (tracks) => {
     set({ tracks })
   },

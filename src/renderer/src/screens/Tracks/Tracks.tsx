@@ -1,6 +1,6 @@
 import { Button } from '@mantine/core'
 import pcManager from '@renderer/core/PlayerControlManager'
-import { usePlayerStore } from '@renderer/store/playerStore'
+import { usePlayerStore } from '@renderer/store/playerStore/playerStore'
 // import { TbChevronLeft, TbChevronRight } from 'react-icons/tb'
 // import { useNavigate } from 'react-router-dom'
 
