@@ -1,5 +1,11 @@
 import { Track } from './playerStore'
 
+export enum RepeatEnum {
+  All = 'all',
+  Off = 'off',
+  One = 'one'
+}
+
 export interface PlayerStoreProps {
   name: string
   tracks: Track[]
@@ -8,12 +14,13 @@ export interface PlayerStoreProps {
   trackFile: string
   playerStatus: {
     playing: boolean
-    repeat: number
+    repeat: RepeatEnum
     shuffle: boolean
     currentTime: number
     duration: number
     lastPlayed: number[]
     nowPlaying: Track | null
+    seekPosition: number
   }
   setTrackFile: (track: Track['fileLocation'] | string) => void
   setNowPlaying: (track: Track) => void

@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { PlayerStoreProps } from './types'
+import { PlayerStoreProps, RepeatEnum } from './types'
 
 export interface Track {
   r_fileLocation: string
@@ -33,12 +33,13 @@ export const usePlayerStore = create<PlayerStoreProps>((set, get) => ({
   trackFile: '',
   playerStatus: {
     playing: false,
-    repeat: 0,
+    repeat: RepeatEnum.Off,
     shuffle: false,
     currentTime: 0,
     duration: 0,
     lastPlayed: [],
-    nowPlaying: {} as Track
+    nowPlaying: {} as Track,
+    seekPosition: 0
   },
   restoreTracks: (tracks) => {
     set({ tracks })
