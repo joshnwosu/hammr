@@ -6,13 +6,13 @@ export interface PlayerStoreProps {
   queues: Track[]
   nowPlaying: Track
   trackFile: string
-  player: {
+  playerStatus: {
     playing: boolean
     repeat: number
     shuffle: boolean
     currentTime: number
     duration: number
-    lastPlayed: Track[]
+    lastPlayed: number[]
     nowPlaying: Track | null
   }
   setTrackFile: (track: Track['fileLocation'] | string) => void

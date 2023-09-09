@@ -12,7 +12,7 @@ export class PlayerControlManager {
     this.audio = new Audio()
     this.tracks = []
     this.fileTrack = ''
-    this.shuffle = false
+    this.shuffle = true
     this.repeat = 0
   }
 
@@ -77,9 +77,14 @@ export class PlayerControlManager {
   playTrack(index: number) {
     if (!this.tracks) return
     else {
-      // if (this.tracks[index]) {
-      //   usePlayerStore.setState({}) // do something here
-      // }
+      if (this.tracks[index]) {
+        usePlayerStore.setState((prevState) => ({
+          playerStatus: {
+            ...prevState.playerStatus,
+            lastPlayed: [...prevState.playerStatus.lastPlayed, index]
+          }
+        }))
+      }
 
       usePlayerStore.setState({
         trackFile: this.tracks[index >= this.tracks.length ? 0 : index].r_fileLocation
@@ -133,9 +138,10 @@ export class PlayerControlManager {
       if (currentIndex == 0) currentIndex = this.tracks.length
       else currentIndex--
     } else {
-      // ! Todo
       // remove last played
+      usePlayerStore.getState().playerStatus.lastPlayed.pop()
       // set current index to last played.
+      currentIndex = usePlayerStore.getState().playerStatus.lastPlayed.pop() || 0
     }
 
     if (currentIndex == undefined || currentIndex < 0) currentIndex = 0

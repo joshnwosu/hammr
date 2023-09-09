@@ -31,7 +31,7 @@ export const usePlayerStore = create<PlayerStoreProps>((set, get) => ({
   queues: [],
   nowPlaying: {} as Track,
   trackFile: '',
-  player: {
+  playerStatus: {
     playing: false,
     repeat: 0,
     shuffle: false,
