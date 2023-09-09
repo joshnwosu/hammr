@@ -1,15 +1,19 @@
 import trackUtils from '@renderer/utils/TrackUtils'
-import { Track, usePlayerStore } from '../../store/playerStore'
+import { Track, usePlayerStore } from '../store/playerStore'
 
 export class PlayerControlManager {
   public audio: HTMLAudioElement
   public tracks: Track[]
   public fileTrack: string
+  public shuffle: boolean
+  public repeat: number
 
   constructor() {
     this.audio = new Audio()
     this.tracks = []
     this.fileTrack = ''
+    this.shuffle = false
+    this.repeat = 0
   }
 
   initPlayer(currentTrack: string) {
@@ -78,7 +82,7 @@ export class PlayerControlManager {
       // }
 
       usePlayerStore.setState({
-        trackFile: this.tracks[index].r_fileLocation
+        trackFile: this.tracks[index >= this.tracks.length ? 0 : index].r_fileLocation
       })
     }
 
@@ -97,14 +101,12 @@ export class PlayerControlManager {
   public nextTrack() {
     if (this.tracks.length === 0) {
       // Push tracks to queues if they are empty
-      console.log('empty')
+      this.tracks = usePlayerStore.getState().tracks
     }
 
     let currentIndex = trackUtils.getTrackIndex(this.tracks, this.fileTrack)
 
-    const status = true
-
-    if (status) {
+    if (!this.shuffle) {
       currentIndex++
       if (currentIndex > this.tracks.length - 1) currentIndex = 0
     } else {
@@ -123,7 +125,22 @@ export class PlayerControlManager {
     console.log('current index: ', currentIndex)
   }
 
-  previousTrack() {}
+  public previousTrack() {
+    if (!this.audio.src) return
+    let currentIndex = trackUtils.getTrackIndex(this.tracks, this.fileTrack)
+
+    if (!this.shuffle) {
+      if (currentIndex == 0) currentIndex = this.tracks.length
+      else currentIndex--
+    } else {
+      // ! Todo
+      // remove last played
+      // set current index to last played.
+    }
+
+    if (currentIndex == undefined || currentIndex < 0) currentIndex = 0
+    this.playTrack(currentIndex)
+  }
 
   shuffleTrack() {}
 }

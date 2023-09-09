@@ -1,14 +1,13 @@
 import { Button } from '@mantine/core'
-import pcManager from '@renderer/components/PlayerControls/PlayerControlManager'
+import pcManager from '@renderer/core/PlayerControlManager'
 import { usePlayerStore } from '@renderer/store/playerStore'
-import trackUtils from '@renderer/utils/TrackUtils'
 // import { TbChevronLeft, TbChevronRight } from 'react-icons/tb'
 // import { useNavigate } from 'react-router-dom'
 
 const Tracks = () => {
   // const navigation = useNavigate()
 
-  const { tracks, setNowPlaying } = usePlayerStore((state) => state)
+  const { tracks } = usePlayerStore((state) => state)
 
   return (
     <div>
@@ -32,6 +31,8 @@ const Tracks = () => {
         })}
       </div>
       <div>
+        <Button onClick={() => pcManager.previousTrack()}>Previous</Button>
+
         <Button onClick={() => pcManager.nextTrack()}>Next</Button>
       </div>
     </div>
