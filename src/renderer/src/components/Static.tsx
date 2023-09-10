@@ -33,6 +33,7 @@ export default function Static() {
           withControls={false}
           height={200}
           getEmblaApi={setEmable}
+          loop
         >
           <Carousel.Slide>1</Carousel.Slide>
           <Carousel.Slide>2</Carousel.Slide>
