@@ -16,6 +16,8 @@ export class PlayerControlManager {
     this.fileTrack = ''
     this.shuffle = usePlayerStore.getState().playerStatus.shuffle
     this.repeat = usePlayerStore.getState().playerStatus.repeat
+
+    setupEqualizer()
   }
 
   initPlayer(currentTrack: string) {
@@ -60,8 +62,6 @@ export class PlayerControlManager {
     this.audio.onerror = () => {
       usePlayerStore.getState().playerStatus.playing = false
     }
-
-    setupEqualizer()
   }
 
   selectedTrack(currentTrack: string, tracks: Track[]) {
