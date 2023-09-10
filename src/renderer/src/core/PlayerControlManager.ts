@@ -51,16 +51,7 @@ export class PlayerControlManager {
       }))
     }
     this.audio.ontimeupdate = () => {
-      // Calculate seek position
-      const seekPosition = (this.audio.currentTime / this.audio.duration) * 100
-
-      usePlayerStore.setState((prevState) => ({
-        playerStatus: {
-          ...prevState.playerStatus,
-          currentTime: this.audio.currentTime,
-          seekPosition: seekPosition
-        }
-      }))
+      this.updateSeekPosition()
     }
     this.audio.onended = () => {
       this.playNextTrack()
@@ -87,7 +78,7 @@ export class PlayerControlManager {
   }
 
   togglePlaying() {
-    if (this.audio.src) return this.nextTrack()
+    if (!this.audio.src) return this.nextTrack()
 
     if (this.audio.paused) {
       this.audio.play()
@@ -118,16 +109,27 @@ export class PlayerControlManager {
     this.isPlaying(true)
   }
 
-  pauseTrack() {
+  play() {
+    this.audio.play()
+    this.isPlaying(true)
+  }
+
+  pause() {
     this.audio.pause()
     this.isPlaying(false)
   }
 
-  playAll() {
+  playAll(tracks: Track[]) {
     this.fileTrack = ''
+    this.tracks = tracks
+    usePlayerStore.setState({
+      trackFile: tracks[0].r_fileLocation
+    })
   }
 
   public nextTrack() {
+    this.updateRepeatShuffle()
+
     if (this.tracks.length === 0) {
       // Push tracks to queues if they are empty
       this.tracks = usePlayerStore.getState().tracks
@@ -150,11 +152,11 @@ export class PlayerControlManager {
     if (this.tracks[currentIndex]) {
       this.playTrack(currentIndex)
     }
-
-    console.log('current index: ', currentIndex)
   }
 
   public previousTrack() {
+    this.updateRepeatShuffle()
+
     if (!this.audio.src) return
     let currentIndex = trackUtils.getTrackIndex(this.tracks, this.fileTrack)
 
@@ -172,6 +174,16 @@ export class PlayerControlManager {
     this.playTrack(currentIndex)
   }
 
+  stepForward() {
+    if (!this.audio.src) return
+    this.audio.currentTime += 10
+  }
+
+  stepBackward() {
+    if (!this.audio.src) return
+    this.audio.currentTime -= 10
+  }
+
   private updateShuffle(value: boolean) {
     usePlayerStore.setState((prevState) => ({
       playerStatus: {
@@ -179,6 +191,11 @@ export class PlayerControlManager {
         shuffle: value
       }
     }))
+  }
+
+  private updateRepeatShuffle() {
+    this.shuffle = usePlayerStore.getState().playerStatus.shuffle
+    this.repeat = usePlayerStore.getState().playerStatus.repeat
   }
 
   private updateRepeat(value: RepeatEnum) {
@@ -191,8 +208,7 @@ export class PlayerControlManager {
   }
 
   shuffleTrack() {
-    this.shuffle = usePlayerStore.getState().playerStatus.shuffle
-    this.repeat = usePlayerStore.getState().playerStatus.repeat
+    this.updateRepeatShuffle()
 
     if (!this.audio.src) return
 
@@ -207,8 +223,7 @@ export class PlayerControlManager {
   }
 
   repeatTrack() {
-    this.shuffle = usePlayerStore.getState().playerStatus.shuffle
-    this.repeat = usePlayerStore.getState().playerStatus.repeat
+    this.updateRepeatShuffle()
 
     if (!this.audio.src) return
 
@@ -225,6 +240,8 @@ export class PlayerControlManager {
   }
 
   playNextTrack() {
+    this.updateRepeatShuffle()
+
     let currentIndex = trackUtils.getTrackIndex(this.tracks, this.fileTrack)
 
     if (this.shuffle) {
@@ -264,8 +281,19 @@ export class PlayerControlManager {
   seekBar(value: number) {
     if (this.audio.src) {
       this.audio.currentTime = (value * this.audio.duration) / 100
-      console.log((value * this.audio.duration) / 100)
     }
+  }
+
+  updateSeekPosition() {
+    const seekPosition = (this.audio.currentTime / this.audio.duration) * 100
+
+    usePlayerStore.setState((prevState) => ({
+      playerStatus: {
+        ...prevState.playerStatus,
+        currentTime: this.audio.currentTime,
+        seekPosition: seekPosition
+      }
+    }))
   }
 }
 

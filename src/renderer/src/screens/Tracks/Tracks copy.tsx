@@ -1,10 +1,28 @@
-import { Button, Flex, Slider, Text } from '@mantine/core'
+import { Button, Flex, Slider, Text, rem } from '@mantine/core'
+import { useDebouncedValue } from '@mantine/hooks'
 import pcManager from '@renderer/core/PlayerControlManager'
 import { usePlayerStore } from '@renderer/store/playerStore/playerStore'
 import trackUtils from '@renderer/utils/TrackUtils'
+import { useEffect, useState } from 'react'
 
 const Tracks = () => {
   const { tracks, playerStatus, trackFile } = usePlayerStore((state) => state)
+
+  const [isSeeking, setIsSeeking] = useState(false)
+
+  const [sliderValue, setSliderValue] = useState(playerStatus.seekPosition || 0)
+
+  const [debounced] = useDebouncedValue(sliderValue, 200)
+
+  const handleSliderChange = (newValue) => {
+    setSliderValue(newValue)
+    setIsSeeking(true)
+  }
+
+  useEffect(() => {
+    pcManager.seekBar(debounced)
+    setIsSeeking(false)
+  }, [debounced])
 
   return (
     <div>
@@ -53,13 +71,39 @@ const Tracks = () => {
         </Flex>
 
         <Slider
-          value={playerStatus.seekPosition || 0}
+          value={isSeeking ? sliderValue : playerStatus.seekPosition || 0}
           labelTransition="skew-down"
           labelTransitionDuration={150}
           labelTransitionTimingFunction="ease"
           label={trackUtils.formatDuration(playerStatus.currentTime)}
           mt={'xl'}
-          onChange={(value) => pcManager.seekBar(value)}
+          onChange={handleSliderChange}
+          size={2}
+          styles={(theme) => ({
+            track: {
+              backgroundColor:
+                theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1]
+            },
+            mark: {
+              width: rem(6),
+              height: rem(6),
+              borderRadius: rem(6),
+              transform: `translateX(-${rem(3)}) translateY(-${rem(2)})`,
+              borderColor:
+                theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1]
+            },
+            markFilled: {
+              borderColor: theme.colors.blue[6]
+            },
+            markLabel: { fontSize: theme.fontSizes.xs, marginBottom: rem(5), marginTop: 0 },
+            thumb: {
+              height: rem(16),
+              width: rem(16),
+              backgroundColor: theme.white,
+              borderWidth: rem(1),
+              boxShadow: theme.shadows.sm
+            }
+          })}
         />
       </div>
     </div>
