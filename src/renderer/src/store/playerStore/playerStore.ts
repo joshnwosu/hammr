@@ -32,6 +32,7 @@ export const usePlayerStore = create<PlayerStoreProps>((set, get) => ({
   nowPlaying: {} as Track,
   trackFile: '',
   playerStatus: {
+    audio: new Audio(),
     playing: false,
     repeat: RepeatEnum.Off,
     shuffle: false,
@@ -39,7 +40,8 @@ export const usePlayerStore = create<PlayerStoreProps>((set, get) => ({
     duration: 0,
     lastPlayed: [],
     nowPlaying: {} as Track,
-    seekPosition: 0
+    seekPosition: 0,
+    volume: 0
   },
   restoreTracks: (tracks) => {
     set({ tracks })
