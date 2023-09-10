@@ -13,6 +13,7 @@ export interface PlayerStoreProps {
   nowPlaying: Track
   trackFile: string
   playerStatus: {
+    audio: HTMLAudioElement
     playing: boolean
     repeat: RepeatEnum
     shuffle: boolean
@@ -21,6 +22,7 @@ export interface PlayerStoreProps {
     lastPlayed: number[]
     nowPlaying: Track | null
     seekPosition: number
+    volume: number
   }
   setTrackFile: (track: Track['fileLocation'] | string) => void
   setNowPlaying: (track: Track) => void
