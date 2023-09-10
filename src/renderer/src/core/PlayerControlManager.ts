@@ -1,6 +1,7 @@
 import trackUtils from '@renderer/utils/TrackUtils'
 import { Track, usePlayerStore } from '../store/playerStore/playerStore'
 import { RepeatEnum } from '@renderer/store/playerStore/types'
+import { gainNode, setupEqualizer } from '@renderer/components/Equalizer/Equalizer'
 
 export class PlayerControlManager {
   public audio: HTMLAudioElement
@@ -10,7 +11,7 @@ export class PlayerControlManager {
   public repeat: RepeatEnum
 
   constructor() {
-    this.audio = new Audio()
+    this.audio = usePlayerStore.getState().playerStatus.audio
     this.tracks = []
     this.fileTrack = ''
     this.shuffle = usePlayerStore.getState().playerStatus.shuffle
@@ -59,6 +60,8 @@ export class PlayerControlManager {
     this.audio.onerror = () => {
       usePlayerStore.getState().playerStatus.playing = false
     }
+
+    setupEqualizer()
   }
 
   selectedTrack(currentTrack: string, tracks: Track[]) {
@@ -294,6 +297,22 @@ export class PlayerControlManager {
         seekPosition: seekPosition
       }
     }))
+  }
+
+  changeVolume(value: number) {
+    let volume = value / 100
+
+    if (gainNode) {
+      usePlayerStore.setState((prevState) => ({
+        playerStatus: {
+          ...prevState.playerStatus,
+          volume: volume
+        }
+      }))
+      gainNode.gain.value = volume
+    } else {
+      console.error('Gain node is not available.')
+    }
   }
 }
 

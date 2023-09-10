@@ -1,9 +1,12 @@
+import { usePlayerStore } from '@renderer/store/playerStore/playerStore'
+
 export const createdFilters: BiquadFilterNode[] = []
 export let gainNode: GainNode | null = null
 
 export function setupEqualizer() {
   const context = new AudioContext()
-  const mediaElement = document.querySelector<HTMLAudioElement>('audio')
+  // const mediaElement = document.querySelector<HTMLAudioElement>('audio')
+  const mediaElement = usePlayerStore.getState().playerStatus.audio
 
   if (!mediaElement) {
     throw new Error('Audio element not found')
