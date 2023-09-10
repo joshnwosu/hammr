@@ -1,4 +1,4 @@
-import { Track } from '@renderer/store/playerStore'
+import { Track } from '@renderer/store/playerStore/playerStore'
 
 class TrackUtils {
   constructor() {}
