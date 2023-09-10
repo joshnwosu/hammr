@@ -1,10 +1,28 @@
 import { Button, Flex, Slider, Text, rem } from '@mantine/core'
+import { useDebouncedValue } from '@mantine/hooks'
 import pcManager from '@renderer/core/PlayerControlManager'
 import { usePlayerStore } from '@renderer/store/playerStore/playerStore'
 import trackUtils from '@renderer/utils/TrackUtils'
+import { useEffect, useState } from 'react'
 
 const Tracks = () => {
   const { tracks, playerStatus, trackFile } = usePlayerStore((state) => state)
+
+  const [isSeeking, setIsSeeking] = useState(false)
+
+  const [sliderValue, setSliderValue] = useState(playerStatus.seekPosition || 0)
+
+  const [debounced] = useDebouncedValue(sliderValue, 200)
+
+  const handleSliderChange = (newValue) => {
+    setSliderValue(newValue)
+    setIsSeeking(true)
+  }
+
+  useEffect(() => {
+    pcManager.seekBar(debounced)
+    setIsSeeking(false)
+  }, [debounced])
 
   return (
     <div>
@@ -53,17 +71,13 @@ const Tracks = () => {
         </Flex>
 
         <Slider
-          value={playerStatus.seekPosition || 0}
+          value={isSeeking ? sliderValue : playerStatus.seekPosition || 0}
           labelTransition="skew-down"
           labelTransitionDuration={150}
           labelTransitionTimingFunction="ease"
           label={trackUtils.formatDuration(playerStatus.currentTime)}
           mt={'xl'}
-          onChange={(value) => {
-            pcManager.pause()
-            pcManager.seekBar(value)
-          }}
-          onChangeEnd={() => pcManager.play()}
+          onChange={handleSliderChange}
           size={2}
           styles={(theme) => ({
             track: {
@@ -90,16 +104,6 @@ const Tracks = () => {
               boxShadow: theme.shadows.sm
             }
           })}
-        />
-
-        {/* Volume */}
-        <Slider
-          value={0}
-          labelTransition="skew-down"
-          labelTransitionDuration={150}
-          labelTransitionTimingFunction="ease"
-          mt={'xl'}
-          size={2}
         />
       </div>
     </div>

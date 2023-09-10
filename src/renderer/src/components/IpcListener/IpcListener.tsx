@@ -1,4 +1,4 @@
-import { usePlayerStore } from '@renderer/store/playerStore'
+import { usePlayerStore } from '@renderer/store/playerStore/playerStore'
 import { useEffect } from 'react'
 
 export default function IpcListener() {

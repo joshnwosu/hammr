@@ -1,7 +1,7 @@
-import { usePlayerStore } from '@renderer/store/playerStore'
+import { usePlayerStore } from '@renderer/store/playerStore/playerStore'
 import { useEffect } from 'react'
 import { Box, Grid, Text } from '@mantine/core'
-import pcManager from './PlayerControlManager'
+import pcManager from '../../core/PlayerControlManager'
 
 function PlayerControls() {
   const { trackFile } = usePlayerStore((state) => state)
@@ -9,6 +9,7 @@ function PlayerControls() {
   useEffect(() => {
     if (trackFile) {
       pcManager.initPlayer(trackFile)
+      console.log('Track File:', trackFile)
     }
   }, [trackFile])
 
