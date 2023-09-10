@@ -9,6 +9,7 @@ export class PlayerControlManager {
   public fileTrack: string
   public shuffle: boolean
   public repeat: RepeatEnum
+  public volume: number
 
   constructor() {
     this.audio = usePlayerStore.getState().playerStatus.audio
@@ -16,6 +17,9 @@ export class PlayerControlManager {
     this.fileTrack = ''
     this.shuffle = usePlayerStore.getState().playerStatus.shuffle
     this.repeat = usePlayerStore.getState().playerStatus.repeat
+    this.volume = usePlayerStore.getState().playerStatus.volume
+
+    setupEqualizer()
   }
 
   initPlayer(currentTrack: string) {
@@ -60,11 +64,11 @@ export class PlayerControlManager {
     this.audio.onerror = () => {
       usePlayerStore.getState().playerStatus.playing = false
     }
-
-    setupEqualizer()
   }
 
   selectedTrack(currentTrack: string, tracks: Track[]) {
+    this.changeVolume(this.volume)
+
     this.tracks = tracks
     this.fileTrack = currentTrack
 
@@ -300,16 +304,14 @@ export class PlayerControlManager {
   }
 
   changeVolume(value: number) {
-    let volume = value / 100
-
     if (gainNode) {
       usePlayerStore.setState((prevState) => ({
         playerStatus: {
           ...prevState.playerStatus,
-          volume: volume
+          volume: value
         }
       }))
-      gainNode.gain.value = volume
+      gainNode.gain.value = value
     } else {
       console.error('Gain node is not available.')
     }
