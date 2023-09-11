@@ -1,7 +1,10 @@
 import { usePlayerStore } from '@renderer/store/playerStore/playerStore'
 import { useEffect } from 'react'
-import { Box, Grid, Text } from '@mantine/core'
+import { Box, Grid } from '@mantine/core'
 import pcManager from '../../core/PlayerControlManager'
+import TrackInfo from './layout/TrackInfo'
+import PlaybackControls from './layout/PlaybackControls'
+import VolumeAndAdditionalControls from './layout/VolumeAndAdditionalControls'
 
 function PlayerControls() {
   const { trackFile } = usePlayerStore((state) => state)
@@ -22,12 +25,16 @@ function PlayerControls() {
           backgroundColor: theme.colorScheme == 'dark' ? theme.black : theme.colors.gray[0]
         })}
       >
-        <Grid>
-          <Grid.Col span={4}>
-            <Text>1</Text>
+        <Grid grow>
+          <Grid.Col span={3}>
+            <TrackInfo />
           </Grid.Col>
-          <Grid.Col span={4}>2</Grid.Col>
-          <Grid.Col span={4}>3</Grid.Col>
+          <Grid.Col span={6}>
+            <PlaybackControls />
+          </Grid.Col>
+          <Grid.Col span={3}>
+            <VolumeAndAdditionalControls />
+          </Grid.Col>
         </Grid>
       </Box>
     </>
