@@ -36,9 +36,13 @@ const Tracks = () => {
 
         <Button onClick={() => pcManager.previousTrack()}>Previous</Button>
 
+        <Button onClick={() => pcManager.stepBackward()}>Step backward</Button>
+
         <Button onClick={() => pcManager.togglePlaying()}>
           {playerStatus.playing ? 'Pause' : 'Play'}
         </Button>
+
+        <Button onClick={() => pcManager.stepForward()}>Step forward</Button>
 
         <Button onClick={() => pcManager.nextTrack()}>Next</Button>
 
