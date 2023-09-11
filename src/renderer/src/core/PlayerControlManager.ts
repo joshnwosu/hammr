@@ -181,14 +181,14 @@ export class PlayerControlManager {
     this.playTrack(currentIndex)
   }
 
-  stepForward() {
+  stepForward(value: number = 10): void {
     if (!this.audio.src) return
-    this.audio.currentTime += 10
+    this.audio.currentTime += value
   }
 
-  stepBackward() {
+  stepBackward(value: number = 10): void {
     if (!this.audio.src) return
-    this.audio.currentTime -= 10
+    this.audio.currentTime -= value
   }
 
   private updateShuffle(value: boolean) {

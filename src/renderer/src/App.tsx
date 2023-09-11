@@ -14,9 +14,10 @@ import { Frame } from './components/Frame/Frame'
 import PlayerControls from './components/PlayerControls/PlayerControls'
 import Sidebar from './components/Sidebar/Sidebar'
 import NowPlaying from './components/NowPlaying/NowPlaying'
-import Tracks from './screens/Tracks/Tracks'
+// import Tracks from './screens/Tracks/Tracks'
 import Root from './components/Root/Root'
 import Static from './components/Static'
+import AppRouter from './routes/appRouter'
 
 const useStyles = createStyles((theme) => ({
   col: {
@@ -75,7 +76,8 @@ const App: React.FC = () => {
 
             <Grid.Col span={'auto'}>
               <Paper className={classes.col} radius={'md'}>
-                <Tracks />
+                {/* <Tracks /> */}
+                <AppRouter />
               </Paper>
             </Grid.Col>
 
