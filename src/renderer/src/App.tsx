@@ -16,7 +16,6 @@ import Sidebar from './components/Sidebar/Sidebar'
 import NowPlaying from './components/NowPlaying/NowPlaying'
 // import Tracks from './screens/Tracks/Tracks'
 import Root from './components/Root/Root'
-import Static from './components/Static'
 import AppRouter from './routes/appRouter'
 
 const useStyles = createStyles((theme) => ({
@@ -89,7 +88,6 @@ const App: React.FC = () => {
           </Grid>
 
           <PlayerControls />
-          <Static />
         </div>
       </MantineProvider>
     </ColorSchemeProvider>
