@@ -31,7 +31,7 @@ export default function Sidebar() {
       </Tooltip>
       <div>
         <TbPlayerPlay size={'5rem'} strokeWidth={1} />
-        <TbPlayerPause size={'5rem'} strokeWidth={0} />
+        <TbPlayerPause size={'5rem'} strokeWidth={1} />
         <TbArrowsShuffle size={'5rem'} strokeWidth={1} />
         <TbRepeat size={'5rem'} strokeWidth={1} />
         <TbRepeatOff size={'5rem'} strokeWidth={1} />

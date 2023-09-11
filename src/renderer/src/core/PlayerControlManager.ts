@@ -30,12 +30,20 @@ export class PlayerControlManager {
 
     this.audio.onloadeddata = () => {
       this.audio.play()
+
+      usePlayerStore.setState((prevState) => ({
+        playerStatus: {
+          ...prevState.playerStatus,
+          nowPlaying: trackUtils.getTrack(this.tracks, this.fileTrack) as Track
+        }
+      }))
     }
     this.audio.oncanplay = () => {
       usePlayerStore.setState((prevState) => ({
         playerStatus: {
           ...prevState.playerStatus,
           duration: this.audio.duration
+          // nowPlaying:
         }
       }))
     }
@@ -72,7 +80,6 @@ export class PlayerControlManager {
     this.tracks = tracks
     this.fileTrack = currentTrack
 
-    usePlayerStore.getState().setTrackFile('')
     if (currentTrack !== undefined) {
       usePlayerStore.getState().setTrackFile(currentTrack)
 

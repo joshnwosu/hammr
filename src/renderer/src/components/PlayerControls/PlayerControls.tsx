@@ -17,27 +17,33 @@ function PlayerControls() {
   }, [trackFile])
 
   return (
-    <>
-      <Box
-        sx={(theme) => ({
-          height: 80,
-          padding: theme.spacing.md,
-          backgroundColor: theme.colorScheme == 'dark' ? theme.black : theme.colors.gray[0]
-        })}
+    <Box
+      sx={(theme) => ({
+        width: '100%',
+        height: 80,
+        backgroundColor: theme.colorScheme == 'dark' ? theme.black : theme.colors.gray[0]
+      })}
+    >
+      <Grid
+        grow
+        style={{
+          height: '100%'
+        }}
+        align="center"
+        justify="center"
+        m={0}
       >
-        <Grid grow>
-          <Grid.Col span={3}>
-            <TrackInfo />
-          </Grid.Col>
-          <Grid.Col span={6}>
-            <PlaybackControls />
-          </Grid.Col>
-          <Grid.Col span={3}>
-            <VolumeAndAdditionalControls />
-          </Grid.Col>
-        </Grid>
-      </Box>
-    </>
+        <Grid.Col span={3}>
+          <TrackInfo />
+        </Grid.Col>
+        <Grid.Col span={6}>
+          <PlaybackControls />
+        </Grid.Col>
+        <Grid.Col span={3}>
+          <VolumeAndAdditionalControls />
+        </Grid.Col>
+      </Grid>
+    </Box>
   )
 }
 
