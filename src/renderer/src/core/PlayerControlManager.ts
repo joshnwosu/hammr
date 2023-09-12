@@ -75,8 +75,6 @@ export class PlayerControlManager {
   }
 
   selectedTrack(currentTrack: string, tracks: Track[]) {
-    this.changeVolume(this.volume)
-
     this.tracks = tracks
     this.fileTrack = currentTrack
 
@@ -322,6 +320,11 @@ export class PlayerControlManager {
     } else {
       console.error('Gain node is not available.')
     }
+  }
+
+  toggleMute() {
+    // mute and unmute audio
+    console.log('mute and unmute audio')
   }
 }
 

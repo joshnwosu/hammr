@@ -1,4 +1,4 @@
-import { ActionIcon, Flex, Slider, Text, rem } from '@mantine/core'
+import { ActionIcon, Flex, Slider, Text, Tooltip, rem } from '@mantine/core'
 import pcManager from '@renderer/core/PlayerControlManager'
 import { usePlayerStore } from '@renderer/store/playerStore/playerStore'
 import { RepeatEnum } from '@renderer/store/playerStore/types'
@@ -30,76 +30,106 @@ export default function PlaybackControls() {
       gap={5}
     >
       <Flex gap={'sm'} align={'center'}>
-        <ActionIcon
-          variant="default"
-          size={'lg'}
-          radius={'xl'}
-          onClick={() => pcManager.shuffleTrack()}
-        >
-          {shuffle ? (
-            <TbArrowsShuffle size={'1rem'} strokeWidth={2} color={'#1FDF64'} />
-          ) : (
-            <TbArrowsShuffle size={'1rem'} strokeWidth={2} />
-          )}
-        </ActionIcon>
+        <Tooltip label={shuffle ? 'Disable shuffle' : 'Enable shuffle'} fz={'xs'} fw={600}>
+          <ActionIcon
+            variant="default"
+            size={'lg'}
+            radius={'xl'}
+            onClick={() => pcManager.shuffleTrack()}
+          >
+            {shuffle ? (
+              <TbArrowsShuffle size={'1rem'} strokeWidth={2} color={'#1FDF64'} />
+            ) : (
+              <TbArrowsShuffle size={'1rem'} strokeWidth={2} />
+            )}
+          </ActionIcon>
+        </Tooltip>
 
-        <ActionIcon
-          variant="default"
-          size={'lg'}
-          radius={'xl'}
-          onClick={() => pcManager.previousTrack()}
-        >
-          <TbPlayerSkipBack size={'1rem'} strokeWidth={2} />
-        </ActionIcon>
-        <ActionIcon
-          variant="default"
-          size={'lg'}
-          radius={'xl'}
-          onClick={() => pcManager.stepBackward()}
-        >
-          <TbPlayerTrackPrev size={'1rem'} strokeWidth={2} />
-        </ActionIcon>
-        <ActionIcon
-          variant="default"
-          size={'xl'}
-          radius={'xl'}
-          onClick={() => pcManager.togglePlaying()}
-        >
-          {playing ? (
-            <TbPlayerPause size={'1.5rem'} strokeWidth={2} />
-          ) : (
-            <TbPlayerPlay size={'1.5rem'} strokeWidth={2} />
-          )}
-        </ActionIcon>
-        <ActionIcon
-          variant="default"
-          size={'lg'}
-          radius={'xl'}
-          onClick={() => pcManager.stepForward()}
-        >
-          <TbPlayerTrackNext size={'1rem'} strokeWidth={2} />
-        </ActionIcon>
-        <ActionIcon
-          variant="default"
-          size={'lg'}
-          radius={'xl'}
-          onClick={() => pcManager.nextTrack()}
-        >
-          <TbPlayerSkipForward size={'1rem'} strokeWidth={2} />
-        </ActionIcon>
+        <Tooltip label={'Previous'} fz={'xs'} fw={600}>
+          <ActionIcon
+            variant="default"
+            size={'lg'}
+            radius={'xl'}
+            onClick={() => pcManager.previousTrack()}
+          >
+            <TbPlayerSkipBack size={'1rem'} strokeWidth={2} />
+          </ActionIcon>
+        </Tooltip>
 
-        <ActionIcon
-          variant="default"
-          size={'lg'}
-          radius={'xl'}
-          onClick={() => pcManager.repeatTrack()}
+        <Tooltip label={'Step backward'} fz={'xs'} fw={600}>
+          <ActionIcon
+            variant="default"
+            size={'lg'}
+            radius={'xl'}
+            onClick={() => pcManager.stepBackward()}
+          >
+            <TbPlayerTrackPrev size={'1rem'} strokeWidth={2} />
+          </ActionIcon>
+        </Tooltip>
+
+        <Tooltip label={playing ? 'Pause' : 'Play'} fz={'xs'} fw={600}>
+          <ActionIcon
+            variant="default"
+            size={'xl'}
+            radius={'xl'}
+            onClick={() => pcManager.togglePlaying()}
+          >
+            {playing ? (
+              <TbPlayerPause size={'1.5rem'} strokeWidth={2} />
+            ) : (
+              <TbPlayerPlay size={'1.5rem'} strokeWidth={2} />
+            )}
+          </ActionIcon>
+        </Tooltip>
+
+        <Tooltip label={'Step forward'} fz={'xs'} fw={600}>
+          <ActionIcon
+            variant="default"
+            size={'lg'}
+            radius={'xl'}
+            onClick={() => pcManager.stepForward()}
+          >
+            <TbPlayerTrackNext size={'1rem'} strokeWidth={2} />
+          </ActionIcon>
+        </Tooltip>
+
+        <Tooltip label={'Next'} fz={'xs'} fw={600}>
+          <ActionIcon
+            variant="default"
+            size={'lg'}
+            radius={'xl'}
+            onClick={() => pcManager.nextTrack()}
+          >
+            <TbPlayerSkipForward size={'1rem'} strokeWidth={2} />
+          </ActionIcon>
+        </Tooltip>
+
+        <Tooltip
+          label={
+            repeat === RepeatEnum.Off
+              ? 'Repeat off'
+              : repeat === RepeatEnum.All
+              ? 'Repeat all'
+              : 'Repeat one'
+          }
+          fz={'xs'}
+          fw={600}
         >
-          {repeat === RepeatEnum.Off && <TbRepeat size={'1rem'} strokeWidth={2} />}
-          {repeat === RepeatEnum.All && <TbRepeat size={'1rem'} strokeWidth={2} color="#1FDF64" />}
-          {repeat === RepeatEnum.One && (
-            <TbRepeatOnce size={'1rem'} strokeWidth={2} color="#1FDF64" />
-          )}
-        </ActionIcon>
+          <ActionIcon
+            variant="default"
+            size={'lg'}
+            radius={'xl'}
+            onClick={() => pcManager.repeatTrack()}
+          >
+            {repeat === RepeatEnum.Off && <TbRepeat size={'1rem'} strokeWidth={2} />}
+            {repeat === RepeatEnum.All && (
+              <TbRepeat size={'1rem'} strokeWidth={2} color="#1FDF64" />
+            )}
+            {repeat === RepeatEnum.One && (
+              <TbRepeatOnce size={'1rem'} strokeWidth={2} color="#1FDF64" />
+            )}
+          </ActionIcon>
+        </Tooltip>
       </Flex>
 
       <Flex gap={'sm'} align={'center'} justify={'center'} w={'100%'}>

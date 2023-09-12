@@ -1,7 +1,6 @@
 import { ActionIcon, Flex, Slider, rem } from '@mantine/core'
 import pcManager from '@renderer/core/PlayerControlManager'
 import { usePlayerStore } from '@renderer/store/playerStore/playerStore'
-import { useEffect } from 'react'
 import {
   IoVolumeHighOutline,
   IoVolumeLowOutline,
@@ -14,10 +13,6 @@ export default function VolumeAndAdditionalControls() {
   const { playerStatus } = usePlayerStore((state) => state)
 
   const { volume } = playerStatus
-
-  useEffect(() => {
-    console.log(volume)
-  }, [volume])
 
   return (
     <Flex
@@ -32,7 +27,7 @@ export default function VolumeAndAdditionalControls() {
         variant="default"
         size={'lg'}
         radius={'xl'}
-        onClick={() => pcManager.repeatTrack()}
+        onClick={() => pcManager.toggleMute()}
       >
         {volume <= 0 ? (
           <IoVolumeOffOutline size={'1rem'} strokeWidth={2} />

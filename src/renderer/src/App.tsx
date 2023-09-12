@@ -21,8 +21,7 @@ const App: React.FC = () => {
         withGlobalStyles
         withNormalizeCSS
         theme={{
-          colorScheme,
-          primaryColor: 'grape'
+          colorScheme
         }}
       >
         <Root />
