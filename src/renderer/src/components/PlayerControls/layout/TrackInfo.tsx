@@ -36,7 +36,7 @@ export default function TrackInfo() {
             </div>
           </Center>
 
-          <Tooltip label={'Add to favorites'} fz={'xs'} fw={600}>
+          <Tooltip label={'Add to favorites'} fz={'xs'} fw={600} color="gray">
             <ActionIcon
               variant="default"
               size={'lg'}

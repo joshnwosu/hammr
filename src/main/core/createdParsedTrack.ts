@@ -34,7 +34,7 @@ function createParsedTrack(fileLocation: string) {
         // @ts-expect-error
         writeImageBuffer(tags.image.imageBuffer, albumArtPath)
 
-        track.albumArt = albumArtPath
+        track.albumArt = 'file://' + albumArtPath
       }
 
       track.title = tags.title || track.fileName

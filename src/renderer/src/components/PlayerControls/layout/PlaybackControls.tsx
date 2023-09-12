@@ -30,7 +30,12 @@ export default function PlaybackControls() {
       gap={5}
     >
       <Flex gap={'sm'} align={'center'}>
-        <Tooltip label={shuffle ? 'Disable shuffle' : 'Enable shuffle'} fz={'xs'} fw={600}>
+        <Tooltip
+          label={shuffle ? 'Disable shuffle' : 'Enable shuffle'}
+          fz={'xs'}
+          fw={600}
+          color="gray"
+        >
           <ActionIcon
             variant="default"
             size={'lg'}
@@ -45,7 +50,7 @@ export default function PlaybackControls() {
           </ActionIcon>
         </Tooltip>
 
-        <Tooltip label={'Previous'} fz={'xs'} fw={600}>
+        <Tooltip label={'Previous'} fz={'xs'} fw={600} color="gray">
           <ActionIcon
             variant="default"
             size={'lg'}
@@ -56,7 +61,7 @@ export default function PlaybackControls() {
           </ActionIcon>
         </Tooltip>
 
-        <Tooltip label={'Step backward'} fz={'xs'} fw={600}>
+        <Tooltip label={'Step backward'} fz={'xs'} fw={600} color="gray">
           <ActionIcon
             variant="default"
             size={'lg'}
@@ -67,7 +72,7 @@ export default function PlaybackControls() {
           </ActionIcon>
         </Tooltip>
 
-        <Tooltip label={playing ? 'Pause' : 'Play'} fz={'xs'} fw={600}>
+        <Tooltip label={playing ? 'Pause' : 'Play'} fz={'xs'} fw={600} color="gray">
           <ActionIcon
             variant="default"
             size={'xl'}
@@ -82,7 +87,7 @@ export default function PlaybackControls() {
           </ActionIcon>
         </Tooltip>
 
-        <Tooltip label={'Step forward'} fz={'xs'} fw={600}>
+        <Tooltip label={'Step forward'} fz={'xs'} fw={600} color="gray">
           <ActionIcon
             variant="default"
             size={'lg'}
@@ -93,7 +98,7 @@ export default function PlaybackControls() {
           </ActionIcon>
         </Tooltip>
 
-        <Tooltip label={'Next'} fz={'xs'} fw={600}>
+        <Tooltip label={'Next'} fz={'xs'} fw={600} color="gray">
           <ActionIcon
             variant="default"
             size={'lg'}
@@ -114,6 +119,7 @@ export default function PlaybackControls() {
           }
           fz={'xs'}
           fw={600}
+          color="gray"
         >
           <ActionIcon
             variant="default"
