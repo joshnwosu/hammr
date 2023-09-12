@@ -20,9 +20,10 @@ function PlayerControls() {
     <Box
       sx={(theme) => ({
         width: '100%',
-        height: 80,
+        height: 100,
         backgroundColor: theme.colorScheme == 'dark' ? theme.black : theme.colors.gray[0]
       })}
+      px={'md'}
     >
       <Grid
         grow
