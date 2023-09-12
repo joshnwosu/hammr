@@ -3,12 +3,12 @@ import { Track } from '@renderer/store/playerStore/playerStore'
 class TrackUtils {
   constructor() {}
 
-  getTrack(tracks: Track[], id: string) {
-    return tracks.find((track) => track.r_fileLocation === id)
+  getTrack(tracks: Track[], fileTrack: string) {
+    return tracks.find((track) => track.r_fileLocation === fileTrack)
   }
 
-  getTrackIndex(tracks: Track[], id: string) {
-    return tracks.findIndex((track) => track.r_fileLocation == id)
+  getTrackIndex(tracks: Track[], fileTrack: string) {
+    return tracks.findIndex((track) => track.r_fileLocation == fileTrack)
   }
 
   formatIndex(num: number) {
