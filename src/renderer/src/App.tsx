@@ -17,7 +17,14 @@ const App: React.FC = () => {
 
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-      <MantineProvider withGlobalStyles withNormalizeCSS theme={{ colorScheme }}>
+      <MantineProvider
+        withGlobalStyles
+        withNormalizeCSS
+        theme={{
+          colorScheme,
+          primaryColor: 'grape'
+        }}
+      >
         <Root />
       </MantineProvider>
     </ColorSchemeProvider>

@@ -36,7 +36,11 @@ export default function PlaybackControls() {
           radius={'xl'}
           onClick={() => pcManager.shuffleTrack()}
         >
-          <TbArrowsShuffle size={'1rem'} strokeWidth={2} color={shuffle ? '#1FDF64' : 'white'} />
+          {shuffle ? (
+            <TbArrowsShuffle size={'1rem'} strokeWidth={2} color={'#1FDF64'} />
+          ) : (
+            <TbArrowsShuffle size={'1rem'} strokeWidth={2} />
+          )}
         </ActionIcon>
 
         <ActionIcon
