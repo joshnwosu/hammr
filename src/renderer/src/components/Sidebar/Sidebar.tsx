@@ -1,25 +1,22 @@
-import { Button, ColSpan, Text, Tooltip } from '@mantine/core'
-import { useState } from 'react'
-import { TbHome2 } from 'react-icons/tb'
+import { Box, Flex, createStyles } from '@mantine/core'
+import { Link } from 'react-router-dom'
+
+const useStyles = createStyles((theme) => ({
+  wrapper: {
+    width: 280,
+    backgroundColor: theme.black,
+    display: 'flex'
+  }
+}))
 
 export default function Sidebar() {
-  const [navbarSize, setNavbarSize] = useState<ColSpan>(2)
+  const { classes } = useStyles()
   return (
-    <div>
-      <Text>Navbar component</Text>
-      <Tooltip label="Expand">
-        <Button
-          onClick={() => {
-            if (navbarSize === 2) setNavbarSize('auto')
-            else setNavbarSize(2)
-          }}
-        >
-          Expand
-        </Button>
-      </Tooltip>
-      <div>
-        <TbHome2 size={'5rem'} strokeWidth={1} />
-      </div>
-    </div>
+    <Box className={classes.wrapper}>
+      <Flex direction={'column'}>
+        <Link to="/">Tracks</Link>
+        <Link to="search">Search</Link>
+      </Flex>
+    </Box>
   )
 }

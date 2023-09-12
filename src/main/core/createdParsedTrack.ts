@@ -26,7 +26,7 @@ function createParsedTrack(fileLocation: string) {
 
         const albumArtPath = join(
           directories.albumCover,
-          `${removeMIME(decodeURI(track.fileName).replace(/[^a-zA-Z0-9-_]/g, ''))}.${
+          `${removeMIME(decodeURIComponent(track.fileName).replace(/[^a-zA-Z0-9-_]/g, ''))}.${
             // @ts-expect-error
             tags.image.mime
           }`
@@ -34,7 +34,7 @@ function createParsedTrack(fileLocation: string) {
         // @ts-expect-error
         writeImageBuffer(tags.image.imageBuffer, albumArtPath)
 
-        track.albumArt = albumArtPath
+        track.albumArt = 'file://' + albumArtPath
       }
 
       track.title = tags.title || track.fileName

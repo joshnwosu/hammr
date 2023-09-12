@@ -11,7 +11,7 @@ const Home = () => {
       <Text>Home</Text>
       <SwitchToggle />
 
-      {/* <Allotment vertical={false}>
+      <Allotment vertical={false}>
         <Allotment.Pane minSize={100}>
           <p>Side Bar yoo</p>
         </Allotment.Pane>
@@ -21,7 +21,7 @@ const Home = () => {
         <Allotment.Pane minSize={200}>
           <p>Now Playing</p>
         </Allotment.Pane>
-      </Allotment> */}
+      </Allotment>
       <Outlet />
     </div>
   )
