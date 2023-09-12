@@ -21,7 +21,8 @@ const App: React.FC = () => {
         withGlobalStyles
         withNormalizeCSS
         theme={{
-          colorScheme
+          colorScheme,
+          fontFamily: "'Josefin Sans', sans-serif"
         }}
       >
         <Root />
