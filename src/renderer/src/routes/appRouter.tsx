@@ -9,7 +9,7 @@ export default function () {
     <>
       <Routes>
         <Route element={<Layout />}>
-          <Route index element={<Tracks />} />
+          <Route index path="tracks" element={<Tracks />} />
           <Route path="search" element={<Search />} />
         </Route>
 

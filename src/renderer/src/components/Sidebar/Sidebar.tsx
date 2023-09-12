@@ -1,22 +1,75 @@
-import { Box, Flex, createStyles } from '@mantine/core'
+import { Navbar, createStyles, getStylesRef } from '@mantine/core'
 import { Link } from 'react-router-dom'
+import { links } from './data'
+import { useState } from 'react'
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
     width: 280,
     backgroundColor: theme.black,
-    display: 'flex'
+    display: 'flex',
+    height: '100%',
+    border: 'none',
+    paddingTop: 30
+  },
+
+  link: {
+    ...theme.fn.focusStyles(),
+    display: 'flex',
+    alignItems: 'center',
+    textDecoration: 'none',
+    fontSize: theme.fontSizes.sm,
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
+    padding: `${theme.spacing.xs} ${theme.spacing.sm}`,
+    fontWeight: 500,
+
+    '&:hover': {
+      backgroundColor: theme.fn.variant({ variant: 'light', color: theme.primaryColor }).background,
+      color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+
+      [`& .${getStylesRef('icon')}`]: {
+        color: theme.colorScheme === 'dark' ? theme.white : theme.black
+      }
+    }
+  },
+
+  linkIcon: {
+    ref: getStylesRef('icon'),
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
+    marginRight: theme.spacing.sm
+  },
+
+  linkActive: {
+    '&, &:hover': {
+      color: theme.fn.variant({ variant: 'light', color: theme.primaryColor }).color,
+      [`& .${getStylesRef('icon')}`]: {
+        color: theme.fn.variant({ variant: 'light', color: theme.primaryColor }).color
+      }
+    }
   }
 }))
 
 export default function Sidebar() {
-  const { classes } = useStyles()
+  const { classes, cx } = useStyles()
+  const [active, setActive] = useState('Tracks')
   return (
-    <Box className={classes.wrapper}>
-      <Flex direction={'column'}>
-        <Link to="/">Tracks</Link>
-        <Link to="search">Search</Link>
-      </Flex>
-    </Box>
+    <>
+      <Navbar className={classes.wrapper}>
+        <Navbar.Section>
+          {links.map((link) => (
+            <Link
+              to={link.link}
+              onClick={() => {
+                setActive(link.label)
+              }}
+              className={cx(classes.link, { [classes.linkActive]: link.label === active })}
+            >
+              <link.icon className={classes.linkIcon} strokeWidth={1.5} size={25} />
+              {link.label}
+            </Link>
+          ))}
+        </Navbar.Section>
+      </Navbar>
+    </>
   )
 }
