@@ -1,4 +1,4 @@
-import { Box, Paper, createStyles } from '@mantine/core'
+import { Box, Paper, ScrollArea, createStyles } from '@mantine/core'
 import Sidebar from '../Sidebar/Sidebar'
 import { Outlet } from 'react-router-dom'
 import NowPlaying from '../NowPlaying/NowPlaying'
@@ -37,10 +37,9 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: '#111111',
     flex: 1,
     borderRadius: 0,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    borderTopLeftRadius: theme.radius.md,
+    borderTopRightRadius: theme.radius.md,
     height: '100%',
-    padding: 20,
     overflowY: 'auto'
   }
 }))
@@ -55,7 +54,9 @@ export default function Layout() {
         <Sidebar />
         <Box className={classes.scene}>
           <Paper className={classes.main}>
-            <Outlet />
+            <ScrollArea h={'100%'}>
+              <Outlet />
+            </ScrollArea>
           </Paper>
           <NowPlaying />
         </Box>
