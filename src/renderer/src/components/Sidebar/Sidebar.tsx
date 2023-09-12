@@ -20,9 +20,8 @@ const useStyles = createStyles((theme) => ({
     textDecoration: 'none',
     fontSize: theme.fontSizes.sm,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
-    padding: `10px 0`,
+    padding: `5px 0`,
     fontWeight: 500,
-    position: 'relative',
 
     '&:hover': {
       backgroundColor: theme.fn.variant({ variant: 'light', color: theme.primaryColor }).background,
@@ -51,7 +50,7 @@ const useStyles = createStyles((theme) => ({
 
   shape: {
     width: 4,
-    height: 35,
+    height: 30,
     backgroundColor: theme.primaryColor,
     marginRight: 10,
     opacity: 0
@@ -81,7 +80,7 @@ export default function Sidebar() {
                 className={cx(classes.shape, { [classes.shapeActive]: link.label === active })}
               />
               <Flex gap={'0'} align={'center'}>
-                <link.icon className={classes.linkIcon} strokeWidth={1.5} size={25} />
+                <link.icon className={classes.linkIcon} strokeWidth={2} size={25} />
                 {link.label}
               </Flex>
             </Link>

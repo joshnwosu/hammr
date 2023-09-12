@@ -1,6 +1,7 @@
-import { TbHome2, TbSearch } from 'react-icons/tb'
+import { TbHeart, TbHome2, TbSearch } from 'react-icons/tb'
 
 export const links = [
   { link: 'tracks', label: 'Tracks', icon: TbHome2 },
-  { link: 'search', label: 'Search', icon: TbSearch }
+  { link: 'search', label: 'Search', icon: TbSearch },
+  { link: 'search', label: 'Favourites', icon: TbHeart }
 ]
