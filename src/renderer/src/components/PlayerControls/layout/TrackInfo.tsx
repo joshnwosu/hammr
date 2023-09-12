@@ -1,5 +1,5 @@
 import { ActionIcon, Center, Flex, Image, Text, Tooltip } from '@mantine/core'
-import pcManager from '@renderer/core/PlayerControlManager'
+// import pcManager from '@renderer/core/PlayerControlManager'
 import { usePlayerStore } from '@renderer/store/playerStore/playerStore'
 import { TbHeart } from 'react-icons/tb'
 
