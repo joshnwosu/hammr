@@ -20,7 +20,7 @@ export interface PlayerStoreProps {
     currentTime: number
     duration: number
     lastPlayed: number[]
-    nowPlaying: Track | null
+    nowPlaying: Track
     seekPosition: number
     volume: number
   }

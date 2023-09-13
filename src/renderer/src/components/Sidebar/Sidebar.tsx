@@ -1,47 +1,92 @@
-import { Button, ColSpan, Text, Tooltip } from '@mantine/core'
+import { Flex, Navbar, Paper, createStyles, getStylesRef } from '@mantine/core'
+import { Link } from 'react-router-dom'
+import { links } from './data'
 import { useState } from 'react'
-import {
-  TbHome2,
-  TbPlayerPlay,
-  TbPlayerPause,
-  TbArrowsShuffle,
-  TbRepeat,
-  TbRepeatOff,
-  TbRepeatOnce,
-  TbPlayerTrackPrev,
-  TbPlayerTrackNext,
-  TbPlayerSkipBack,
-  TbPlayerSkipForward
-} from 'react-icons/tb'
+
+const useStyles = createStyles((theme) => ({
+  wrapper: {
+    width: 280,
+    backgroundColor: theme.black,
+    display: 'flex',
+    height: '100%',
+    border: 'none',
+    paddingTop: 30
+  },
+
+  link: {
+    ...theme.fn.focusStyles(),
+    display: 'flex',
+    alignItems: 'center',
+    textDecoration: 'none',
+    fontSize: theme.fontSizes.sm,
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
+    padding: `5px 0`,
+    fontWeight: 500,
+
+    '&:hover': {
+      backgroundColor: theme.fn.variant({ variant: 'light', color: theme.primaryColor }).background,
+      color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+
+      [`& .${getStylesRef('icon')}`]: {
+        color: theme.colorScheme === 'dark' ? theme.white : theme.black
+      }
+    }
+  },
+
+  linkIcon: {
+    ref: getStylesRef('icon'),
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
+    marginRight: theme.spacing.sm
+  },
+
+  linkActive: {
+    '&, &:hover': {
+      color: theme.fn.variant({ variant: 'light', color: theme.primaryColor }).color,
+      [`& .${getStylesRef('icon')}`]: {
+        color: theme.fn.variant({ variant: 'light', color: theme.primaryColor }).color
+      }
+    }
+  },
+
+  shape: {
+    width: 4,
+    height: 30,
+    backgroundColor: theme.primaryColor,
+    marginRight: 10,
+    opacity: 0
+  },
+
+  shapeActive: {
+    opacity: 1
+  }
+}))
 
 export default function Sidebar() {
-  const [navbarSize, setNavbarSize] = useState<ColSpan>(2)
+  const { classes, cx } = useStyles()
+  const [active, setActive] = useState('Tracks')
   return (
-    <div>
-      <Text>Navbar component</Text>
-      <Tooltip label="Expand">
-        <Button
-          onClick={() => {
-            if (navbarSize === 2) setNavbarSize('auto')
-            else setNavbarSize(2)
-          }}
-        >
-          Expand
-        </Button>
-      </Tooltip>
-      <div>
-        <TbPlayerPlay size={'5rem'} strokeWidth={1} />
-        <TbPlayerPause size={'5rem'} strokeWidth={0} />
-        <TbArrowsShuffle size={'5rem'} strokeWidth={1} />
-        <TbRepeat size={'5rem'} strokeWidth={1} />
-        <TbRepeatOff size={'5rem'} strokeWidth={1} />
-        <TbRepeatOnce size={'5rem'} strokeWidth={1} />
-        <TbPlayerTrackPrev size={'5rem'} strokeWidth={1} />
-        <TbPlayerTrackNext size={'5rem'} strokeWidth={1} />
-        <TbPlayerSkipBack size={'5rem'} strokeWidth={1} />
-        <TbPlayerSkipForward size={'5rem'} strokeWidth={1} />
-        <TbHome2 size={'5rem'} strokeWidth={1} />
-      </div>
-    </div>
+    <>
+      <Navbar className={classes.wrapper}>
+        <Navbar.Section>
+          {links.map((link) => (
+            <Link
+              to={link.link}
+              onClick={() => {
+                setActive(link.label)
+              }}
+              className={cx(classes.link, { [classes.linkActive]: link.label === active })}
+            >
+              <Paper
+                className={cx(classes.shape, { [classes.shapeActive]: link.label === active })}
+              />
+              <Flex gap={'0'} align={'center'}>
+                <link.icon className={classes.linkIcon} strokeWidth={2} size={25} />
+                {link.label}
+              </Flex>
+            </Link>
+          ))}
+        </Navbar.Section>
+      </Navbar>
+    </>
   )
 }

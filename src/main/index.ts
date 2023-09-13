@@ -126,14 +126,12 @@ export const playerReady = () => {
   const recentlyPlayedTracks = playbackStats.recentlyPlayedTracks
   const playStats = playbackStats.playStats
 
-  // if (processedFiles.length > 0) {
   ipcMain.on('playerReady', (_event) => {
     _event.sender.send('processedFiles', processedFiles)
     _event.sender.send('userPlaylists', playlists)
     _event.sender.send('recentlyPlayed', recentlyPlayedTracks)
     _event.sender.send('playStats', playStats)
   })
-  // }
   refreshTracks()
 }
 

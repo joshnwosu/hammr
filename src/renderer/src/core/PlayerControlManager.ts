@@ -30,12 +30,20 @@ export class PlayerControlManager {
 
     this.audio.onloadeddata = () => {
       this.audio.play()
+
+      usePlayerStore.setState((prevState) => ({
+        playerStatus: {
+          ...prevState.playerStatus,
+          nowPlaying: trackUtils.getTrack(this.tracks, this.fileTrack) as Track
+        }
+      }))
     }
     this.audio.oncanplay = () => {
       usePlayerStore.setState((prevState) => ({
         playerStatus: {
           ...prevState.playerStatus,
           duration: this.audio.duration
+          // nowPlaying:
         }
       }))
     }
@@ -67,12 +75,9 @@ export class PlayerControlManager {
   }
 
   selectedTrack(currentTrack: string, tracks: Track[]) {
-    this.changeVolume(this.volume)
-
     this.tracks = tracks
     this.fileTrack = currentTrack
 
-    usePlayerStore.getState().setTrackFile('')
     if (currentTrack !== undefined) {
       usePlayerStore.getState().setTrackFile(currentTrack)
 
@@ -315,6 +320,11 @@ export class PlayerControlManager {
     } else {
       console.error('Gain node is not available.')
     }
+  }
+
+  toggleMute() {
+    // mute and unmute audio
+    console.log('mute and unmute audio')
   }
 }
 
