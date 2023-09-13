@@ -21,7 +21,7 @@ export default function VolumeControls() {
   const { volume } = playerStatus
 
   return (
-    <Flex className={classes.wrapper} align={'center'} justify={'flex-end'}>
+    <Flex className={classes.wrapper} align={'center'} justify={'flex-end'} gap={'md'}>
       <ActionIcon
         variant="default"
         size={'lg'}

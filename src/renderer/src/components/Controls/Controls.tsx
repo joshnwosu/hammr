@@ -25,7 +25,7 @@ export default function Controls() {
 
   return (
     <>
-      <Flex className={classes.wrapper} justify={'space-between'} align={'center'}>
+      <Flex className={classes.wrapper} justify={'space-between'} align={'center'} px={'lg'}>
         <CurrentTrack />
         <PlayerControls />
         <VolumeControls />

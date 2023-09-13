@@ -17,8 +17,7 @@ import Seek from './Seek'
 
 const useStyles = createStyles(() => ({
   wrapper: {
-    width: '50%',
-    border: '1px solid red'
+    width: '50%'
   }
 }))
 
@@ -28,7 +27,7 @@ export default function PlayerControls() {
   const { shuffle, playing, repeat } = playerStatus
 
   return (
-    <Flex className={classes.wrapper}>
+    <Flex className={classes.wrapper} direction={'column'} align={'center'}>
       <Flex align={'center'} gap={'md'}>
         <Tooltip label={shuffle ? 'Disable Shuffle' : 'Enable Shuffle'}>
           <CustomIcon onClick={() => pcManager.shuffleTrack()}>
