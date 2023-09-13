@@ -68,8 +68,9 @@ export default function Sidebar() {
     <>
       <Navbar className={classes.wrapper}>
         <Navbar.Section>
-          {links.map((link) => (
+          {links.map((link, index) => (
             <Link
+              key={index.toString()}
               to={link.link}
               onClick={() => {
                 setActive(link.label)
