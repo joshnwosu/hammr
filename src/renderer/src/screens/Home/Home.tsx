@@ -2,7 +2,7 @@ import { Text } from '@mantine/core'
 import { Link, Outlet } from 'react-router-dom'
 // @ts-ignore
 import { Allotment } from 'allotment'
-import { SwitchToggle } from '@renderer/components/widgets/SwitchTheme'
+import { SwitchToggle } from '@renderer/components/Widgets/SwitchTheme'
 
 const Home = () => {
   return (
