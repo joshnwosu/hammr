@@ -5,7 +5,7 @@ const useStyles = createStyles(() => ({
     backgroundColor: '#111111',
     width: 300,
     borderRadius: 0,
-    borderTopLeftRadius: 20,
+    borderTopLeftRadius: 10,
     height: '100%',
     padding: 20
   }
