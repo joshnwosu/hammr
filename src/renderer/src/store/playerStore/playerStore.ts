@@ -41,7 +41,8 @@ export const usePlayerStore = create<PlayerStoreProps>((set, get) => ({
     lastPlayed: [],
     nowPlaying: {} as Track,
     seekPosition: 0,
-    volume: 0.5
+    volume: 0.5,
+    muted: false
   },
   restoreTracks: (tracks) => {
     set({ tracks })

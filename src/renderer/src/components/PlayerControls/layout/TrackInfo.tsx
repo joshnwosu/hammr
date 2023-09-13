@@ -1,5 +1,7 @@
-import { Center, Flex, Image, Text } from '@mantine/core'
+import { ActionIcon, Center, Flex, Image, Text, Tooltip } from '@mantine/core'
+// import pcManager from '@renderer/core/PlayerControlManager'
 import { usePlayerStore } from '@renderer/store/playerStore/playerStore'
+import { TbHeart } from 'react-icons/tb'
 
 export default function TrackInfo() {
   const { playerStatus, trackFile } = usePlayerStore((state) => state)
@@ -13,19 +15,12 @@ export default function TrackInfo() {
       }}
       align={'center'}
       justify={'flex-start'}
+      gap={'md'}
     >
       {trackFile && (
         <>
           {albumArt ? (
-            <Image
-              width={60}
-              height={60}
-              radius="md"
-              src={albumArt}
-              fit="cover"
-              alt="Album Art"
-              mr={'xl'}
-            />
+            <Image width={60} height={60} radius="md" src={albumArt} fit="cover" alt="Album Art" />
           ) : (
             <></>
           )}
@@ -40,6 +35,17 @@ export default function TrackInfo() {
               </Text>
             </div>
           </Center>
+
+          <Tooltip label={'Add to favorites'} fz={'xs'} fw={600} color="gray">
+            <ActionIcon
+              variant="default"
+              size={'lg'}
+              radius={'xl'}
+              //   onClick={() => pcManager.stepBackward()}
+            >
+              <TbHeart size={'1rem'} strokeWidth={2} />
+            </ActionIcon>
+          </Tooltip>
         </>
       )}
     </Flex>

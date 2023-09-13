@@ -23,6 +23,7 @@ export interface PlayerStoreProps {
     nowPlaying: Track
     seekPosition: number
     volume: number
+    muted: boolean
   }
   setTrackFile: (track: Track['fileLocation'] | string) => void
   setNowPlaying: (track: Track) => void
