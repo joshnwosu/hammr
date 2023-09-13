@@ -26,54 +26,56 @@ export default function PlayerControls() {
   const { playerStatus } = usePlayerStore()
   const { shuffle, playing, repeat } = playerStatus
 
+  const iconSize = '1.2rem'
+
   return (
     <Flex className={classes.wrapper} direction={'column'} align={'center'}>
-      <Flex align={'center'} gap={'md'}>
+      <Flex align={'center'} gap={'md'} mb={'sm'}>
         <Tooltip label={shuffle ? 'Disable Shuffle' : 'Enable Shuffle'}>
           <CustomIcon onClick={() => pcManager.shuffleTrack()}>
-            <TbArrowsShuffle color={shuffle ? '#1FDF64' : ''} size={'1.2rem'} strokeWidth={2} />
+            <TbArrowsShuffle color={shuffle ? '#1FDF64' : ''} size={iconSize} strokeWidth={2} />
           </CustomIcon>
         </Tooltip>
         <Tooltip label={'Previous'}>
           <CustomIcon onClick={() => pcManager.previousTrack()}>
-            <TbPlayerSkipBack />
+            <TbPlayerSkipBack size={iconSize} />
           </CustomIcon>
         </Tooltip>
         <Tooltip label={'Step back'}>
           <CustomIcon onClick={() => pcManager.stepBackward()}>
-            <TbPlayerTrackPrev />
+            <TbPlayerTrackPrev size={iconSize} />
           </CustomIcon>
         </Tooltip>
         <Tooltip label={playing ? 'Pause' : 'Play'}>
           <CustomIcon onClick={() => pcManager.togglePlaying()} size={'xl'}>
             {playing ? (
-              <TbPlayerPause size={'1.5rem'} strokeWidth={2} />
+              <TbPlayerPause size={'2rem'} strokeWidth={2} />
             ) : (
-              <TbPlayerPlay size={'1.5rem'} strokeWidth={2} />
+              <TbPlayerPlay size={'2rem'} strokeWidth={2} />
             )}
           </CustomIcon>
         </Tooltip>
         <Tooltip label={'Step forward'}>
           <CustomIcon onClick={() => pcManager.previousTrack()}>
-            <TbPlayerTrackNext />
+            <TbPlayerTrackNext size={iconSize} />
           </CustomIcon>
         </Tooltip>
         <Tooltip label={'Nest'}>
           <CustomIcon onClick={() => pcManager.stepBackward()}>
-            <TbPlayerSkipForward />
+            <TbPlayerSkipForward size={iconSize} />
           </CustomIcon>
         </Tooltip>
         <Tooltip label={`Repeat ${repeat}`}>
           <CustomIcon onClick={() => pcManager.repeatTrack()}>
             {repeat !== RepeatEnum.One && (
               <TbRepeat
-                size={'1rem'}
+                size={iconSize}
                 color={repeat !== RepeatEnum.Off ? '#1FDF64' : ''}
                 strokeWidth={2}
               />
             )}
             {repeat === RepeatEnum.One && (
-              <TbRepeatOnce size={'1rem'} color={'#1FDF64'} strokeWidth={2} />
+              <TbRepeatOnce size={iconSize} color={'#1FDF64'} strokeWidth={2} />
             )}
           </CustomIcon>
         </Tooltip>
@@ -91,7 +93,7 @@ interface CustomIconProps {
 
 function CustomIcon({ children, size, onClick }: CustomIconProps) {
   return (
-    <ActionIcon size={size || 'lg'} onClick={onClick} variant={'light'} radius={'xl'}>
+    <ActionIcon size={size || 'lg'} onClick={onClick} variant={'transparent'} radius={'xl'}>
       {children}
     </ActionIcon>
   )

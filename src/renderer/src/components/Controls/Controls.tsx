@@ -9,7 +9,7 @@ import pcManager from '@renderer/core/PlayerControlManager'
 const useStyles = createStyles(() => ({
   wrapper: {
     width: '100%',
-    height: 100
+    maxHeight: 100
   }
 }))
 
@@ -25,7 +25,7 @@ export default function Controls() {
 
   return (
     <>
-      <Flex className={classes.wrapper} justify={'space-between'} align={'center'} px={'lg'}>
+      <Flex className={classes.wrapper} justify={'space-between'} align={'center'} p={'lg'}>
         <CurrentTrack />
         <PlayerControls />
         <VolumeControls />
