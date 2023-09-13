@@ -26,11 +26,11 @@ export default function TrackInfo() {
           )}
 
           <Center>
-            <div>
-              <Text fz={'sm'} fw={400} color="white">
+            <div style={{ overflow: 'hidden', width: 200, maxWidth: '100%' }}>
+              <Text fz={'sm'} fw={400} color="white" truncate>
                 {title}
               </Text>
-              <Text size={'12px'} fw={600} color="dimmed" mt={2}>
+              <Text size={'12px'} fw={600} color="dimmed" mt={2} truncate>
                 {artist}
               </Text>
             </div>

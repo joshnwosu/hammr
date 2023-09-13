@@ -54,9 +54,9 @@ export default function Layout() {
         <Sidebar />
         <Box className={classes.scene}>
           <Paper className={classes.main}>
-            <ScrollArea h={'100%'}>
-              <Outlet />
-            </ScrollArea>
+            {/* <ScrollArea h={'100%'}> */}
+            <Outlet />
+            {/* </ScrollArea> */}
           </Paper>
           <NowPlaying />
         </Box>
