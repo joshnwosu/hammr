@@ -16,7 +16,7 @@ import {
 } from 'react-icons/tb'
 
 export default function PlaybackControls() {
-  const { playerStatus } = usePlayerStore((state) => state)
+  const { playerStatus, trackFile } = usePlayerStore((state) => state)
 
   const { playing, shuffle, repeat, currentTime, duration, seekPosition } = playerStatus
   return (
@@ -41,6 +41,7 @@ export default function PlaybackControls() {
             size={'lg'}
             radius={'xl'}
             onClick={() => pcManager.shuffleTrack()}
+            disabled={trackFile == ''}
           >
             {shuffle ? (
               <TbArrowsShuffle size={'1rem'} strokeWidth={2} color={'#1FDF64'} />
@@ -56,6 +57,7 @@ export default function PlaybackControls() {
             size={'lg'}
             radius={'xl'}
             onClick={() => pcManager.previousTrack()}
+            disabled={trackFile == ''}
           >
             <TbPlayerSkipBack size={'1rem'} strokeWidth={2} />
           </ActionIcon>
@@ -67,6 +69,7 @@ export default function PlaybackControls() {
             size={'lg'}
             radius={'xl'}
             onClick={() => pcManager.stepBackward()}
+            disabled={trackFile == ''}
           >
             <TbPlayerTrackPrev size={'1rem'} strokeWidth={2} />
           </ActionIcon>
@@ -78,6 +81,7 @@ export default function PlaybackControls() {
             size={'xl'}
             radius={'xl'}
             onClick={() => pcManager.togglePlaying()}
+            // disabled={trackFile == ''}
           >
             {playing ? (
               <TbPlayerPause size={'1.5rem'} strokeWidth={2} />
@@ -93,6 +97,7 @@ export default function PlaybackControls() {
             size={'lg'}
             radius={'xl'}
             onClick={() => pcManager.stepForward()}
+            disabled={trackFile == ''}
           >
             <TbPlayerTrackNext size={'1rem'} strokeWidth={2} />
           </ActionIcon>
@@ -104,6 +109,7 @@ export default function PlaybackControls() {
             size={'lg'}
             radius={'xl'}
             onClick={() => pcManager.nextTrack()}
+            disabled={trackFile == ''}
           >
             <TbPlayerSkipForward size={'1rem'} strokeWidth={2} />
           </ActionIcon>
@@ -112,10 +118,10 @@ export default function PlaybackControls() {
         <Tooltip
           label={
             repeat === RepeatEnum.Off
-              ? 'Repeat off'
+              ? 'Enable repeat'
               : repeat === RepeatEnum.All
-              ? 'Repeat all'
-              : 'Repeat one'
+              ? 'Enable repeat one'
+              : 'Disable repeat'
           }
           fz={'xs'}
           fw={600}
@@ -126,6 +132,7 @@ export default function PlaybackControls() {
             size={'lg'}
             radius={'xl'}
             onClick={() => pcManager.repeatTrack()}
+            disabled={trackFile == ''}
           >
             {repeat === RepeatEnum.Off && <TbRepeat size={'1rem'} strokeWidth={2} />}
             {repeat === RepeatEnum.All && (
