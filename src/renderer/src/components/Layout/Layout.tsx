@@ -2,7 +2,7 @@ import { Box, Paper, ScrollArea, createStyles } from '@mantine/core'
 import Sidebar from '../Sidebar/Sidebar'
 import { Outlet } from 'react-router-dom'
 import NowPlaying from '../NowPlaying/NowPlaying'
-import PlayerControls from '../PlayerControls/PlayerControls'
+import Controls from '../Controls/Controls'
 import { Frame } from '../Frame/Frame'
 import IpcListener from '../IpcListener/IpcListener'
 
@@ -61,7 +61,7 @@ export default function Layout() {
           <NowPlaying />
         </Box>
       </Box>
-      <PlayerControls />
+      <Controls />
     </Box>
   )
 }
