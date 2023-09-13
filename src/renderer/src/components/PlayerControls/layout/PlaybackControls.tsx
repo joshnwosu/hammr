@@ -160,7 +160,7 @@ export default function PlaybackControls() {
             pcManager.seekBar(value)
           }}
           onChangeEnd={() => pcManager.play()}
-          size={2}
+          size={3.5}
           styles={(theme) => ({
             track: {
               backgroundColor:

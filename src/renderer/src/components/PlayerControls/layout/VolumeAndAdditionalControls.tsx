@@ -45,12 +45,12 @@ export default function VolumeAndAdditionalControls() {
         labelTransitionDuration={150}
         labelTransitionTimingFunction="ease"
         label={(value) => `${value.toFixed(0)}%`}
-        size={2}
+        size={3}
         defaultValue={0.5}
         onChange={(value) => {
           pcManager.changeVolume(value / 100)
         }}
-        w={150}
+        w={100}
         styles={(theme) => ({
           track: {
             backgroundColor:

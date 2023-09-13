@@ -1,5 +1,5 @@
-import { Button, Text } from '@mantine/core'
-import pcManager from '@renderer/core/PlayerControlManager'
+import { Box, Flex } from '@mantine/core'
+import Track from '@renderer/components/Track/Track'
 import { usePlayerStore } from '@renderer/store/playerStore/playerStore'
 import { usePlaylistStore } from '@renderer/store/playlistStore/playlistStore'
 import playlistUtils from '@renderer/utils/PlaylistUtils'
@@ -15,40 +15,13 @@ const Tracks = () => {
   }, [playlist])
 
   return (
-    <div>
-      <Text>This is where the tracks lies.</Text>
-      <div>
+    <Box style={{ overflow: 'auto' }} p={20}>
+      <Flex direction={'column'}>
         {tracks.map((track, index) => {
-          return (
-            <div
-              key={index}
-              style={{
-                backgroundColor: trackFile === track.r_fileLocation ? 'blue' : 'transparent'
-              }}
-            >
-              <p
-                onClick={() => {
-                  pcManager.selectedTrack(track.r_fileLocation, tracks)
-                }}
-              >
-                {track.title}
-              </p>
-            </div>
-          )
+          return <Track track={track} tracks={tracks} trackFile={trackFile} key={index} />
         })}
-      </div>
-      <div>
-        <Button onClick={() => playlistUtils.createPlaylist('Joshua')}>Create playlist</Button>
-
-        {/* {playlist.map((item, index) => {
-          return (
-            <div key={index.toString()}>
-              <p>{item.name}</p>
-            </div>
-          )
-        })} */}
-      </div>
-    </div>
+      </Flex>
+    </Box>
   )
 }
 
