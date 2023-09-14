@@ -3,6 +3,7 @@ import pcManager from '@renderer/core/PlayerControlManager'
 import { usePlayerStore } from '@renderer/store/playerStore/playerStore'
 import { RepeatEnum } from '@renderer/store/playerStore/types'
 import trackUtils from '@renderer/utils/TrackUtils'
+import { useEffect, useState } from 'react'
 import {
   TbPlayerPause,
   TbPlayerPlay,
@@ -18,7 +19,50 @@ import {
 export default function PlaybackControls() {
   const { playerStatus, trackFile } = usePlayerStore((state) => state)
 
-  const { playing, shuffle, repeat, currentTime, duration, seekPosition } = playerStatus
+  const { playing, shuffle, repeat, duration, audio } = playerStatus
+
+  //   const audioRef = useRef(null);
+  const [currentTime, setCurrentTime] = useState(0)
+  const [seekPosition, setSeekPosition] = useState(0)
+  const [isSeeking, setIsSeeking] = useState(false)
+
+  useEffect(() => {
+    // let animationFrameId: number
+    function handleTimeUpdate() {
+      if (!audio || !audio.duration) return
+
+      const newTime = audio.currentTime
+      const newSeekPosition = (newTime / audio.duration) * 100
+
+      setCurrentTime(newTime)
+      setSeekPosition(newSeekPosition)
+
+      //   animationFrameId = requestAnimationFrame(handleTimeUpdate)
+    }
+
+    // Attach the timeupdate event listener
+    audio.addEventListener('timeupdate', handleTimeUpdate)
+    // animationFrameId = requestAnimationFrame(handleTimeUpdate)
+
+    // Cleanup when the component unmounts
+    return () => {
+      audio.removeEventListener('timeupdate', handleTimeUpdate)
+      //   cancelAnimationFrame(animationFrameId)
+    }
+  }, [isSeeking])
+
+  // Function to handle seek bar changes
+  function handleSeekBarChange(event) {
+    const newSeekPosition = parseFloat(event.target.value)
+    const newTime = (newSeekPosition / 100) * audio.duration
+
+    setSeekPosition(newSeekPosition)
+    setCurrentTime(newTime)
+
+    // Seek to the new time in the audio
+    audio.currentTime = newTime
+  }
+
   return (
     <Flex
       style={{
@@ -29,6 +73,7 @@ export default function PlaybackControls() {
       direction={'column'}
       gap={5}
     >
+      {/* <Text>{currentTime}</Text> */}
       <Flex gap={'sm'} align={'center'}>
         <Tooltip
           label={shuffle ? 'Disable shuffle' : 'Enable shuffle'}
@@ -148,6 +193,16 @@ export default function PlaybackControls() {
       <Flex gap={'sm'} align={'center'} justify={'center'} w={'100%'}>
         <Text size={'xs'}>{trackUtils.formatDuration(currentTime)}</Text>
 
+        {/* <input
+          type="range"
+          min="0"
+          max="100"
+          value={seekPosition}
+          onChange={handleSeekBarChange}
+          onMouseDown={() => setIsSeeking(true)}
+          onMouseUp={() => setIsSeeking(false)}
+        /> */}
+
         <Slider
           value={seekPosition || 0}
           labelTransition="skew-down"
@@ -156,10 +211,15 @@ export default function PlaybackControls() {
           label={trackUtils.formatDuration(currentTime)}
           w={'60%'}
           onChange={(value) => {
-            pcManager.pause()
-            pcManager.seekBar(value)
+            // pcManager.pause()
+            // pcManager.seekBar(value)
+            setIsSeeking(true)
+            handleSeekBarChange(value)
           }}
-          onChangeEnd={() => pcManager.play()}
+          onChangeEnd={() => {
+            // pcManager.play()
+            setIsSeeking(false)
+          }}
           size={3.5}
           styles={(theme) => ({
             track: {
