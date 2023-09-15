@@ -1,4 +1,4 @@
-import { ActionIcon, Flex, Paper, Text, createStyles } from '@mantine/core'
+import { ActionIcon, Flex, Group, Image, Paper, Text, createStyles } from '@mantine/core'
 import { useAppStore } from '@renderer/store/appStore/appStore'
 import { usePlayerStore } from '@renderer/store/playerStore/playerStore'
 import { TbX } from 'react-icons/tb'
@@ -22,11 +22,18 @@ export default function NowPlaying() {
 
   return (
     <Paper className={classes.wrapper} radius={'md'} p={'md'}>
-      <Flex align={'center'} justify={'space-between'}>
-        <Text fz={'lg'}>{nowPlaying.title}</Text>
+      <Flex align={'center'} justify={'space-between'} mb={'md'}>
+        <Text fz={'lg'} truncate w={'80%'}>
+          {nowPlaying.title}
+        </Text>
         <ActionIcon onClick={handleClose} size={'lg'} radius={'xl'}>
           <TbX size={'1.2rem'} color="dimmed" />
         </ActionIcon>
+      </Flex>
+      <Flex>
+        <Group>
+          <Image src={nowPlaying.albumArt} radius={'md'} />
+        </Group>
       </Flex>
     </Paper>
   )
