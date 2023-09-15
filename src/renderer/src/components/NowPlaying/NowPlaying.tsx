@@ -1,21 +1,17 @@
-import { Box, Text, createStyles } from '@mantine/core'
+import { Paper, Text, createStyles } from '@mantine/core'
 
 const useStyles = createStyles(() => ({
   wrapper: {
     backgroundColor: '#111111',
-    width: 300,
-    borderRadius: 0,
-    borderTopLeftRadius: 10,
-    height: '100%',
-    padding: 20
+    height: '100%'
   }
 }))
 
 export default function NowPlaying() {
   const { classes } = useStyles()
   return (
-    <Box className={classes.wrapper}>
+    <Paper className={classes.wrapper} radius={'md'} p={'md'}>
       <Text>Nowplaying</Text>
-    </Box>
+    </Paper>
   )
 }
