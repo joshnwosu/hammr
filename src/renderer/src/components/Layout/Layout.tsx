@@ -37,7 +37,7 @@ export default function Layout() {
       <IpcListener />
       <Flex direction={'column'} className={classes.inner}>
         <Box className={classes.box}>
-          <Allotment>
+          <Allotment separator={false}>
             <Allotment.Pane minSize={100} maxSize={400}>
               <Flex direction={'column'} gap={8} h={'100%'}>
                 <Navbar />
@@ -45,7 +45,7 @@ export default function Layout() {
               </Flex>
             </Allotment.Pane>
             <Allotment.Pane>
-              <Allotment>
+              <Allotment separator={false}>
                 <Allotment.Pane>
                   <Box h={'100%'} px={8}>
                     <Paper radius={'md'} p={'md'} className={classes.scene}>
