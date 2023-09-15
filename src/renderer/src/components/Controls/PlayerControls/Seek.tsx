@@ -1,28 +1,79 @@
 import { Flex, Slider, Text, rem } from '@mantine/core'
+// @ts-ignore
 import pcManager from '@renderer/core/PlayerControlManager'
 import { usePlayerStore } from '@renderer/store/playerStore/playerStore'
 import trackUtils from '@renderer/utils/TrackUtils'
+import { useEffect, useState } from 'react'
 
 export default function Seek() {
   const { playerStatus } = usePlayerStore((state) => state)
-  const { currentTime, duration, seekPosition } = playerStatus
+  const { duration, audio } = playerStatus
+
+  const [currentTime, setCurrentTime] = useState(0)
+  const [seekPosition, setSeekPosition] = useState(0)
+  const [isSeeking, setIsSeeking] = useState(false)
+
+  useEffect(() => {
+    // let animationFrameId: number
+    function handleTimeUpdate() {
+      if (!audio || !audio.duration) return
+
+      const newTime = audio.currentTime
+      const newSeekPosition = (newTime / audio.duration) * 100
+
+      setCurrentTime(newTime)
+      setSeekPosition(newSeekPosition)
+
+      //   animationFrameId = requestAnimationFrame(handleTimeUpdate)
+    }
+
+    // Attach the timeupdate event listener
+    audio.addEventListener('timeupdate', handleTimeUpdate)
+    // animationFrameId = requestAnimationFrame(handleTimeUpdate)
+
+    // Cleanup when the component unmounts
+    return () => {
+      audio.removeEventListener('timeupdate', handleTimeUpdate)
+      //   cancelAnimationFrame(animationFrameId)
+    }
+  }, [isSeeking])
+
+  // Function to handle seek bar changes
+  function handleSeekBarChange(value) {
+    const newSeekPosition = parseFloat(value)
+    const newTime = (newSeekPosition / 100) * audio.duration
+
+    setSeekPosition(newSeekPosition)
+    setCurrentTime(newTime)
+
+    // Seek to the new time in the audio
+    audio.currentTime = newTime
+  }
+
   return (
     <>
-      <Flex gap={'sm'} align={'center'} justify={'center'} w={'100%'}>
-        <Text size={'xs'}>{trackUtils.formatDuration(currentTime)}</Text>
+      <Flex gap={0} align={'center'} justify={'center'} w={'100%'}>
+        <Text w={50} size={'xs'} align={'left'}>
+          {trackUtils.formatDuration(currentTime)}
+        </Text>
 
         <Slider
-          value={seekPosition || 0}
+          // value={seekPosition || 0}
           labelTransition="skew-down"
           labelTransitionDuration={150}
           labelTransitionTimingFunction="ease"
           label={trackUtils.formatDuration(currentTime)}
           w={'60%'}
-          onChange={(value) => {
-            pcManager.pause()
-            pcManager.seekBar(value)
-          }}
-          onChangeEnd={() => pcManager.play()}
+          // onChange={(value) => {
+          //   // pcManager.pause()
+          //   // pcManager.seekBar(value)
+          //   setIsSeeking(true)
+          //   handleSeekBarChange(value)
+          // }}
+          // onChangeEnd={() => {
+          //   // pcManager.play()
+          //   setIsSeeking(false)
+          // }}
           size={3.5}
           styles={(theme) => ({
             track: {
@@ -51,7 +102,9 @@ export default function Seek() {
           })}
         />
 
-        <Text size={'xs'}>{trackUtils.formatDuration(duration)}</Text>
+        <Text w={50} size={'xs'} align={'right'}>
+          {trackUtils.formatDuration(duration)}
+        </Text>
       </Flex>
     </>
   )
