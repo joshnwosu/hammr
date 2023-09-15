@@ -2,7 +2,6 @@ import { ColorScheme, ColorSchemeProvider, MantineProvider } from '@mantine/core
 import React, { useState } from 'react'
 import { useCookies } from 'react-cookie'
 import AppRouter from './routes/appRouter'
-import Pane from './components/Pane'
 import GStyles from './components/GStyles'
 
 const App: React.FC = () => {
@@ -29,7 +28,6 @@ const App: React.FC = () => {
       >
         <AppRouter />
         <GStyles />
-        {/* <Pane /> */}
       </MantineProvider>
     </ColorSchemeProvider>
   )
