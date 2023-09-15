@@ -1,82 +1,68 @@
-import { Box, Flex, Paper, createStyles } from '@mantine/core'
-import { Frame } from '../Frame/Frame'
+import { Box, Flex, Paper, Text, createStyles } from '@mantine/core'
+import { Allotment } from 'allotment'
 import Navbar from '../Navbar/Navbar'
 import Sidebar from '../Sidebar/Sidebar'
 import NowPlaying from '../NowPlaying/NowPlaying'
+import { Frame } from '../Frame/Frame'
 import Controls from '../Controls/Controls'
 import IpcListener from '../IpcListener/IpcListener'
 import { Outlet } from 'react-router-dom'
 
-const useStyles = createStyles((theme) => ({
-  box: {
-    width: '100%',
-    height: '100vh',
-    flexDirection: 'column'
-  },
+const useStyes = createStyles((theme) => ({
   wrapper: {
     width: '100%',
-    flexDirection: 'column',
-    backgroundColor: theme.black,
-    flex: 1
+    height: '100vh',
+    backgroundColor: theme.black
   },
 
   inner: {
     flex: 1
   },
-
-  nav: {
-    width: 380,
-    flexDirection: 'column'
-  },
-
-  main: {
+  box: {
     flex: 1
   },
-
   scene: {
     backgroundColor: '#111111',
-    flex: 1
-  },
-
-  sceneBox: {
-    width: '100%',
-    height: '100%'
+    height: '100%',
+    overflowY: 'scroll'
   }
 }))
 
-export default function Layout2() {
-  const { classes } = useStyles()
-
-  const gap = 8
-
+export default function Pane() {
+  const { classes } = useStyes()
   return (
-    <Flex className={classes.box}>
+    <Flex className={classes.wrapper} direction={'column'}>
       <Frame />
       <IpcListener />
-      <Flex className={classes.wrapper} gap={gap} p={gap}>
-        <Flex className={classes.inner} gap={gap}>
-          <Flex className={classes.nav} gap={gap}>
-            <Navbar />
-            <Sidebar />
-          </Flex>
-          <Flex className={classes.main} gap={gap}>
-            <Scene />
-            <NowPlaying />
-          </Flex>
-        </Flex>
+      <Flex direction={'column'} className={classes.inner}>
+        <Box className={classes.box}>
+          <Allotment>
+            <Allotment.Pane minSize={100} maxSize={400}>
+              <Flex p={'sm'} direction={'column'} gap={'sm'} h={'100%'}>
+                <Navbar />
+                <Sidebar />
+              </Flex>
+            </Allotment.Pane>
+            <Allotment.Pane>
+              <Allotment>
+                <Allotment.Pane>
+                  <Box p={'sm'} h={'100%'}>
+                    <Paper radius={'md'} p={'md'} className={classes.scene}>
+                      <Outlet />
+                    </Paper>
+                  </Box>
+                </Allotment.Pane>
+                <Allotment.Pane maxSize={400} minSize={300}>
+                  <Box p={'sm'} h={'100%'}>
+                    <NowPlaying />
+                  </Box>
+                </Allotment.Pane>
+              </Allotment>
+            </Allotment.Pane>
+          </Allotment>
+        </Box>
         <Controls />
       </Flex>
     </Flex>
-  )
-}
-
-function Scene() {
-  const { classes } = useStyles()
-  return (
-    <Paper className={classes.scene} radius={'md'}>
-      <Box className={classes.sceneBox}>
-        <Outlet />
-      </Box>
-    </Paper>
   )
 }

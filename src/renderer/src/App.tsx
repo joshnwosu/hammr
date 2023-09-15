@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useCookies } from 'react-cookie'
 import AppRouter from './routes/appRouter'
 import Pane from './components/Pane'
-import './styles/main.css'
+import GStyles from './components/GStyles'
 
 const App: React.FC = () => {
   const [cookie, setCookie] = useCookies()
@@ -27,8 +27,9 @@ const App: React.FC = () => {
           fontFamily: "'Josefin Sans', sans-serif"
         }}
       >
-        {/* <AppRouter /> */}
-        <Pane />
+        <AppRouter />
+        <GStyles />
+        {/* <Pane /> */}
       </MantineProvider>
     </ColorSchemeProvider>
   )
