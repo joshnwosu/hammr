@@ -63,9 +63,9 @@ export default function Track({ track, tracks, trackFile, index }: TrackProps) {
         <Text w={20} fz={'sm'}>
           {trackUtils.formatIndex(index)}
         </Text>
-        <Avatar size="md" radius="sm" src={track.albumArt || ''} alt="Album Art" />
+        <Avatar size="md" src={track.albumArt || ''} alt="Album Art" />
         <div style={{ overflow: 'hidden' }}>
-          <Text fz={'sm'} truncate>
+          <Text fz={'md'} truncate>
             {track.title}
           </Text>
           <Text color="dimmed" fz={'sm'}>
@@ -101,7 +101,7 @@ export default function Track({ track, tracks, trackFile, index }: TrackProps) {
             radius={'xl'}
             //   onClick={() => pcManager.stepBackward()}
           >
-            <TbHeart size={'1rem'} strokeWidth={1} />
+            <TbHeart size={'1.2rem'} strokeWidth={1} />
           </ActionIcon>
         </Tooltip>
         <Text fz={'sm'}>{'04:25'}</Text>

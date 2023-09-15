@@ -7,6 +7,8 @@ export default function GStyles() {
     <Global
       styles={css`
         .sash {
+          opacity: 0;
+          background-color: ${theme.black};
         }
       `}
     />

@@ -67,15 +67,7 @@ export const Frame = () => {
 
   return (
     <div className={classes.frame}>
-      <Group
-        position="apart"
-        w={'100%'}
-        h={'100%'}
-        sx={(theme) => ({
-          backgroundColor: theme.colorScheme == 'dark' ? theme.black : theme.colors.gray[0]
-        })}
-        py={0}
-      >
+      <Group position="apart" w={'100%'} h={'100%'} py={0}>
         <div
           className={classes.left}
           style={{
