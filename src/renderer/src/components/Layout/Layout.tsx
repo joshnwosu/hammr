@@ -20,7 +20,6 @@ const useStyes = createStyles((theme) => ({
   },
   box: {
     flex: 1,
-    border: '1px solid red',
     padding: 8
   },
   scene: {
