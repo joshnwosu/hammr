@@ -25,7 +25,7 @@ const useStyes = createStyles((theme) => ({
   scene: {
     backgroundColor: '#111111',
     height: '100%',
-    overflowY: 'scroll'
+    overflowY: 'auto'
   }
 }))
 
