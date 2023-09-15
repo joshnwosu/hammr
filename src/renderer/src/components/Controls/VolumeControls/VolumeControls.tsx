@@ -1,5 +1,6 @@
-import { ActionIcon, Flex, Slider, createStyles, rem } from '@mantine/core'
+import { ActionIcon, Flex, Slider, Tooltip, createStyles, rem } from '@mantine/core'
 import pcManager from '@renderer/core/PlayerControlManager'
+import { useAppStore } from '@renderer/store/appStore/appStore'
 import { usePlayerStore } from '@renderer/store/playerStore/playerStore'
 import {
   IoVolumeHighOutline,
@@ -8,6 +9,7 @@ import {
   //   IoVolumeMuteOutline,
   IoVolumeOffOutline
 } from 'react-icons/io5'
+import { TbLayoutSidebarRightExpand } from 'react-icons/tb'
 
 const useStyles = createStyles(() => ({
   wrapper: {
@@ -18,25 +20,36 @@ const useStyles = createStyles(() => ({
 export default function VolumeControls() {
   const { classes } = useStyles()
   const { playerStatus } = usePlayerStore((state) => state)
+  const { toggleNowPlayingView, nowPlayingView } = useAppStore((state) => state)
   const { volume } = playerStatus
 
+  const handleShowNowPlaying = () => {
+    toggleNowPlayingView(!nowPlayingView)
+  }
+
+  const VolumIcon =
+    volume <= 0
+      ? IoVolumeOffOutline
+      : volume <= 0.1
+      ? IoVolumeLowOutline
+      : volume <= 0.6
+      ? IoVolumeMediumOutline
+      : IoVolumeHighOutline
+
   return (
-    <Flex className={classes.wrapper} align={'center'} justify={'flex-end'} gap={'md'}>
+    <Flex className={classes.wrapper} align={'center'} justify={'flex-end'} gap={'sm'}>
+      <Tooltip label="Now Playing">
+        <ActionIcon onClick={handleShowNowPlaying} variant="transparent" size={'lg'}>
+          <TbLayoutSidebarRightExpand size={'1.2rem'} strokeWidth={1.5} />
+        </ActionIcon>
+      </Tooltip>
       <ActionIcon
-        variant="default"
+        variant="transparent"
         size={'lg'}
         radius={'xl'}
         onClick={() => pcManager.toggleMute()}
       >
-        {volume <= 0 ? (
-          <IoVolumeOffOutline size={'1rem'} strokeWidth={2} />
-        ) : volume <= 0.1 ? (
-          <IoVolumeLowOutline size={'1rem'} strokeWidth={2} />
-        ) : volume <= 0.6 ? (
-          <IoVolumeMediumOutline size={'1rem'} strokeWidth={2} />
-        ) : (
-          <IoVolumeHighOutline size={'1rem'} strokeWidth={2} />
-        )}
+        <VolumIcon size={'1.2rem'} strokeWidth={1.5} />
       </ActionIcon>
       <Slider
         value={volume * 100}
