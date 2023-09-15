@@ -1,20 +1,14 @@
 import { usePlayerStore } from '@renderer/store/playerStore/playerStore'
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import 'react-virtualized/styles.css'
 import { FixedSizeList } from 'react-window'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import Track from '@renderer/components/Track/Track'
 import { Box } from '@mantine/core'
-import trackUtils from '@renderer/utils/TrackUtils'
 
 const TrackVirtualizedList = () => {
   const listRef = useRef<any>()
   const { tracks, trackFile } = usePlayerStore((state) => state)
-
-  useEffect(() => {
-    const trackIndex = trackUtils.getTrackIndex(tracks, trackFile)
-    listRef?.current?.scrollToItem(trackIndex)
-  }, [trackFile])
 
   return (
     <Box
