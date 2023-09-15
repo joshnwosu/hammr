@@ -68,22 +68,28 @@ export default function Track({ track, tracks, trackFile, index }: TrackProps) {
           <Text fz={'md'} truncate>
             {track.title}
           </Text>
-          <Text color="dimmed" fz={'sm'}>
+          <Text color="dimmed" fz={'sm'} truncate>
             {track.artist}
           </Text>
         </div>
       </Flex>
 
       <Flex style={{ flex: 2, overflow: 'hidden' }}>
-        <Text fz={'sm'}>{track.album}</Text>
+        <Text fz={'sm'} truncate>
+          {track.album}
+        </Text>
       </Flex>
 
       <Flex style={{ flex: 2, overflow: 'hidden' }}>
-        <Text fz={'sm'}>{track.genre}</Text>
+        <Text fz={'sm'} truncate>
+          {track.genre}
+        </Text>
       </Flex>
 
       <Flex style={{ flex: 1, overflow: 'hidden' }}>
-        <Text fz={'sm'}>{track.year}</Text>
+        <Text fz={'sm'} truncate>
+          {track.year}
+        </Text>
       </Flex>
 
       <Flex
