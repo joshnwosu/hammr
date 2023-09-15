@@ -8,26 +8,13 @@ import { Box } from '@mantine/core'
 import trackUtils from '@renderer/utils/TrackUtils'
 
 const TrackVirtualizedList = () => {
+  const listRef = useRef<any>()
   const { tracks, trackFile } = usePlayerStore((state) => state)
 
-  const listRef = useRef(null)
-  const scrollableContainerRef = useRef(null)
-
   useEffect(() => {
-    scrollTo(trackUtils.getTrackIndex(tracks, trackFile))
+    const trackIndex = trackUtils.getTrackIndex(tracks, trackFile)
+    listRef?.current?.scrollToItem(trackIndex)
   }, [trackFile])
-
-  // @ts-ignore
-  const scrollTo = (scrollOffset: number) => {
-    // Note that my list is vertical which is why I am feeding this to the "top" prop.
-    if (scrollableContainerRef.current) {
-      ;(scrollableContainerRef.current as any).scrollTo({
-        left: 0,
-        top: scrollOffset,
-        behavior: 'smooth'
-      })
-    }
-  }
 
   return (
     <Box
@@ -39,12 +26,11 @@ const TrackVirtualizedList = () => {
       <AutoSizer>
         {({ height, width }) => (
           <FixedSizeList
+            ref={listRef}
             height={height}
             width={width}
             itemCount={tracks.length}
             itemSize={60}
-            ref={listRef}
-            outerRef={scrollableContainerRef}
             layout="vertical"
           >
             {({ index, style }) => {

@@ -87,20 +87,8 @@ export default function Track({ track, tracks, trackFile, index, style }: TrackP
       </Flex>
 
       <Flex style={{ flex: 2, overflow: 'hidden' }}>
-        <Text fz={'sm'} truncate>
+        <Text color="dimmed" fz={'md'} truncate>
           {track.album}
-        </Text>
-      </Flex>
-
-      <Flex style={{ flex: 2, overflow: 'hidden' }}>
-        <Text fz={'sm'} truncate>
-          {track.genre}
-        </Text>
-      </Flex>
-
-      <Flex style={{ flex: 1, overflow: 'hidden' }}>
-        <Text fz={'sm'} truncate>
-          {track.year}
         </Text>
       </Flex>
 
@@ -122,7 +110,7 @@ export default function Track({ track, tracks, trackFile, index, style }: TrackP
             <TbHeart size={'1.2rem'} strokeWidth={1} />
           </ActionIcon>
         </Tooltip>
-        <Text fz={'sm'}>{'04:25'}</Text>
+
         <Tooltip label={'More options'} fz={'xs'} fw={600} color="gray">
           <ActionIcon
             variant="transparent"

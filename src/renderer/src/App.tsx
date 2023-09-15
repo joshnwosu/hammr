@@ -23,7 +23,8 @@ const App: React.FC = () => {
         withNormalizeCSS
         theme={{
           colorScheme,
-          fontFamily: "'Josefin Sans', sans-serif"
+          // fontFamily: "'Josefin Sans', sans-serif",
+          fontFamily: "'Nunito', sans-serif"
         }}
       >
         <GStyles />

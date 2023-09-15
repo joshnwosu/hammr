@@ -108,8 +108,8 @@ export default function Sidebar() {
         </Flex>
       </Flex>
       <Box>
-        {items.map((item) => (
-          <UnstyledButton className={classes.item}>
+        {items.map((item, index) => (
+          <UnstyledButton className={classes.item} key={index}>
             <Group>
               <Avatar size={'lg'}>
                 <item.icon size={'1.8rem'} strokeWidth={1.5} />
