@@ -1,4 +1,7 @@
-import { Paper, Text, createStyles } from '@mantine/core'
+import { ActionIcon, Flex, Paper, Text, createStyles } from '@mantine/core'
+import { useAppStore } from '@renderer/store/appStore/appStore'
+import { usePlayerStore } from '@renderer/store/playerStore/playerStore'
+import { TbX } from 'react-icons/tb'
 
 const useStyles = createStyles(() => ({
   wrapper: {
@@ -9,9 +12,22 @@ const useStyles = createStyles(() => ({
 
 export default function NowPlaying() {
   const { classes } = useStyles()
+  const { playerStatus } = usePlayerStore((state) => state)
+  const { toggleNowPlayingView } = useAppStore((state) => state)
+  const { nowPlaying } = playerStatus
+
+  const handleClose = () => {
+    toggleNowPlayingView(false)
+  }
+
   return (
     <Paper className={classes.wrapper} radius={'md'} p={'md'}>
-      <Text>Nowplaying</Text>
+      <Flex align={'center'} justify={'space-between'}>
+        <Text fz={'lg'}>{nowPlaying.title}</Text>
+        <ActionIcon onClick={handleClose} size={'lg'} radius={'xl'}>
+          <TbX size={'1.2rem'} color="dimmed" />
+        </ActionIcon>
+      </Flex>
     </Paper>
   )
 }

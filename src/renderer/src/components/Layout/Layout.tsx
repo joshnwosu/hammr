@@ -7,6 +7,7 @@ import { Frame } from '../Frame/Frame'
 import Controls from '../Controls/Controls'
 import IpcListener from '../IpcListener/IpcListener'
 import { Outlet } from 'react-router-dom'
+import { useAppStore } from '@renderer/store/appStore/appStore'
 
 const useStyes = createStyles((theme) => ({
   wrapper: {
@@ -31,6 +32,7 @@ const useStyes = createStyles((theme) => ({
 
 export default function Layout() {
   const { classes } = useStyes()
+  const { nowPlayingView } = useAppStore((state) => state)
   return (
     <Flex className={classes.wrapper} direction={'column'}>
       <Frame />
@@ -53,7 +55,7 @@ export default function Layout() {
                     </Paper>
                   </Box>
                 </Allotment.Pane>
-                <Allotment.Pane maxSize={400} minSize={300}>
+                <Allotment.Pane maxSize={400} minSize={300} visible={nowPlayingView}>
                   <Box h={'100%'}>
                     <NowPlaying />
                   </Box>
