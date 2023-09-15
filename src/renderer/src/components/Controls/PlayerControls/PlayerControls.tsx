@@ -33,7 +33,7 @@ export default function PlayerControls() {
       <Flex align={'center'} gap={'md'} mb={4}>
         <CustomIcon
           onClick={() => pcManager.shuffleTrack()}
-          label={shuffle ? 'Disable Shuffle' : 'Enable Shuffle'}
+          label={shuffle ? 'Disable shuffle' : 'Enable shuffle'}
         >
           <TbArrowsShuffle color={shuffle ? '#1FDF64' : ''} size={iconSize} strokeWidth={2} />
         </CustomIcon>
@@ -87,6 +87,7 @@ interface CustomIconProps {
 }
 
 function CustomIcon({ children, size, onClick, label }: CustomIconProps) {
+  const { trackFile } = usePlayerStore()
   return (
     <Tooltip
       label={label}
@@ -97,7 +98,13 @@ function CustomIcon({ children, size, onClick, label }: CustomIconProps) {
         }
       })}
     >
-      <ActionIcon size={size || 'lg'} onClick={onClick} variant={'transparent'} radius={'xl'}>
+      <ActionIcon
+        size={size || 'lg'}
+        onClick={onClick}
+        variant={'transparent'}
+        radius={'xl'}
+        disabled={!trackFile}
+      >
         {children}
       </ActionIcon>
     </Tooltip>
