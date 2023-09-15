@@ -19,7 +19,8 @@ const useStyes = createStyles((theme) => ({
     flex: 1
   },
   box: {
-    flex: 1
+    flex: 1,
+    padding: 8
   },
   scene: {
     backgroundColor: '#111111',
@@ -38,7 +39,7 @@ export default function Layout() {
         <Box className={classes.box}>
           <Allotment>
             <Allotment.Pane minSize={100} maxSize={400}>
-              <Flex p={'sm'} direction={'column'} gap={'sm'} h={'100%'}>
+              <Flex direction={'column'} gap={8} h={'100%'}>
                 <Navbar />
                 <Sidebar />
               </Flex>
@@ -46,14 +47,14 @@ export default function Layout() {
             <Allotment.Pane>
               <Allotment>
                 <Allotment.Pane>
-                  <Box p={'sm'} h={'100%'}>
+                  <Box h={'100%'} px={8}>
                     <Paper radius={'md'} p={'md'} className={classes.scene}>
                       <Outlet />
                     </Paper>
                   </Box>
                 </Allotment.Pane>
                 <Allotment.Pane maxSize={400} minSize={300}>
-                  <Box p={'sm'} h={'100%'}>
+                  <Box h={'100%'}>
                     <NowPlaying />
                   </Box>
                 </Allotment.Pane>

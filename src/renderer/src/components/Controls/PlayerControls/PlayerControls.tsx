@@ -55,10 +55,10 @@ export default function PlayerControls() {
             <TbPlayerPlay size={'2rem'} strokeWidth={2} />
           )}
         </CustomIcon>
-        <CustomIcon onClick={() => pcManager.previousTrack()} label={'Step forward'}>
+        <CustomIcon onClick={() => pcManager.stepForward()} label={'Step forward'}>
           <TbPlayerTrackNext size={iconSize} />
         </CustomIcon>
-        <CustomIcon onClick={() => pcManager.stepBackward()} label={'Nest'}>
+        <CustomIcon onClick={() => pcManager.nextTrack()} label={'Next'}>
           <TbPlayerSkipForward size={iconSize} />
         </CustomIcon>
         <CustomIcon onClick={() => pcManager.repeatTrack()} label={`Repeat ${repeat}`}>

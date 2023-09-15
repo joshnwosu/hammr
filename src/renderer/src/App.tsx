@@ -26,8 +26,8 @@ const App: React.FC = () => {
           fontFamily: "'Josefin Sans', sans-serif"
         }}
       >
-        <AppRouter />
         <GStyles />
+        <AppRouter />
       </MantineProvider>
     </ColorSchemeProvider>
   )
