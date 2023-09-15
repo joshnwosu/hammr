@@ -63,9 +63,9 @@ export class PlayerControlManager {
         }
       }))
     }
-    this.audio.ontimeupdate = () => {
-      this.updateSeekPosition()
-    }
+    // this.audio.ontimeupdate = () => {
+    //   this.updateSeekPosition()
+    // }
     this.audio.onended = () => {
       this.playNextTrack()
     }

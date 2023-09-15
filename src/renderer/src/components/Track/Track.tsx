@@ -1,6 +1,6 @@
 import { Track as ITrack } from '@renderer/store/playerStore/playerStore'
 import pcManager from '@renderer/core/PlayerControlManager'
-import { Flex, createStyles, Text, Avatar, Tooltip, ActionIcon } from '@mantine/core'
+import { Flex, createStyles, Text, Avatar, Tooltip, ActionIcon, Box } from '@mantine/core'
 import { useEffect, useState } from 'react'
 import trackUtils from '@renderer/utils/TrackUtils'
 import { TbHeart, TbDots } from 'react-icons/tb'
@@ -53,37 +53,43 @@ export default function Track({ track, tracks, trackFile, index }: TrackProps) {
   }, [trackFile, track])
 
   return (
-    <div
+    <Box
       className={active ? classes.currentTrack : classes.track}
-      onClick={() => {
+      onDoubleClick={() => {
         pcManager.selectedTrack(track.r_fileLocation, tracks)
       }}
     >
+      <Flex w={20}>
+        <Text fz={'sm'}>{trackUtils.formatIndex(index)}</Text>
+      </Flex>
       <Flex align={'center'} gap={'md'} style={{ flex: 5, overflow: 'hidden' }}>
-        <Text w={20} fz={'sm'}>
-          {trackUtils.formatIndex(index)}
-        </Text>
         <Avatar size="md" src={track.albumArt || ''} alt="Album Art" />
         <div style={{ overflow: 'hidden' }}>
           <Text fz={'md'} truncate>
             {track.title}
           </Text>
-          <Text color="dimmed" fz={'sm'}>
+          <Text color="dimmed" fz={'sm'} truncate>
             {track.artist}
           </Text>
         </div>
       </Flex>
 
       <Flex style={{ flex: 2, overflow: 'hidden' }}>
-        <Text fz={'sm'}>{track.album}</Text>
+        <Text fz={'sm'} truncate>
+          {track.album}
+        </Text>
       </Flex>
 
       <Flex style={{ flex: 2, overflow: 'hidden' }}>
-        <Text fz={'sm'}>{track.genre}</Text>
+        <Text fz={'sm'} truncate>
+          {track.genre}
+        </Text>
       </Flex>
 
       <Flex style={{ flex: 1, overflow: 'hidden' }}>
-        <Text fz={'sm'}>{track.year}</Text>
+        <Text fz={'sm'} truncate>
+          {track.year}
+        </Text>
       </Flex>
 
       <Flex
@@ -116,21 +122,6 @@ export default function Track({ track, tracks, trackFile, index }: TrackProps) {
           </ActionIcon>
         </Tooltip>
       </Flex>
-    </div>
-  )
-
-  return (
-    <Flex
-      className={classes.wrapper}
-      style={{
-        backgroundColor: active ? 'blue' : 'transparent'
-      }}
-      onClick={() => {
-        pcManager.selectedTrack(track.r_fileLocation, tracks)
-      }}
-    >
-      <Avatar size="md" radius="sm" src={track.albumArt || ''} alt="Album Art" mr={'xl'} />
-      <Text>{track.title}</Text>
-    </Flex>
+    </Box>
   )
 }
