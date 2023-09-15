@@ -55,7 +55,7 @@ export default function Track({ track, tracks, trackFile, index }: TrackProps) {
   return (
     <Box
       className={active ? classes.currentTrack : classes.track}
-      onClick={() => {
+      onDoubleClick={() => {
         pcManager.selectedTrack(track.r_fileLocation, tracks)
       }}
     >
