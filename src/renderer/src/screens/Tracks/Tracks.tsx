@@ -4,6 +4,7 @@ import { usePlaylistStore } from '@renderer/store/playlistStore/playlistStore'
 import { useEffect } from 'react'
 
 import Track from '@renderer/components/Track/Track'
+import VirtualTracks from './VirtualTracks'
 
 const Tracks = () => {
   const { tracks, trackFile } = usePlayerStore((state) => state)
@@ -27,6 +28,7 @@ const Tracks = () => {
           )
         })}
       </Flex>
+      <VirtualTracks />
     </Box>
   )
 }
