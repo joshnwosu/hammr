@@ -1,115 +1,32 @@
-import { ActionIcon, Avatar, Box, Flex, Text, Tooltip, createStyles } from '@mantine/core'
-import pcManager from '@renderer/core/PlayerControlManager'
-import { Track as ITrack, usePlayerStore } from '@renderer/store/playerStore/playerStore'
-import { usePlaylistStore } from '@renderer/store/playlistStore/playlistStore'
-import { useEffect } from 'react'
+import { usePlayerStore } from '@renderer/store/playerStore/playerStore'
+import { useEffect, useRef } from 'react'
 import 'react-virtualized/styles.css'
-import trackUtils from '@renderer/utils/TrackUtils'
-import { TbDots, TbHeart } from 'react-icons/tb'
 import { FixedSizeList } from 'react-window'
 import AutoSizer from 'react-virtualized-auto-sizer'
+import Track from '@renderer/components/Track/Track'
+import { Box } from '@mantine/core'
+import trackUtils from '@renderer/utils/TrackUtils'
 
-const useStyles = createStyles((theme) => ({
-  track: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: '10px 20px',
-    marginRight: theme.spacing.lg,
-    borderRadius: theme.radius.sm,
-    gap: theme.spacing.md,
-    ':hover': {
-      backgroundColor: theme.colors.dark[6]
-    }
-  },
-
-  currentTrack: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: '10px 20px',
-    marginRight: theme.spacing.lg,
-    borderRadius: theme.radius.sm,
-    gap: theme.spacing.md,
-    backgroundColor: theme.colors.dark[7]
-  }
-}))
-
-const Tracks = () => {
-  const { classes } = useStyles()
-
+const TrackVirtualizedList = () => {
   const { tracks, trackFile } = usePlayerStore((state) => state)
 
-  const { playlist } = usePlaylistStore((state) => state)
+  const listRef = useRef(null)
+  const scrollableContainerRef = useRef(null)
 
   useEffect(() => {
-    console.log('Tahtah', playlist)
-  }, [playlist])
+    scrollTo(trackUtils.getTrackIndex(tracks, trackFile))
+  }, [trackFile])
 
-  const TrackList = ({
-    track,
-    style,
-    index
-  }: {
-    track: ITrack
-    style: React.CSSProperties
-    index: number
-  }) => {
-    return (
-      <div
-        style={style}
-        className={track.r_fileLocation === trackFile ? classes.currentTrack : classes.track}
-        onClick={() => {
-          pcManager.selectedTrack(track.r_fileLocation, tracks)
-        }}
-      >
-        <Flex align={'center'} gap={'md'} style={{ flex: 5, overflow: 'hidden' }}>
-          <Text w={20} fz={'sm'}>
-            {trackUtils.formatIndex(index)}
-          </Text>
-          <Avatar size="md" radius="sm" src={track.albumArt || ''} alt="Album Art" />
-          <div style={{ overflow: 'hidden' }}>
-            <Text fz={'sm'} truncate>
-              {track.title}
-            </Text>
-            <Text color="dimmed" fz={'sm'}>
-              {track.artist}
-            </Text>
-          </div>
-        </Flex>
-
-        <Flex style={{ flex: 2, overflow: 'hidden' }}>
-          <Text fz={'sm'}>{track.album}</Text>
-        </Flex>
-
-        <Flex style={{ flex: 2, overflow: 'hidden' }}>
-          <Text fz={'sm'}>{track.genre}</Text>
-        </Flex>
-
-        <Flex style={{ flex: 1, overflow: 'hidden' }}>
-          <Text fz={'sm'}>{track.year}</Text>
-        </Flex>
-
-        <Flex
-          style={{
-            overflow: 'hidden'
-          }}
-          align={'center'}
-          justify={'flex-end'}
-          gap={'sm'}
-        >
-          <Tooltip label={'Add to favorites'} fz={'xs'} fw={600} color="gray">
-            <ActionIcon variant="transparent" size={'lg'} radius={'xl'}>
-              <TbHeart size={'1rem'} strokeWidth={1} />
-            </ActionIcon>
-          </Tooltip>
-          <Text fz={'sm'}>{'04:25'}</Text>
-          <Tooltip label={'More options'} fz={'xs'} fw={600} color="gray">
-            <ActionIcon variant="transparent" size={'lg'} radius={'xl'}>
-              <TbDots size={'1.5rem'} strokeWidth={1} />
-            </ActionIcon>
-          </Tooltip>
-        </Flex>
-      </div>
-    )
+  // @ts-ignore
+  const scrollTo = (scrollOffset: number) => {
+    // Note that my list is vertical which is why I am feeding this to the "top" prop.
+    if (scrollableContainerRef.current) {
+      ;(scrollableContainerRef.current as any).scrollTo({
+        left: 0,
+        top: scrollOffset,
+        behavior: 'smooth'
+      })
+    }
   }
 
   return (
@@ -121,11 +38,26 @@ const Tracks = () => {
     >
       <AutoSizer>
         {({ height, width }) => (
-          <FixedSizeList height={height} width={width} itemCount={tracks.length} itemSize={60}>
+          <FixedSizeList
+            height={height}
+            width={width}
+            itemCount={tracks.length}
+            itemSize={60}
+            ref={listRef}
+            outerRef={scrollableContainerRef}
+            layout="vertical"
+          >
             {({ index, style }) => {
               const track = tracks[index]
               return (
-                <TrackList key={track.r_fileLocation} track={track} style={style} index={index} />
+                <Track
+                  track={track}
+                  tracks={tracks}
+                  index={index}
+                  trackFile={trackFile}
+                  key={index}
+                  style={style}
+                />
               )
             }}
           </FixedSizeList>
@@ -135,4 +67,4 @@ const Tracks = () => {
   )
 }
 
-export default Tracks
+export default TrackVirtualizedList

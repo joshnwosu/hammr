@@ -10,15 +10,13 @@ interface TrackProps {
   tracks: ITrack[]
   trackFile: string
   index: number
+  style?: React.CSSProperties
 }
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
     alignItems: 'center',
     padding: '10px 20px'
-    // ':hover': {
-    //   backgroundColor: 'purple'
-    // }
   },
 
   track: {
@@ -33,6 +31,16 @@ const useStyles = createStyles((theme) => ({
     }
   },
 
+  appear: {
+    visibility: 'visible',
+    opacity: 1
+  },
+
+  disappear: {
+    visibility: 'hidden',
+    opacity: 0
+  },
+
   currentTrack: {
     display: 'flex',
     alignItems: 'center',
@@ -44,9 +52,10 @@ const useStyles = createStyles((theme) => ({
   }
 }))
 
-export default function Track({ track, tracks, trackFile, index }: TrackProps) {
+export default function Track({ track, tracks, trackFile, index, style }: TrackProps) {
   const { classes } = useStyles()
   const [active, setActive] = useState(false)
+  const [isHovered, setIsHovered] = useState(false)
 
   useEffect(() => {
     setActive(trackFile === track.r_fileLocation ? true : false)
@@ -54,10 +63,13 @@ export default function Track({ track, tracks, trackFile, index }: TrackProps) {
 
   return (
     <Box
+      style={style}
       className={active ? classes.currentTrack : classes.track}
       onDoubleClick={() => {
         pcManager.selectedTrack(track.r_fileLocation, tracks)
       }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       <Flex w={20}>
         <Text fz={'sm'}>{trackUtils.formatIndex(index)}</Text>
@@ -105,7 +117,7 @@ export default function Track({ track, tracks, trackFile, index }: TrackProps) {
             variant="transparent"
             size={'lg'}
             radius={'xl'}
-            //   onClick={() => pcManager.stepBackward()}
+            className={isHovered ? classes.appear : classes.disappear}
           >
             <TbHeart size={'1.2rem'} strokeWidth={1} />
           </ActionIcon>
@@ -116,7 +128,7 @@ export default function Track({ track, tracks, trackFile, index }: TrackProps) {
             variant="transparent"
             size={'lg'}
             radius={'xl'}
-            //   onClick={() => pcManager.stepBackward()}
+            className={isHovered ? classes.appear : classes.disappear}
           >
             <TbDots size={'1.5rem'} strokeWidth={1} />
           </ActionIcon>

@@ -36,8 +36,8 @@ export default function Navbar() {
   return (
     <Paper className={classes.wrapper} radius={'md'}>
       <Flex className={classes.links}>
-        {links.map((link) => (
-          <Link to={link.href} className={classes.link}>
+        {links.map((link, index) => (
+          <Link to={link.href} className={classes.link} key={index}>
             <link.icon size={'1.7rem'} strokeWidth={1.5} />
             <Text fw={700} mb={-5}>
               {link.label}
