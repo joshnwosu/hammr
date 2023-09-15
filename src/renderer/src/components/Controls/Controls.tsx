@@ -9,7 +9,7 @@ import pcManager from '@renderer/core/PlayerControlManager'
 const useStyles = createStyles(() => ({
   wrapper: {
     width: '100%',
-    maxHeight: 100
+    maxHeight: 80
   }
 }))
 

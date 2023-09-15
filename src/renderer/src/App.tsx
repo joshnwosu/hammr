@@ -2,6 +2,8 @@ import { ColorScheme, ColorSchemeProvider, MantineProvider } from '@mantine/core
 import React, { useState } from 'react'
 import { useCookies } from 'react-cookie'
 import AppRouter from './routes/appRouter'
+import Pane from './components/Pane'
+import './styles/main.css'
 
 const App: React.FC = () => {
   const [cookie, setCookie] = useCookies()
@@ -25,7 +27,8 @@ const App: React.FC = () => {
           fontFamily: "'Josefin Sans', sans-serif"
         }}
       >
-        <AppRouter />
+        {/* <AppRouter /> */}
+        <Pane />
       </MantineProvider>
     </ColorSchemeProvider>
   )

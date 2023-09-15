@@ -1,4 +1,5 @@
 import { usePlayerStore } from '@renderer/store/playerStore/playerStore'
+import playlistUtils from '@renderer/utils/PlaylistUtils'
 import { useEffect } from 'react'
 
 export default function IpcListener() {
@@ -19,6 +20,7 @@ export default function IpcListener() {
 
     window.api.receive('userPlaylists', (_, playlists) => {
       console.log('The Playlists Here: ', playlists)
+      playlistUtils.restorePlaylists(playlists)
     })
 
     window.api.receive('recentlyPlayed', (_, tracks) => {

@@ -88,7 +88,15 @@ interface CustomIconProps {
 
 function CustomIcon({ children, size, onClick, label }: CustomIconProps) {
   return (
-    <Tooltip label={label}>
+    <Tooltip
+      label={label}
+      styles={(theme) => ({
+        tooltip: {
+          backgroundColor: theme.colors.dark[7],
+          color: theme.colors.gray[2]
+        }
+      })}
+    >
       <ActionIcon size={size || 'lg'} onClick={onClick} variant={'transparent'} radius={'xl'}>
         {children}
       </ActionIcon>

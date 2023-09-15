@@ -1,4 +1,4 @@
-import { Box, Paper, ScrollArea, createStyles } from '@mantine/core'
+import { Box, Paper, createStyles } from '@mantine/core'
 import Sidebar from '../Sidebar/Sidebar'
 import { Outlet } from 'react-router-dom'
 import NowPlaying from '../NowPlaying/NowPlaying'
@@ -54,9 +54,7 @@ export default function Layout() {
         <Sidebar />
         <Box className={classes.scene}>
           <Paper className={classes.main}>
-            <ScrollArea h={'100%'}>
-              <Outlet />
-            </ScrollArea>
+            <Outlet />
           </Paper>
           <NowPlaying />
         </Box>

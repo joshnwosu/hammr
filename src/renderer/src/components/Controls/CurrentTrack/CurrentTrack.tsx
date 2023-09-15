@@ -28,10 +28,10 @@ export default function CurrentTrack() {
           )}
           <Center>
             <Box>
-              <Text fz={'sm'} fw={400} color="white">
+              <Text fz={'md'} fw={400} color="white">
                 {title}
               </Text>
-              <Text size={'12px'} fw={600} color="dimmed" mt={2}>
+              <Text size={'sm'} fw={600} color="dimmed" mt={2}>
                 {artist}
               </Text>
             </Box>

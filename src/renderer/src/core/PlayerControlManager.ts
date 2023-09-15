@@ -322,9 +322,45 @@ export class PlayerControlManager {
     }
   }
 
+  updateMuted(value: boolean) {
+    usePlayerStore.setState((prevState) => ({
+      playerStatus: {
+        ...prevState.playerStatus,
+        muted: value
+      }
+    }))
+  }
+
+  muteAudio() {
+    this.audio.muted = true
+
+    this.updateMuted(true)
+
+    usePlayerStore.setState((prevState) => ({
+      playerStatus: {
+        ...prevState.playerStatus,
+        volume: 0
+      }
+    }))
+  }
+
+  unMuteAudio() {
+    this.audio.muted = false
+
+    this.updateMuted(false)
+
+    usePlayerStore.setState((prevState) => ({
+      playerStatus: {
+        ...prevState.playerStatus,
+        volume: 0.5
+      }
+    }))
+  }
+
   toggleMute() {
-    // mute and unmute audio
-    console.log('mute and unmute audio')
+    const value = usePlayerStore.getState().playerStatus.muted
+    if (value) this.unMuteAudio()
+    else this.muteAudio()
   }
 }
 
