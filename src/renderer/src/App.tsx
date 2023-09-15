@@ -2,6 +2,7 @@ import { ColorScheme, ColorSchemeProvider, MantineProvider } from '@mantine/core
 import React, { useState } from 'react'
 import { useCookies } from 'react-cookie'
 import AppRouter from './routes/appRouter'
+import GStyles from './components/GStyles'
 
 const App: React.FC = () => {
   const [cookie, setCookie] = useCookies()
@@ -25,6 +26,7 @@ const App: React.FC = () => {
           fontFamily: "'Josefin Sans', sans-serif"
         }}
       >
+        <GStyles />
         <AppRouter />
       </MantineProvider>
     </ColorSchemeProvider>

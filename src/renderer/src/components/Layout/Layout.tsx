@@ -1,67 +1,69 @@
-import { Box, Paper, ScrollArea, createStyles } from '@mantine/core'
+import { Box, Flex, Paper, createStyles } from '@mantine/core'
+import { Allotment } from 'allotment'
+import Navbar from '../Navbar/Navbar'
 import Sidebar from '../Sidebar/Sidebar'
-import { Outlet } from 'react-router-dom'
 import NowPlaying from '../NowPlaying/NowPlaying'
-import PlayerControls from '../PlayerControls/PlayerControls'
 import { Frame } from '../Frame/Frame'
+import Controls from '../Controls/Controls'
 import IpcListener from '../IpcListener/IpcListener'
+import { Outlet } from 'react-router-dom'
 
-const useStyles = createStyles((theme) => ({
+const useStyes = createStyles((theme) => ({
   wrapper: {
     width: '100%',
-    height: '100%',
-    zIndex: 9999999,
-    position: 'fixed',
-    backgroundColor: theme.black,
-    display: 'flex',
-    flexDirection: 'column'
+    height: '100vh',
+    backgroundColor: theme.black
   },
 
   inner: {
-    flex: 1,
-    display: 'flex',
-    overflow: 'auto'
+    flex: 1
   },
-
+  box: {
+    flex: 1,
+    padding: 8
+  },
   scene: {
-    width: '100%',
-    backgroundColor: theme.black,
-    display: 'flex',
-    alignItems: 'center',
-    flex: 1,
-    borderTopLeftRadius: theme.radius.lg,
-    gap: 8
-  },
-
-  main: {
     backgroundColor: '#111111',
-    flex: 1,
-    borderRadius: 0,
-    borderTopLeftRadius: theme.radius.md,
-    borderTopRightRadius: theme.radius.md,
     height: '100%',
-    overflowY: 'auto'
+    overflowY: 'scroll'
   }
 }))
 
 export default function Layout() {
-  const { classes } = useStyles()
+  const { classes } = useStyes()
   return (
-    <Box className={classes.wrapper}>
-      <IpcListener />
+    <Flex className={classes.wrapper} direction={'column'}>
       <Frame />
-      <Box className={classes.inner}>
-        <Sidebar />
-        <Box className={classes.scene}>
-          <Paper className={classes.main}>
-            <ScrollArea h={'100%'}>
-              <Outlet />
-            </ScrollArea>
-          </Paper>
-          <NowPlaying />
+      <IpcListener />
+      <Flex direction={'column'} className={classes.inner}>
+        <Box className={classes.box}>
+          <Allotment>
+            <Allotment.Pane minSize={100} maxSize={400}>
+              <Flex direction={'column'} gap={8} h={'100%'}>
+                <Navbar />
+                <Sidebar />
+              </Flex>
+            </Allotment.Pane>
+            <Allotment.Pane>
+              <Allotment>
+                <Allotment.Pane>
+                  <Box h={'100%'} px={8}>
+                    <Paper radius={'md'} p={'md'} className={classes.scene}>
+                      <Outlet />
+                    </Paper>
+                  </Box>
+                </Allotment.Pane>
+                <Allotment.Pane maxSize={400} minSize={300}>
+                  <Box h={'100%'}>
+                    <NowPlaying />
+                  </Box>
+                </Allotment.Pane>
+              </Allotment>
+            </Allotment.Pane>
+          </Allotment>
         </Box>
-      </Box>
-      <PlayerControls />
-    </Box>
+        <Controls />
+      </Flex>
+    </Flex>
   )
 }
